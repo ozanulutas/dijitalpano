@@ -1,0 +1,451 @@
+/*
+ _____ALANLAR_____
+ |         |     |
+ |   A-1   | A-2 | 
+ |________ |_____|
+ |_____A-3_______|
+
+*/
+
+
+@font-face{
+    font-family:'digital';
+    src: url('../font/digital-7.ttf');
+}
+
+* {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, 
+body {
+    /* width: 100%;
+    height: 100%; 
+    max-height: 100vh;*/
+    overflow: hidden;
+}
+
+body {
+    background: url('../upload/img/layout/arkaplan.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Open Sans', sans-serif;    
+    font-weight: 700;        
+    margin: 0px;
+    /* font-size: 1.5rem; */   
+    
+    font-size: 1.75vmin; 
+}
+
+h1 { font-size: 3vw; }
+h2 { font-size: 3.0vmin; }
+p { font-size: 2.5vmin; } 
+
+a { text-decoration: none;}
+
+/* HEADER */
+
+#header {
+    /* font-size: 1.5rem; */
+    text-align: center;
+}
+
+.header-baslik {
+    font-weight: 700;
+    font-weight: bold;
+    color: white;
+    text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.5), 
+                 2px -2px 4px rgba(255, 255, 255, 0.9); 
+}
+
+/* SIDEPANEL */
+
+#sidenav {    
+    display: flex;
+    flex-direction: column;
+    font-size: 1.75vmin; 
+    background-color: #ff5f01;
+    /* box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5); */
+    box-shadow: 0 12px 28px -10px black;
+
+    width: 0; 
+    position: fixed; 
+    z-index: 1; 
+    top: 0;
+    left: 0;
+    overflow-x: hidden; 
+    transition: 0.5s; 
+}
+
+.sidenav-item {
+    margin-bottom: 1%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#sidenav a {     
+    color:black;
+    transition: 0.3s;    
+}
+
+#sidenav .closenav-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.closenav {   
+    /* margin: -2%;    */
+    font-size: 3.0vmin;
+    color:black;
+    transition: 0.3s;    
+}
+
+.closenav:hover,
+a:hover {
+    cursor: pointer;
+    color: #f1f1f1;    
+}
+
+.giris-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    white-space: nowrap;
+}
+
+#subeSec {
+    font-size: 1.70vmin;
+}
+
+.opennav {
+  position: fixed;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.opennav:hover {
+  background-color: #444;
+}
+
+/* LOGIN MODAL */
+
+#modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+    animation-name: fade;
+    animation-duration: 0.3s;
+}    
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; 
+    
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-item {
+    margin-bottom: 1%;    
+}
+
+.submit-btn {
+    padding: 2%;
+    margin-top: 3%;
+    border-style: none;
+    background-color: rgb(3, 187, 3);
+    color: white;
+    font-weight: bold;
+    font-size: 2vmin;
+    transition: 0.3s;
+}
+.submit-btn:hover {
+    cursor: pointer; 
+    opacity: 0.8;
+}
+
+#close-modal {
+    display: flex;
+    justify-content: flex-end;    
+}
+
+#close-modal:hover,
+#close-modal:focus {
+    color: #ff5f01; 
+}
+
+/* MAIN */
+
+#main-pano {          
+    /* margin: 0.5rem; */
+    display: grid;
+    min-height: 100%; 
+    max-width: 100%;
+    gap: 0.5rem;
+    /* grid-template-columns: 3.5fr 1fr; 
+    grid-template-rows: auto-fill, 3.5fr 1fr; */
+    grid-template-columns: 74vw 25vw; 
+    grid-template-rows: 74vh 25vh;
+    grid-template-areas: 
+        "alan1 alan2"
+        "alan3 alan3";            
+}
+
+/* GENEL BÖLÜMLER */
+
+.alan1 {
+    grid-area: alan1;
+    padding: 0.5rem;
+}
+.alan2 {
+    /**/ grid-area: alan2;
+    display: grid;
+    grid-template-rows: auto auto 1fr; 
+    padding: 0.5rem;
+    overflow: hidden;
+}
+.alan3 {
+    grid-area: alan3;
+    padding: 1rem;
+    margin: 0.5rem;
+    background-color: #feac00;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Comic Neue', cursive;
+    font-style: italic;
+    text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.5), 
+                 2px -2px 4px rgba(255, 255, 255, 0.9); 
+}
+
+/* BÖLÜM İÇERİKLERİ */
+
+/* alan1 */
+
+.header-baslik {
+    margin: 0;
+}
+
+.video-wrapper {
+    text-align: center;
+    /* overflow: hidden;
+    height: 85%; */
+}
+.video {
+    margin: 1rem;
+    background-color: white;
+    max-width: 95%;
+    /* height: 90%; */
+    height: 60vh;
+    max-height: 60vmin;
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5), 
+                 5px -5px 10px rgba(255, 255, 255, 0.9); 
+}
+
+/* alan2 */
+
+#saat,
+.hava,
+.prog {
+    margin-top: 2%;
+}
+
+.prog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-weight: normal;
+    padding: 1% 2%;
+    background-color: #ff5f01;
+}
+
+.prog h2 {
+    margin-bottom: 1%;
+    color: white;
+}
+
+.simdi,
+.sonra {
+    padding: 1%;
+    display: flex;
+}
+
+#simdi,
+#sonra {
+    margin: auto;
+}
+
+.prog .simdi {
+    margin-top: 1%;
+    background-color: #6bd300;
+    color: maroon;
+}
+.prog .sonra {
+    background-color: red;
+    color: white;
+    margin-top: 0px;
+}
+#zaman-fark {
+    color: black;
+    text-align: left;
+    font-size: 2vmin;
+}
+
+#saat {
+    background-color: #ff5f01;
+    overflow: hidden;
+    padding: 3rem;
+    margin: 0;
+    text-align: center;
+    font-family:'digital';
+    color: white;
+    /* font-size:6rem; */
+    text-shadow: #9d2c00 1px 1px 1px;
+    font-size: 8vmin;
+}
+
+.hava {
+    overflow: hidden;
+}
+
+/* alan3 */
+
+.alan3-sol {
+    display: flex;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+    width: 50vw;
+}
+
+.alan3-sol .dikey-baslik{
+    margin: auto 1.5rem auto -1rem;
+    transform: rotate(-90deg);
+    position: fixed;
+}
+
+.alan3-sol-icerik {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8vmin;
+}
+
+.alan3-sag {
+    background-color: #ffb933;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+    height: 100%;
+    width: 50vw;
+}
+
+.alan3-sag h2 {       
+    text-align: center;
+}
+.alan3-sag p {
+    color: white;
+}
+
+/* .resim-wrapper {
+    height: 100px;            
+} */
+.alan3-sag-resim {
+    /* margin-right: 1rem; */    
+    /* max-height: 15vh; */
+    /* width: 30vmin; */
+    margin-right: 1%;
+    max-height: 98%;
+    border: 5px solid #feac00;
+}
+
+/* Slide */
+
+.slide {
+    display: none;
+}
+
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 2s;
+    animation-name: fade;
+    animation-duration: 2s;    
+}
+
+.rotate {
+    animation-name: fade, rotate;
+    animation-duration: 2s;  
+}
+
+.dot-container {
+    text-align: right;
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    margin: 2px;
+    background-color: #ff5f01;
+    border-radius: 50%;
+    display: inline-flex;
+    transition: background-color 0.6s ease;      
+}
+
+.active {
+    filter: brightness(60%);
+}
+
+@-webkit-keyframes fade {
+    from { opacity: .4 }
+    to { opacity: 1 }    
+}
+
+@keyframes fade {
+    from { opacity: .4 }
+    to { opacity: 1 }    
+}
+
+@keyframes rotate {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+
+/* ÇEŞİTLİ */
+
+.marquee {
+    top: 6em;
+    position: relative;
+    box-sizing: border-box;
+    animation: marquee 15s linear infinite;
+}
+.marquee:hover {
+    animation-play-state: paused;
+}
+@keyframes marquee {
+    0%   { top:   8em }
+    100% { top: -11em }
+}
