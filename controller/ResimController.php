@@ -34,10 +34,6 @@ class ResimController extends Controller {
         $dbh = DatabaseConnection::getInstance();
         $dbc = $dbh->getConnection();
 
-        // $data = array();
-        // $data['baslik'] = 'Resim Ekle';
-        // $data['action'] = 'create';
-
         if(isset($_POST['kaydet'])) {
 
             $upload = new Upload('img', IMG_SLIDE_DIR);
@@ -50,15 +46,7 @@ class ResimController extends Controller {
       
             header("Location: index.php?section=resim&action=default");
         }
-        elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=resim&action=default");
-        }
-        // else {
-        //     $data['resim'] = new Resim();
 
-        //     $template = new Template('admin');
-        //     $template->view('admin/resim', $data);
-        // }
     }
 
 

@@ -32,9 +32,16 @@ class Upload {
                 echo "Sadece JPG, JPEG, PNG & GIF formatındaki resimler desteklenmektedir.";
                 $this->uploadOk = 0;
             }
+
         } elseif($this->media == 'video') {
             if($fileType != "mp4" && $fileType != "avi" && $fileType != "mov" && $fileType != "3gp" && $fileType != "mpeg") {
                 echo "Sadece MP4, AVI, MOV, 3GP & MPEG formatındaki videolar desteklenmektedir.";
+                $this->uploadOk = 0;
+            }
+
+        } elseif($this->media == 'sheet') {
+            if($fileType != "xls" && $fileType != "csv" && $fileType != "xlsx") {
+                echo "Sadece XLS, XLSX, CSV formatındaki dosyalar desteklenmektedir.";
                 $this->uploadOk = 0;
             }
         }

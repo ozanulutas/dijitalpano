@@ -6,20 +6,22 @@ define( "DB_USERNAME", "root" );
 define( "DB_PASSWORD", "" );
 
 define( "UPLOAD_DIR", "upload/" );
+define( "SHEET_DIR", UPLOAD_DIR . "sheet/" );
 define( "VIDEO_DIR", UPLOAD_DIR . "video/" );
 define( "IMG_DIR", UPLOAD_DIR . "img/" );
 define( "IMG_SLIDE_DIR", IMG_DIR . "slide/" );
 define( "IMG_LAYOUT_DIR", IMG_DIR . "layout/" );
 define( "IMG_THUMB_DIR", IMG_DIR . "thumbnail/" );
 
-define( "HAFTALAR", [
-    1 => 'Pazartesi',
-    2 => 'Salı',
-    3 => 'Çarşamba',
-    4 => 'Perşembe',
-    5 => 'Cuma',
-    6 => 'Cumartesi',
-    0 => 'Pazar'
+
+define( "GUNLER", [
+    'Pazartesi',
+    'Salı',
+    'Çarşamba',
+    'Perşembe',
+    'Cuma',
+    'Cumartesi',
+    'Pazar'
 ]);
 
 require_once 'src/Upload.php';
@@ -37,3 +39,5 @@ require_once 'model/Resim.php';
 require_once 'model/Program.php';
 require_once 'model/Video.php';
 require_once 'model/Thumbnail.php';
+
+include 'vendor/autoload.php';

@@ -206,6 +206,26 @@ td img {
   cursor: pointer;
 }
 
+.progress-bar {
+  height: 35px;
+  width: 250px;
+  border: 2px solid darkblue;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background-color: lightblue;
+  display: flex;
+  align-items: center;
+  transition: width 0.25s;
+}
+
+.progress-bar-text {
+  margin-left: 10px;
+  font-weight: bold;
+}
+
 /* DUYURULAR */
 
 .duyuru-wrapper {
@@ -214,8 +234,7 @@ td img {
 }
 
 .duyuru-table {
-  table-layout: fixed;
-  
+  table-layout: fixed;  
 }
 
 /* RESİMLER */
@@ -226,8 +245,7 @@ td img {
 }
 .gallery {
   display: flex;
-  overflow-x: scroll;
-  
+  overflow-x: scroll;  
 }
 
 .gallery-item {

@@ -114,7 +114,8 @@ function progGoster() {
         dataType: 'json',
 
         success: function(data) {  
-            var haftalar = [1, 2, 3, 4, 5, 6, 0];
+            // var haftalar = [1, 2, 3, 4, 5, 6, 0];
+            var gunler = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             var maxRow = 0;
             for (let i in data.programlar) {
                 if (maxRow < data.programlar[i].length)
@@ -125,11 +126,11 @@ function progGoster() {
 
             for (let i = 0; i < maxRow; i++) {
                 var row = '<tr>';
-                for (let j = 0; j < haftalar.length; j++) {
+                for (let j = 0; j < gunler.length; j++) {
                     
-                    if ((typeof data.programlar[haftalar[j]] !== 'undefined') && (typeof data.programlar[haftalar[j]][i] !== 'undefined')) {
-                        row += '<td onclick="edit(\'program\', ' + data.programlar[haftalar[j]][i]['id'] + ');" class="prog-edit">' 
-                        + (formatTime(data.programlar[haftalar[j]][i]['saat']) + '<br>' + data.programlar[haftalar[j]][i]['etkinlik']) 
+                    if ((typeof data.programlar[gunler[j]] !== 'undefined') && (typeof data.programlar[gunler[j]][i] !== 'undefined')) {
+                        row += '<td onclick="edit(\'program\', ' + data.programlar[gunler[j]][i]['id'] + ');" class="prog-edit">' 
+                        + (formatTime(data.programlar[gunler[j]][i]['saat']) + '<br>' + data.programlar[gunler[j]][i]['etkinlik']) 
                         + '</td>';
                     }
                     else {
@@ -193,9 +194,9 @@ $(function() {
     }); 
 });
 
-// THUMBNAIL KAYDET
-
-var input = document.getElementById('upload');
+// THUMBNAIL KAYDET // Uncaught TypeError: input is null - ZARASIZ
+/*
+var input = document.getElementById('inpFile');
 var img = document.getElementById('thumbnail');
 
 input.addEventListener('change', function(event) {
@@ -206,6 +207,8 @@ input.addEventListener('change', function(event) {
 
     var snapshot = function(){
         var canvas = document.createElement('canvas');
+        canvas.width = 200;
+        canvas.height = 200;
         var ctx = canvas.getContext('2d');
         
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -216,16 +219,12 @@ input.addEventListener('change', function(event) {
     };
     video.addEventListener('canplay', snapshot);
 
-
-    let tmpName = $('#upload').val().split(/[\\\/]/);
-    //let fileName = tmpName[tmpName.length - 1];
-    
+    let tmpName = $('#inpFile').val().split(/[\\\/]/);    
     if(tmpName[tmpName.length - 1].includes('.')) {
         tmpName[tmpName.length - 1] = tmpName[tmpName.length - 1].substr(0, tmpName[tmpName.length - 1].lastIndexOf("."));
-    }
- 
+    } 
     $('#fname').val(tmpName[tmpName.length - 1]);
-});
+});*/
 
 // VIDEO GOSTER
 
@@ -244,7 +243,6 @@ function videoGoster(id) {
             dataType: 'json',
 
             success: function(data) {  
-                console.log(data.video.yol);
                 $('#modalContent video source').attr('src', data.video.yol);
                 $("#modalContent video")[0].load();  
                 
@@ -258,6 +256,8 @@ function videoGoster(id) {
                 var span = document.getElementsByClassName("close")[0];
                 span.onclick = function() {
                     modal.style.display = "none";
+                    $("#modalContent video")[0].pause();
+                    $("#modalContent video")[0].currentTime = 0;
                 }     
             }            
         });
@@ -291,3 +291,77 @@ function yayinla() {
 $('.radio').click(function() {
     console.log($('input[name=video_id]:checked').val());
 });
+
+// // CANCEL 
+
+
+//     $(function() {  
+//         $('#cancel').click(function(e) {
+//             e.preventDefault();
+//             $.ajax({
+//                 type: 'POST',
+//                 url: 'index.php',
+//                 data: {
+//                     section: 'video', 
+//                     action: 'ajax',
+//                     command: 'cancel',
+//                 },    
+//                 success: function(data) {  
+//                     console.log(data);
+//                 }            
+//             });
+//         });
+//     });
+
+// UPLOAD
+
+// const uploadForm = document.getElementById('uploadForm');
+// const inpFile = document.getElementById('inpFile');
+// const progressBarFill = document.querySelector('#progressBar > .progress-bar-fill');
+// const progressBarText = progressBarFill.querySelector('.progress-bar-text');
+
+// uploadForm.addEventListener('submit', uploadFile);
+
+// // console.log(uploadForm);
+// // console.log(inpFile);
+
+// function uploadFile(e) {
+//     e.preventDefault();
+
+//     const xhr = new XMLHttpRequest();
+//     var params = 'section=video&action=create';
+
+//     xhr.open('POST', 'index.php', true);
+    
+//     xhr.upload.addEventListener('progress', e => {
+//         const percent = e.lengthComputable ? (e.loaded / e.total) * 100 : 0;
+
+//         progressBarFill.style.width = percent.toFixed(2) + '%';
+//         progressBarText.textContent = percent.toFixed(2) + '%';
+//     });
+
+//     xhr.setRequestHeader('Content-Type', 'multiform/form-data');
+    
+//     xhr.send(new FormData(uploadForm)); 
+// }
+
+// $(function() {  
+//     $('#uploadForm').on('submit', function(e) {
+//         e.preventDefault();
+
+//         //console.log(new FormData(this));
+//         $.ajax({
+//             type: 'POST',
+//             url: 'index.php?section=video&action=ajax&command=create',
+//             contentType: false,
+//             processData: false,
+//             cache: false,
+//             data: new FormData(this),
+            
+//             success: function(data) {  
+//                 console.log(data);
+//             }            
+//         });
+//     });
+// });
+

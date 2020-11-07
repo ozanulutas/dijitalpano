@@ -130,6 +130,48 @@ class ProgramController extends Controller {
     }
 
 
+    public function importAction() {
+
+        $dbh = DatabaseConnection::getInstance();
+        $dbc = $dbh->getConnection();
+
+        //if(isset($_POST['kaydet'])) {
+
+            $upload = new Upload('sheet', SHEET_DIR);
+
+            if($yol = $upload->uploadFile()) {
+
+                $fileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($yol);
+                $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($fileType);
+                $spreadSheet = $reader->load($yol);
+                unlink($yol);
+                $data['sheet'] = $spreadSheet->getActiveSheet()->toArray();
+
+                $program = new Program($dbc);
+
+                for($i = 0, $j = 0; $i < 7; $i++, $j += 5) {
+            
+                    foreach($data['sheet'] as $row) {
+                                            
+                        $values = array(
+                            'gun'  => $row[0 + $j],//RALATFAH[],
+                            'saat'  => $row[1 + $j],
+                            'etkinlik'  => $row[3 + $j],
+                            'sube_id'  => $_POST['sube_id']
+                        );
+                        
+                        $program->setValues($values);
+                        $program->insert();
+                    }
+                }
+                echo "Dosya başarıyla içe aktarıldı.";
+            }
+            
+            //header("Location: index.php?section=resim&action=default");
+        //}        
+    }
+
+
     public function ajaxAction() {
 
         $dbh = DatabaseConnection::getInstance();

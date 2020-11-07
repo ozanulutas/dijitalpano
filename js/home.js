@@ -21,6 +21,21 @@ var hava = document.getElementById('hava');
 hava.setAttribute('data-label_1', zaman.getDate() + ' ' + aylar[zaman.getMonth()]);
 hava.setAttribute('data-label_2', gunler[zaman.getDay()]);
 
+// GUNLER
+
+function gunuGoster() {
+
+    let gunler = [];
+    gunler[1] = 'Pazartesi';
+    gunler[2] = 'Salı';
+    gunler[3] = 'Çarşamba';
+    gunler[4] = 'Perşembe';
+    gunler[5] = 'Cuma';
+    gunler[6] = 'Cumartesi';
+    gunler[0] = 'Pazar';
+    return gunler
+}
+
 // SAAT
 
 // SAAT GÖLGESİ
@@ -166,21 +181,22 @@ function showSlides() {
     
     marquee();
     
-    setTimeout(showSlides, 4000);     
+    //setTimeout(showSlides, 4000);     
 } 
 
 // GOSTER - AJAX
 
 function progGoster() {
 
-    if((typeof prog !== 'undefined') && (typeof prog[zaman.getDay()] !== 'undefined')) {                
-                
-        for (let i = 0; i < prog[zaman.getDay()].length; i++) {
-            if(prog[zaman.getDay()][i]['saat'] <= simdi()) {
-                var simdiki = prog[zaman.getDay()][i];
-                var sonraki = prog[zaman.getDay()][i + 1];   
-                var fark = ((typeof sonraki !== 'undefined') && (typeof simdiki !== 'undefined')) ? zamanFarki(simdi(), sonraki['saat']) : '';
-                                  
+    let gunler = gunuGoster();
+
+    if((typeof prog !== 'undefined') && (typeof prog[gunler[zaman.getDay()]] !== 'undefined')) {      
+        
+        for (let i = 0; i < prog[gunler[zaman.getDay()]].length; i++) {
+            if(prog[gunler[zaman.getDay()]][i]['saat'] <= simdi()) {
+                var simdiki = prog[gunler[zaman.getDay()]][i];
+                var sonraki = prog[gunler[zaman.getDay()]][i + 1];   
+                var fark = ((typeof sonraki !== 'undefined') && (typeof simdiki !== 'undefined')) ? zamanFarki(simdi(), sonraki['saat']) : '';                                  
             }
         }
     }

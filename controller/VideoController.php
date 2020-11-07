@@ -50,16 +50,13 @@ class VideoController extends Controller {
                 $video->setValues(['yol' => $yol]);
                 $video->insert();
 
-                //if(isset($_POST['command']) && $_POST['command'] == 'thumb') {
-                $this->thumb($video->id);                
+                $this->thumb($video->id);
             }
-      
-            header("Location: index.php?section=video&action=default");
+            //header("Location: index.php?section=video&action=default");
         }
         elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=video&action=default");
+            //header("Location: index.php?section=video&action=default");
         }
-
     }
 
 
@@ -99,7 +96,7 @@ class VideoController extends Controller {
 
                 echo json_encode($data);
             }
-            if($_POST['command'] == 'edit') {
+            elseif($_POST['command'] == 'edit') {
                 
                 $video = new Video($dbc);
                 $video->findBy('goster', true);
@@ -113,6 +110,18 @@ class VideoController extends Controller {
 
                 echo 'Video Yayında.';
             }
+            // elseif($_POST['command'] == 'create') {  
+            //     echo "meko";              
+            //     $this->createAction();
+                
+            // }
+            // elseif($_POST['command'] == 'cancel') {
+                
+            //     $key =  ini_get("session.upload_progress.name");
+            //     //print_r($_SESSION[$key]);
+            //     $_SESSION[$key]["cancel_upload"] = true;
+            //     echo print_r($_SESSION[$key]);
+            // }
         }
     }
     
@@ -120,9 +129,6 @@ class VideoController extends Controller {
     public function thumb($video_id) {
         $dbh = DatabaseConnection::getInstance();
         $dbc = $dbh->getConnection();
-
-        //file_put_contents("/opt/lampp/htdocs/dijitalpano/upload/img/slide/deneme.png", file_get_contents("data://".$_POST['uri']));
-        // echo $_POST['uri'];
 
         $upload = new Upload('img', IMG_THUMB_DIR);
         $upload->uploadFromUri($_POST['fname'], $_POST['uri']);

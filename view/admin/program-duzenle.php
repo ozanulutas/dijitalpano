@@ -36,9 +36,9 @@
 
         <h3 class="form-item">Gün</h3>
         <select name="gun" id="gun">
-            <?php foreach(HAFTALAR as $key => $val) { ?>
-                <option value="<?php echo $key; ?>" <?php echo (($data['program']->gun ?? '666') == $key) ? ' selected' : ' '; ?>>
-                    <?php echo $val; ?>
+            <?php foreach(GUNLER as $gun) { ?>
+                <option value="<?php echo $gun; ?>" <?php echo (($data['program']->gun ?? 'Yok') == $gun) ? ' selected' : ' '; ?>>
+                    <?php echo $gun; ?>
                 </option> <?php
             } ?>
         </select> 
