@@ -25,14 +25,21 @@ hava.setAttribute('data-label_2', gunler[zaman.getDay()]);
 
 function gunuGoster() {
 
-    let gunler = [];
-    gunler[1] = 'Pazartesi';
-    gunler[2] = 'Salı';
-    gunler[3] = 'Çarşamba';
-    gunler[4] = 'Perşembe';
-    gunler[5] = 'Cuma';
-    gunler[6] = 'Cumartesi';
-    gunler[0] = 'Pazar';
+    let gunler = [];/* = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];*/
+    // gunler[1] = 'Pazartesi';
+    // gunler[2] = 'Salı';
+    // gunler[3] = 'Çarşamba';
+    // gunler[4] = 'Perşembe';
+    // gunler[5] = 'Cuma';
+    // gunler[6] = 'Cumartesi';
+    // gunler[0] = 'Pazar';
+    gunler[1] = 0;
+    gunler[2] = 1;
+    gunler[3] = 2;
+    gunler[4] = 3;
+    gunler[5] = 4;
+    gunler[6] = 5;
+    gunler[0] = 6;
     return gunler
 }
 

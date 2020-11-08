@@ -9,7 +9,30 @@
     
     <div id="success" class="fade"></div>
 
-    <form id="importForm">    
+
+
+        <div class="accordion">Aktarma Seçenekleri</div>
+        <div class="panel">
+            <form id="importForm">   
+                <input type="file" name="yol" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required>
+        
+                <button type="submit" name="import" id="import">Seçili Şubeye Aktar</button> 
+            </form>
+
+            <br>
+            
+            <form method="post" action="index.php?section=program&action=export" id="exportForm">
+                <input type="hidden" name="sube_id" val="" class="subeId">
+                <select name="file_type" id="fileType">
+                    <option value="Xlsx">Xlsx</option>
+                    <option value="Xls">Xls</option>
+                    <option value="Csv">Csv</option>
+                </select>
+                
+                <button type="submit" name="export" id="export">Export</button> 
+            </form>
+            <hr>
+        </div>
 
         <select name="sube_id" id="subeSec" class="sec">     
             <?php foreach($data['subeler'] as $sube) { ?>
@@ -17,20 +40,16 @@
                 <?php echo $sube->isim; ?>
             </option>
             <?php } ?>
-        </select> 
+        </select>   
 
-        <input type="file" name="yol" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required>
-       
-        <button type="submit" name="kaydet" id="import">İçe Aktar</button>    
-
-    </form>
+    
 
     <div class="islem-group">
 
         <span class="create" onclick="create('program')">Yeni Etkinlik Ekle</span>
 
         <form action="index.php?section=program&action=delete" method="post">
-            <input type="hidden" name="sube_id" val="" id="subeId">
+            <input type="hidden" name="sube_id" val="" class="subeId">
             <div class="btn-sil-wrapper">
                 <button type="submit" name="topluSil" class="btn-sil" onclick="return deleteControl('Seçili şubeye ait programı silmek istediğinize emin misiniz?')">Programı Sil</button>
             </div>
@@ -68,36 +87,3 @@
     </table>
 
 </div>
-
-<script>
-
-$(document).ready(function(){
-    $('#importForm').on('submit', function(event){
-        event.preventDefault();
-        var formData = new FormData(this);
-        formData.append('section', 'program');
-        formData.append('action', 'import');
-        $.ajax({
-            url:"index.php",
-            method:"POST",
-            data: formData,
-            contentType:false,
-            cache:false,
-            processData:false,
-            beforeSend:function() {
-                $('#import').attr('disabled', 'disabled');
-                $('#import').text('Aktarılıyor...');
-            },
-            success:function(data)
-            {
-                console.log(data);
-                $('.success').html(data);
-                $('#importForm')[0].reset();
-                $('#import').attr('disabled', false);
-                $('#import').text('İçe Aktar');
-            }
-        })
-    });
-});
-
-</script>

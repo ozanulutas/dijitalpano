@@ -22,13 +22,15 @@
             } ?>
         </div>  
         
+        <?php if(!empty($data['thumbs'])) { ?> 
         <div class="islem-group">            
             <span class="create" id="yayinla" onclick="yayinla()">Seçili Videoyu Yayınla</span>
 
             <div class="btn-sil-wrapper">
                 <button type="submit" name="sil" class="btn-sil" onclick="return deleteControl('Seçili videoyu Silmek İstediğinize Emin Misiniz?')">Videoyu Sil</button> 
             </div>
-        </div>   
+        </div> <?php
+        } ?>  
 
     </form>
     
@@ -45,21 +47,21 @@
         <h3 class="form-item">Video Yükle</h3>
         <input type="file" name="yol" id="inpFile" accept="video/*" required> <br>        
         
-        <button type="submit" name="kaydet" class="form-item submit-btn">Yükle</button> <br>
+        <button type="submit" name="kaydet" class="form-item submit-btn" id="yukle">Yükle</button> <br>
         <!-- <button name="iptal" formnovalidate class="form-item cancel-btn" id="cancel">İptal</button> <br> -->
     </form>
 
-    <!-- <div class="progress-bar" id="progressBar">
+    <div class="progress-bar" id="progressBar">
         <div class="progress-bar-fill">
             <span class="progress-bar-text">
                 0%
             </span>
         </div>
-    </div> -->
+    </div>
 
 </div>
 
-<img id="thumbnail" style="">
+<img id="thumbnail" style="display: hidden">
 
 <div id="modal" class="modal">
     <span class="close">&times;</span>

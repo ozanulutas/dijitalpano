@@ -20,6 +20,27 @@ function create(section) {
     location="index.php?section=" + section + "&action=create&sube_id=" + id; 
 }
 
+// AKORDİYON
+
+
+function akordiyon() {
+    var acc = document.getElementsByClassName("accordion");
+    
+    for (let i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+              } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+              } 
+        });
+    }
+} 
+akordiyon();
+
 // MODAL
 
 function goster(id) {
@@ -100,7 +121,7 @@ $(function() {
 });*/
 
 
-/**/progGoster();
+progGoster();
 function progGoster() {
     $.ajax({
         type: 'POST',
@@ -128,9 +149,9 @@ function progGoster() {
                 var row = '<tr>';
                 for (let j = 0; j < gunler.length; j++) {
                     
-                    if ((typeof data.programlar[gunler[j]] !== 'undefined') && (typeof data.programlar[gunler[j]][i] !== 'undefined')) {
-                        row += '<td onclick="edit(\'program\', ' + data.programlar[gunler[j]][i]['id'] + ');" class="prog-edit">' 
-                        + (formatTime(data.programlar[gunler[j]][i]['saat']) + '<br>' + data.programlar[gunler[j]][i]['etkinlik']) 
+                    if ((typeof data.programlar[j] !== 'undefined') && (typeof data.programlar[j][i] !== 'undefined')) {
+                        row += '<td onclick="edit(\'program\', ' + data.programlar[j][i]['id'] + ');" class="prog-edit">' 
+                        + (formatTime(data.programlar[j][i]['saat']) + '<br>' + data.programlar[j][i]['etkinlik']) 
                         + '</td>';
                     }
                     else {
@@ -146,14 +167,20 @@ function progGoster() {
         }
     });
 
-    $('#subeId').val($('#subeSec').val());
+    // $('#subeId').val($('#subeSec').val());
+    $('.subeId').each(function(){
+        $(this).val($('#subeSec').val());
+    });
 }
 
 $(function() {
     $('#subeSec').change(function() {        
         progGoster();
         
-        $('#subeId').val($('#subeSec').val());
+        // $('#subeId').val($('#subeSec').val());
+        $('.subeId').each(function(){
+            $(this).val($('#subeSec').val());
+        });
     }); 
 });
 
@@ -194,37 +221,78 @@ $(function() {
     }); 
 });
 
-// THUMBNAIL KAYDET // Uncaught TypeError: input is null - ZARASIZ
-/*
-var input = document.getElementById('inpFile');
-var img = document.getElementById('thumbnail');
+// PROG IMPORT
 
-input.addEventListener('change', function(event) {
-    var file = this.files[0];
-    var url = URL.createObjectURL(file);
-    var video = document.createElement('video');
-    video.src = url;
+$(document).ready(function(){
+    $('#importForm').on('submit', function(event){
+        event.preventDefault();
+        var formData = new FormData(this);
+        formData.append('section', 'program');
+        formData.append('action', 'import');
+        formData.append('import', 'import');
+        formData.append('sube_id', $('#subeSec').val());
+        $.ajax({
+            url:"index.php",
+            method:"POST",
+            data: formData,
+            contentType:false,
+            cache:false,
+            processData:false,
+            beforeSend:function() {
+                $('#import').attr('disabled', 'disabled');
+                $('#import').text('Aktarılıyor...');
+            },
+            success:function(data) {
+            
+                $("#success").html(data);
+                $("#success").show();
+                $('#success').delay(5000).fadeOut('slow');
 
-    var snapshot = function(){
-        var canvas = document.createElement('canvas');
-        canvas.width = 200;
-        canvas.height = 200;
-        var ctx = canvas.getContext('2d');
-        
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        img.src = canvas.toDataURL('image/png');
-        video.removeEventListener('canplay', snapshot);
+                $('#importForm')[0].reset();
+                $('#import').attr('disabled', false);
+                $('#import').text('Seçili Şubeye Aktar');
+            }
+        })
+    });
+});
 
-        $('#uri').val(img.src);
-    };
-    video.addEventListener('canplay', snapshot);
+// THUMBNAIL KAYDET 
 
-    let tmpName = $('#inpFile').val().split(/[\\\/]/);    
-    if(tmpName[tmpName.length - 1].includes('.')) {
-        tmpName[tmpName.length - 1] = tmpName[tmpName.length - 1].substr(0, tmpName[tmpName.length - 1].lastIndexOf("."));
-    } 
-    $('#fname').val(tmpName[tmpName.length - 1]);
-});*/
+function thumbnail() {
+
+    var input = document.getElementById('inpFile');
+    var img = document.getElementById('thumbnail');
+
+    if(input != null) {
+        input.addEventListener('change', function(event) {
+            var file = this.files[0];
+            var url = URL.createObjectURL(file);
+            var video = document.createElement('video');
+            video.src = url;
+
+            var snapshot = function(){
+                var canvas = document.createElement('canvas');
+                canvas.width = 200;
+                canvas.height = 200;
+                var ctx = canvas.getContext('2d');
+                
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                img.src = canvas.toDataURL('image/png');
+                video.removeEventListener('canplay', snapshot);
+
+                $('#uri').val(img.src);
+            };
+            video.addEventListener('canplay', snapshot);
+
+            let tmpName = $('#inpFile').val().split(/[\\\/]/);    
+            if(tmpName[tmpName.length - 1].includes('.')) {
+                tmpName[tmpName.length - 1] = tmpName[tmpName.length - 1].substr(0, tmpName[tmpName.length - 1].lastIndexOf("."));
+            } 
+            $('#fname').val(tmpName[tmpName.length - 1]);
+        });
+    }
+}
+thumbnail();
 
 // VIDEO GOSTER
 
@@ -315,53 +383,51 @@ $('.radio').click(function() {
 
 // UPLOAD
 
-// const uploadForm = document.getElementById('uploadForm');
-// const inpFile = document.getElementById('inpFile');
-// const progressBarFill = document.querySelector('#progressBar > .progress-bar-fill');
-// const progressBarText = progressBarFill.querySelector('.progress-bar-text');
+$(function() {  
+    $('#uploadForm').on('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        formData.append('section', 'video');
+        formData.append('action', 'create');
+        formData.append('kaydet', 'kaydet');
+        formData.append('sube_id', $('#subeSec').val());
 
-// uploadForm.addEventListener('submit', uploadFile);
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: formData,
+            contentType:false,
+            cache:false,
+            processData:false,
+            xhr: function () {
+                const progressBarFill = document.querySelector('#progressBar > .progress-bar-fill');
+                const progressBarText = progressBarFill.querySelector('.progress-bar-text');
+                var xhr = new window.XMLHttpRequest();
 
-// // console.log(uploadForm);
-// // console.log(inpFile);
+                xhr.upload.addEventListener('progress', e => {
+                    const percent = e.lengthComputable ? (e.loaded / e.total) * 100 : 0;
+                    progressBarFill.style.width = percent.toFixed(2) + '%';
+                    progressBarText.textContent = percent.toFixed(2) + '%';
+                });
+                return xhr;
+            },
+            beforeSend: function() {
+                $('#yukle').attr('disabled', 'disabled');
+                $('#yukle').text('Yükleniyor...');
+                
+            },            
+            success: function(data) {  
+                // $("#success").html(data);
+                // $("#success").show();
+                // $('#success').delay(5000).fadeOut('slow');
 
-// function uploadFile(e) {
-//     e.preventDefault();
+                // $('#importForm')[0].reset();
+                // $('#yukle').attr('disabled', false);
+                // $('#yukle').text('Yükle');
+            }            
+        });
+    });
+});
 
-//     const xhr = new XMLHttpRequest();
-//     var params = 'section=video&action=create';
 
-//     xhr.open('POST', 'index.php', true);
-    
-//     xhr.upload.addEventListener('progress', e => {
-//         const percent = e.lengthComputable ? (e.loaded / e.total) * 100 : 0;
-
-//         progressBarFill.style.width = percent.toFixed(2) + '%';
-//         progressBarText.textContent = percent.toFixed(2) + '%';
-//     });
-
-//     xhr.setRequestHeader('Content-Type', 'multiform/form-data');
-    
-//     xhr.send(new FormData(uploadForm)); 
-// }
-
-// $(function() {  
-//     $('#uploadForm').on('submit', function(e) {
-//         e.preventDefault();
-
-//         //console.log(new FormData(this));
-//         $.ajax({
-//             type: 'POST',
-//             url: 'index.php?section=video&action=ajax&command=create',
-//             contentType: false,
-//             processData: false,
-//             cache: false,
-//             data: new FormData(this),
-            
-//             success: function(data) {  
-//                 console.log(data);
-//             }            
-//         });
-//     });
-// });
 
