@@ -47,21 +47,34 @@
         <h3 class="form-item">Video Yükle</h3>
         <input type="file" name="yol" id="inpFile" accept="video/*" required> <br>        
         
-        <button type="submit" name="kaydet" class="form-item submit-btn" id="yukle">Yükle</button> <br>
-        <!-- <button name="iptal" formnovalidate class="form-item cancel-btn" id="cancel">İptal</button> <br> -->
+        <button type="submit" name="kaydet" class="form-item submit-btn" id="yukle">Yükle</button> <br>        
+
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-bar-fill">
+                <span class="progress-bar-text">
+                    0%
+                </span>
+            </div>
+        </div>
+
+        <button name="iptal" formnovalidate class="form-item cancel-btn" id="videoCancel">İptal</button> <br>
+
     </form>
 
-    <div class="progress-bar" id="progressBar">
-        <div class="progress-bar-fill">
-            <span class="progress-bar-text">
-                0%
-            </span>
-        </div>
-    </div>
+
+    <!-- <div class="progress-bar" id="progressBar">
+            <div class="progress-bar-fill">
+                <span class="progress-bar-text">
+                    0%
+                </span>
+            </div>
+        </div> -->
+
+
 
 </div>
 
-<img id="thumbnail" style="display: hidden">
+<img id="thumbnail" style="display: none">
 
 <div id="modal" class="modal">
     <span class="close">&times;</span>

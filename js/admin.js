@@ -92,34 +92,18 @@ $(function() {
     });
 });
 
+// ŞİFREYİ GÖSTER
+
+function showPassword() {
+    var inp = document.getElementById("sifre");
+    if (inp.type === "password") {
+        inp.type = "text";
+    } else {
+        inp.type = "password";
+    }
+}
+
 // AJAX - PRGORAM GOSTER
-
-/*var ekle = document.getElementById('ekle');
-$(function() {
-    var formDataArray = new Array();
-    $('#ekle').click(function(e) {
-        e.preventDefault();
-        formData = $('#form').serializeArray();
-        formDataArray.push(formData);
-        $('#detay').empty();
-        $('#detay').append('<h3>Detaylar</h3>');
-        for (let i = 0; i < formDataArray.length; i++) {
-            var btnText = '';
-            for (let j = 0; j < formData.length; j++) {
-                btnText += formData[j]['name'] + ' - ' + formData[j]['value'];
-                //$('#detay').append(formData[j]['name'] + ' - ' + formData[j]['value'] + '<br>');                
-            }
-            var btn = $('<button/>', {
-                text: btnText,
-                class: 'deneme',
-            });
-            $('#detay').append(btn);
-        }
-        //$('#detay').html(JSON.stringify(formData));        
-        console.log(formDataArray);
-    }); 
-});*/
-
 
 progGoster();
 function progGoster() {
@@ -135,7 +119,8 @@ function progGoster() {
         dataType: 'json',
 
         success: function(data) {  
-            // var haftalar = [1, 2, 3, 4, 5, 6, 0];
+            (data.programlar == null) ? $('#progSil').hide() : $('#progSil').show();
+
             var gunler = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
             var maxRow = 0;
             for (let i in data.programlar) {
@@ -240,17 +225,19 @@ $(document).ready(function(){
             processData:false,
             beforeSend:function() {
                 $('#import').attr('disabled', 'disabled');
+                $('#import').css('cursor', 'default');
                 $('#import').text('Aktarılıyor...');
             },
             success:function(data) {
-            
+                console.log(data);
                 $("#success").html(data);
                 $("#success").show();
                 $('#success').delay(5000).fadeOut('slow');
 
                 $('#importForm')[0].reset();
                 $('#import').attr('disabled', false);
-                $('#import').text('Seçili Şubeye Aktar');
+                $('#import').text('İçe Aktar');
+                $('#import').css('cursor', 'pointer');
             }
         })
     });
@@ -356,31 +343,6 @@ function yayinla() {
     });
 } 
 
-$('.radio').click(function() {
-    console.log($('input[name=video_id]:checked').val());
-});
-
-// // CANCEL 
-
-
-//     $(function() {  
-//         $('#cancel').click(function(e) {
-//             e.preventDefault();
-//             $.ajax({
-//                 type: 'POST',
-//                 url: 'index.php',
-//                 data: {
-//                     section: 'video', 
-//                     action: 'ajax',
-//                     command: 'cancel',
-//                 },    
-//                 success: function(data) {  
-//                     console.log(data);
-//                 }            
-//             });
-//         });
-//     });
-
 // UPLOAD
 
 $(function() {  
@@ -412,20 +374,19 @@ $(function() {
                 return xhr;
             },
             beforeSend: function() {
+                $('#yukle').hide();
+                $('#videoCancel').show();
                 $('#yukle').attr('disabled', 'disabled');
-                $('#yukle').text('Yükleniyor...');
-                
+                $('#progressBar').fadeIn();            
             },            
-            success: function(data) {  
-                // $("#success").html(data);
-                // $("#success").show();
-                // $('#success').delay(5000).fadeOut('slow');
-
-                // $('#importForm')[0].reset();
-                // $('#yukle').attr('disabled', false);
-                // $('#yukle').text('Yükle');
+            success: function() {  
+                location.reload();
             }            
         });
+    });
+
+    $('#videoCancel').click(function() {
+        location.reload();
     });
 });
 

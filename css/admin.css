@@ -162,6 +162,8 @@ td img {
   margin-bottom: 2%;
 }
 
+
+.btn,
 .submit-btn,
 .cancel-btn {
   border-style: none;
@@ -170,8 +172,10 @@ td img {
   font-weight: bold;
   box-shadow: 0 2px 20px -10px black;
   color: whitesmoke;
+  width: 100%;
 }
 
+.btn:hover,
 .submit-btn:hover,
 .cancel-btn:hover {
   cursor: pointer;
@@ -183,8 +187,13 @@ td img {
   background-color: rgb(3, 187, 3);
 }
 
-.cancel-btn {
+.cancel-btn {  
   background-color: rgb(163, 162, 162);
+}
+
+#videoCancel {
+  margin-top: 3%;
+  display: none;
 }
 
 .checkbox {
@@ -207,23 +216,31 @@ td img {
 }
 
 .progress-bar {
-  height: 35px;
-  width: 250px;
-  border: 2px solid darkblue;
+  height: 5vmin;
+  /* width: 250px; */
+  margin-top: 3%;
+  border: 2px solid rgb(3, 187, 3);  
+  box-shadow: 0 2px 20px -10px black;
+  
+  background-color: lightgray;
+  display: none;
+  
 }
 
 .progress-bar-fill {
   height: 100%;
   width: 0%;
-  background-color: lightblue;
+  background-color: rgb(3, 187, 3);
   display: flex;
   align-items: center;
   transition: width 0.25s;
+  
 }
 
 .progress-bar-text {
-  margin-left: 10px;
+  margin-left: 0.7rem;
   font-weight: bold;
+  color: whitesmoke;
 }
 
 /* DUYURULAR */
@@ -363,6 +380,26 @@ td img {
   margin-top: 1%;
 }
 
+.prog-secenek-wrapper {
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.select-group {
+  flex: 1;
+  margin-right: 0.5%;
+}
+
+.accordion-group {
+  flex: 1;
+  margin-left: 0.5%;
+}
+
+.btn-aktar {
+  background-color: dodgerblue;
+}
+
 /* AKORDİYON */
 
 .accordion {
@@ -370,9 +407,10 @@ td img {
   color: #444;
   cursor: pointer;
   padding: 2%;
-  width: 100%;
+  /* max-width: 100%; */
   text-align: left;
   transition: 0.4s;
+  border-radius: 3px;
 }
 
 .active, .accordion:hover {
@@ -395,6 +433,12 @@ td img {
 
 .active:after {
   content: "\2796"; 
+}
+
+/* KULLANICI */
+
+.kullanici-table tr:hover {
+  cursor: default;
 }
 
 /* ÇEŞİTLİ */
@@ -429,7 +473,7 @@ td img {
 }
 
 .sec {
-  width: 30%;
+  width: 100%;
 }
 
 .video-baslik {

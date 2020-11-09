@@ -29,10 +29,6 @@ class Kullanici extends Entity{
             $obj = new $this;
             $obj->setValues($row);
             return $obj;   
-        }
-        // echo "<pre>";
-        // print_r($row);
-        // echo "</pre>";        
-        
+        }        
     }
 }

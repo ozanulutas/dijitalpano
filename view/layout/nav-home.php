@@ -22,7 +22,7 @@
     
     <div class="giris-wrapper">
         <?php if(isset($_SESSION['k_id'])) { ?>
-            <a href="index.php?section=admin">Admin Paneli</a> <?php
+            <a href="index.php?section=sube">Admin Paneli</a> <?php
         }
         else { ?>
             <a href="#" id="open-modal" class="giris">Giriş</a> <?php

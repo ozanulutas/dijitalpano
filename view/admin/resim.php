@@ -20,10 +20,11 @@
 
         </div>  
         
+        <?php if($data['resimler']) { ?> 
         <div class="btn-sil-wrapper">
-            <button type="submit" name="sil" class="btn-sil" onclick="return deleteControl('Seçili Resimleri Silmek İstediğinize Emin Misiniz?')">Seçili Resimleri Sil</button>
-        </div>
-
+            <button type="submit" name="sil" class="btn-sil" onclick="return deleteControl('Seçili Resimleri Silmek İstediğinize Emin Misiniz?');">Seçili Resimleri Sil</button>
+        </div> <?php
+        } ?>
 
     </form>
     
@@ -34,22 +35,17 @@
 <div class="form-wrapper">
 
     <form action="index.php?section=resim&action=<?php echo $data['action']; ?>" method="post" class="form" enctype="multipart/form-data">
-        <!-- <input type="hidden" name="id" value="<?php //echo $data['resim']->id ?? ''; ?>" class="form-item">  -->
-
         <h3 class="form-item">Resim Yükle</h3>
         <input type="file" name="yol" accept="image/*" required> <br>
         
         <button type="submit" name="kaydet" class="form-item submit-btn">Yükle</button> <br>
-        <button type="submit" name="iptal" formnovalidate class="form-item cancel-btn">İptal</button> <br>
     </form>
 
 </div>
 
 
 <div id="modal" class="modal">
-    <span class="close">&times;</span>
-    
-    <img class="modal-content" id="modalContent">
-    
+    <span class="close">&times;</span>    
+    <img class="modal-content" id="modalContent">    
     <div id="caption"></div>
 </div> 

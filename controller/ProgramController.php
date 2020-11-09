@@ -168,10 +168,10 @@ class ProgramController extends Controller {
                         $k = 0;
                         if(!empty($row[$k])) {                    
                             $values = array(
-                                'gun'  => $gunler[$row[0 + $j]],
-                                'saat'  => $row[1 + $j],
-                                'etkinlik'  => $row[3 + $j],
-                                'sube_id'  => $_POST['sube_id']
+                                'gun'  => $gunler[$row[0 + $j]] ?? null,
+                                'saat'  => $row[1 + $j] ?? null,
+                                'etkinlik'  => $row[3 + $j] ?? null,
+                                'sube_id'  => $_POST['sube_id'] ?? null
                             );
                             
                             $program->setValues($values);

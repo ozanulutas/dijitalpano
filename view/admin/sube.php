@@ -3,7 +3,7 @@
     <h2 class="baslik"> <?php echo $data['baslik']; ?> </h2>
 </div>
 
-    <hr>
+<hr>
 
 <div class="form-wrapper">
 
