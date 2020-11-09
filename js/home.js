@@ -23,7 +23,7 @@ function tarihGoster() {
 function havaDurumu(lat, long) {
     console.log(lat);
     console.log(long);
-    $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&lang=tr&exclude=minutely,hourly,alerts&appid=fa13191aaafdf33d06c157515cbd09f8", function(data){
+    $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&lang=tr&exclude=minutely,hourly,alerts&appid=", function(data){
      
         var havaDurum = document.getElementsByClassName('hava-durum');
         var gun = document.getElementsByClassName('gun');
