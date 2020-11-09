@@ -23,9 +23,74 @@
         <h1 id="saat"> &nbsp; </h1>
 
         <div class="hava">
-            <a id="hava" class="weatherwidget-io" href="https://forecast7.com/tr/40d9827d51/tekirdag/" 
+            <!-- <a id="hava" class="weatherwidget-io" href="https://forecast7.com/tr/40d9827d51/tekirdag/" 
             data-label_1=" &nbsp; " data-label_2=" &nbsp; " 
-            data-theme="orange" data-basecolor="#ff7220" data-accent="#ffad00" ></a>
+            data-theme="orange" data-basecolor="#ff7220" data-accent="#ffad00" ></a> -->
+            <div class="bugun">
+                <div class="hafta-gun">
+                    <div class="bugun">
+                        Bugün
+                    </div>
+                    <div class="hava-durum">
+                        HAVA
+                    </div>
+                </div>
+                <div class="tarih">
+                    <div id="tarih"> TARİH </div>
+                    <div id="gun"> GÜN </div>
+                </div>
+            </div>
+
+            <div class="hafta">
+                <div class="hafta-gun">
+                    <div class="gun">
+                        GÜN
+                    </div>
+                    <div class="hava-durum">
+                        HAVA
+                    </div>
+                </div>
+                <div class="hafta-gun">
+                    <div class="gun">
+                        GÜN
+                    </div>
+                    <div class="hava-durum">
+                        HAVA
+                    </div>
+                </div>
+                <div class="hafta-gun">
+                    <div class="gun">
+                        GÜN
+                    </div>
+                    <div class="hava-durum">
+                        HAVA
+                    </div>
+                </div>
+                <div class="hafta-gun">
+                    <div class="gun">
+                        GÜN
+                    </div>
+                    <div class="hava-durum">
+                        HAVA
+                    </div>
+                </div>
+                <div class="hafta-gun">
+                    <div class="gun">
+                        GÜN
+                    </div>
+                    <div class="hava-durum">
+                        HAVA
+                    </div>
+                </div>
+                <div class="hafta-gun">
+                    <div class="gun">
+                        GÜN
+                    </div>
+                    <div class="hava-durum">
+                        HAVA
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="prog" id="prog">

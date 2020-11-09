@@ -223,7 +223,7 @@ a:hover {
 .alan2 {
     /**/ grid-area: alan2;
     display: grid;
-    grid-template-rows: auto auto 1fr; 
+    grid-template-rows: auto 1fr auto; /*auto auto 1fr; */
     padding: 0.5rem;
     overflow: hidden;
 }
@@ -268,7 +268,8 @@ a:hover {
 
 #saat,
 .hava,
-.prog {
+.prog,
+.hafta {
     margin-top: 2%;
 }
 
@@ -329,6 +330,44 @@ a:hover {
 
 .hava {
     overflow: hidden;
+    
+}
+
+.bugun {
+    display: flex;
+}
+
+.gun,
+.bugun {
+    background-color: #ffc933;
+}
+
+.tarih {
+    text-align: center;
+    background-color: #ff5f01;
+}
+
+.hafta {
+    display: flex;
+    width: 100%;   
+}
+
+.hafta-gun {
+    text-align: center;
+    /* width: 16%; */
+}
+
+.gun {
+    text-align: center;
+    font-size: 1vmin;
+}
+
+.hava-durum {
+    background-color: #feac00;
+}
+.hava-durum img {
+    max-width: 100%;
+    background-color: dodgerblue;
 }
 
 /* alan3 */

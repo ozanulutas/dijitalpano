@@ -1,38 +1,81 @@
 
-
-// HAVA
-
-!function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if(!d.getElementById(id)) {
-        js = d.createElement(s);
-        js.id = id;
-        js.src = 'https://weatherwidget.io/js/widget.min.js';
-        fjs.parentNode.insertBefore(js, fjs);
-    }
-}(document, 'script', 'weatherwidget-io-js');
-
 // TARİH
 
 var zaman = new Date();
-var aylar = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
-var gunler = ["PAZAR", "PAZARTESİ", "SALI", "ÇARŞAMBA", "PERŞEMBE", "CUMA", "CUMARTESİ"];
-var hava = document.getElementById('hava');
-hava.setAttribute('data-label_1', zaman.getDate() + ' ' + aylar[zaman.getMonth()]);
-hava.setAttribute('data-label_2', gunler[zaman.getDay()]);
+const aylar = ["OCAK", "ŞUBAT", "MART", "NİSAN", "MAYIS", "HAZİRAN", "TEMMUZ", "AĞUSTOS", "EYLÜL", "EKİM", "KASIM", "ARALIK"];
+const gunler = ["PAZAR", "PAZARTESİ", "SALI", "ÇARŞAMBA", "PERŞEMBE", "CUMA", "CUMARTESİ"];
+// var hava = document.getElementById('hava');
+
+tarihGoster();
+function tarihGoster() {
+
+    let date = new Date();
+    let dt = date.getDate();
+    let month = aylar[date.getMonth()];
+    let gun = gunler[date.getDay()];
+
+    document.getElementById('tarih').innerHTML = dt + ' ' + month;
+    document.getElementById('gun').innerHTML = gun;
+}
+
+// HAVA
+
+function havaDurumu(lat, long) {
+    console.log(lat);
+    console.log(long);
+    $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&lang=tr&exclude=minutely,hourly,alerts&appid=fa13191aaafdf33d06c157515cbd09f8", function(data){
+     
+        var havaDurum = document.getElementsByClassName('hava-durum');
+        var gun = document.getElementsByClassName('gun');
+        
+        for(let i = 0; i < data.daily.length - 1 ; i++) {
+            
+            var unix_timestamp = data.daily[i+1].dt;
+            var date = new Date(unix_timestamp * 1000);
+            var icon = data.daily[i].weather[0].icon;
+            var temp = data.daily[i].temp.day;         
+
+            if(gun[i]) gun[i].innerHTML = gunler[date.getDay()];                
+            havaDurum[i].innerHTML = "<img src='http://openweathermap.org/img/wn/" + icon + "@2x.png' alt=''></img>"
+            havaDurum[i].innerHTML += "<br>";
+            havaDurum[i].innerHTML += Math.round(temp);
+
+        }
+    });
+}
+
+function koordinat() {
+    navigator.geolocation.getCurrentPosition(getPosition);     
+}
+
+function getPosition(position) {
+    var lat = position.coords.latitude;
+    var long = position.coords.longitude;
+    
+    havaDurumu(lat, long);
+}
+
+koordinat();
+
+// !function(d, s, id) {
+//     var js, fjs = d.getElementsByTagName(s)[0];
+//     if(!d.getElementById(id)) {
+//         js = d.createElement(s);
+//         js.id = id;
+//         js.src = 'https://weatherwidget.io/js/widget.min.js';
+//         fjs.parentNode.insertBefore(js, fjs);
+//     }
+// }(document, 'script', 'weatherwidget-io-js');
+
+
+// hava.setAttribute('data-label_1', zaman.getDate() + ' ' + aylar[zaman.getMonth()]);
+// hava.setAttribute('data-label_2', gunler[zaman.getDay()]);
 
 // GUNLER
 
 function gunuGoster() {
 
-    let gunler = [];/* = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];*/
-    // gunler[1] = 'Pazartesi';
-    // gunler[2] = 'Salı';
-    // gunler[3] = 'Çarşamba';
-    // gunler[4] = 'Perşembe';
-    // gunler[5] = 'Cuma';
-    // gunler[6] = 'Cumartesi';
-    // gunler[0] = 'Pazar';
+    let gunler = [];
     gunler[1] = 0;
     gunler[2] = 1;
     gunler[3] = 2;
@@ -230,7 +273,7 @@ function progGoster() {
         $('#zaman-fark').show();
     }   
 
-    setTimeout(progGoster, 10000);
+    setTimeout(progGoster, 60000);
 }
 
 function goster() {
