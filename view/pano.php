@@ -20,74 +20,66 @@
     <!-- ALAN2 -->
 
     <div class="alan2">
-        <h1 id="saat"> &nbsp; </h1>
+        <div id="saat">
+            <h1> &nbsp; </h1>
+        </div>
 
         <div class="hava">
-            <!-- <a id="hava" class="weatherwidget-io" href="https://forecast7.com/tr/40d9827d51/tekirdag/" 
-            data-label_1=" &nbsp; " data-label_2=" &nbsp; " 
-            data-theme="orange" data-basecolor="#ff7220" data-accent="#ffad00" ></a> -->
             <div class="bugun">
                 <div class="hafta-gun">
-                    <div class="bugun">
-                        Bugün
-                    </div>
+                    <div class="gun kalin"> Bugün </div>                                       
                     <div class="hava-durum">
-                        HAVA
+                        <img src="" alt="" class="hava-icon">
+                        <div class="hava-derece kalin"></div>
                     </div>
                 </div>
-                <div class="tarih">
+                <div class="tarih kalin">
                     <div id="tarih"> TARİH </div>
-                    <div id="gun"> GÜN </div>
+                    <div id="gun"> GÜN </div>                    
                 </div>
             </div>
 
             <div class="hafta">
                 <div class="hafta-gun">
-                    <div class="gun">
-                        GÜN
-                    </div>
+                    <div class="gun kalin"> GUN </div>
                     <div class="hava-durum">
-                        HAVA
+                        <img src="" alt="" class="hava-icon">
+                        <div class="hava-derece kalin"></div>
                     </div>
                 </div>
                 <div class="hafta-gun">
-                    <div class="gun">
-                        GÜN
-                    </div>
+                    <div class="gun kalin"> GUN </div>
                     <div class="hava-durum">
-                        HAVA
+                        <img src="" alt="" class="hava-icon">
+                        <div class="hava-derece kalin"></div>
                     </div>
                 </div>
                 <div class="hafta-gun">
-                    <div class="gun">
-                        GÜN
-                    </div>
+                    <div class="gun kalin"> GUN </div>
                     <div class="hava-durum">
-                        HAVA
+                        <img src="" alt="" class="hava-icon">
+                        <div class="hava-derece kalin"></div>
                     </div>
                 </div>
                 <div class="hafta-gun">
-                    <div class="gun">
-                        GÜN
-                    </div>
+                    <div class="gun kalin"> GUN </div>
                     <div class="hava-durum">
-                        HAVA
+                        <img src="" alt="" class="hava-icon">
+                        <div class="hava-derece kalin"></div>
                     </div>
                 </div>
                 <div class="hafta-gun">
-                    <div class="gun">
-                        GÜN
-                    </div>
+                    <div class="gun kalin"> GUN </div>
                     <div class="hava-durum">
-                        HAVA
+                        <img src="" alt="" class="hava-icon">
+                        <div class="hava-derece kalin"></div>
                     </div>
                 </div>
                 <div class="hafta-gun">
-                    <div class="gun">
-                        GÜN
-                    </div>
+                    <div class="gun kalin"> GUN </div>
                     <div class="hava-durum">
-                        HAVA
+                        <img src="" alt="" class="hava-icon">
+                        <div class="hava-derece kalin"></div>
                     </div>
                 </div>
             </div>
@@ -115,7 +107,7 @@
     <div class="alan3">
 
         <div class="alan3-sol overflow">
-            <h2 class="dikey-baslik">duyuru</h2>
+            <h2 class="dikey-baslik">DUYURU</h2>
             <div class="alan3-sol-icerik">
                 <div name="marquee" id="duyuru">  
                     &nbsp;               

@@ -6,6 +6,7 @@
     <a href="index.php?section=resim&action=default">Resimler</a>
     <a href="index.php?section=video&action=default">Videolar</a>
     <a href="index.php?section=kullanici&action=default">Kullanıcılar</a>
+    <a href="index.php?section=css&action=default">Tema</a>
     <a href="index.php?section=kullanici&action=edit">Hesap Ayarları</a>
     <a href="index.php?section=kullanici&action=logout">Oturumu Kapat</a>
     <a href="index.php?section=home&action=default">Panoya Dön</a>

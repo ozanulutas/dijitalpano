@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet"> 
-    
     <link rel="stylesheet" href="./css/admin.css?<?php echo date('l jS \of F Y h:i:s A'); ?>">
 
     <script type="text/javascript" src="./js/jquery-3.5.1.min.js"></script>

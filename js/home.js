@@ -4,7 +4,6 @@
 var zaman = new Date();
 const aylar = ["OCAK", "ŞUBAT", "MART", "NİSAN", "MAYIS", "HAZİRAN", "TEMMUZ", "AĞUSTOS", "EYLÜL", "EKİM", "KASIM", "ARALIK"];
 const gunler = ["PAZAR", "PAZARTESİ", "SALI", "ÇARŞAMBA", "PERŞEMBE", "CUMA", "CUMARTESİ"];
-// var hava = document.getElementById('hava');
 
 tarihGoster();
 function tarihGoster() {
@@ -20,28 +19,42 @@ function tarihGoster() {
 
 // HAVA
 
-function havaDurumu(lat, long) {
-    console.log(lat);
-    console.log(long);
+function havaDurumu() {
+
     $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&lang=tr&exclude=minutely,hourly,alerts&appid=fa13191aaafdf33d06c157515cbd09f8", function(data){
-     
-        var havaDurum = document.getElementsByClassName('hava-durum');
-        var gun = document.getElementsByClassName('gun');
         
-        for(let i = 0; i < data.daily.length - 1 ; i++) {
+        
+        var gun = document.getElementsByClassName('gun');
+        var havaIcon = document.getElementsByClassName('hava-icon');
+        var havaDerece = document.getElementsByClassName('hava-derece');
+
+        var unix_timestamp, date, icon, temp;
+
+            unix_timestamp = data.current.dt;
+            date = new Date(unix_timestamp * 1000);            
+
+        temp = data.current.temp;
+        icon = data.current.weather[0].icon;
+
+        havaIcon[0].src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";  
+        havaDerece[0].innerHTML = Math.round(temp) + '&deg;'; 
+            // havaDerece[0].innerHTML +=  date.getDate(); 
+        
+        for(let i = 1; i < data.daily.length - 1 ; i++) {
             
-            var unix_timestamp = data.daily[i+1].dt;
-            var date = new Date(unix_timestamp * 1000);
-            var icon = data.daily[i].weather[0].icon;
-            var temp = data.daily[i].temp.day;         
+            unix_timestamp = data.daily[i].dt;
+            date = new Date(unix_timestamp * 1000);
+            icon = data.daily[i].weather[0].icon;
+            temp = data.daily[i].temp.day;         
 
-            if(gun[i]) gun[i].innerHTML = gunler[date.getDay()];                
-            havaDurum[i].innerHTML = "<img src='http://openweathermap.org/img/wn/" + icon + "@2x.png' alt=''></img>"
-            havaDurum[i].innerHTML += "<br>";
-            havaDurum[i].innerHTML += Math.round(temp);
-
+            if(gun[i]) gun[i].innerHTML = gunler[date.getDay()];    
+            havaIcon[i].src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";  
+            havaDerece[i].innerHTML = Math.round(temp) + '&deg;'; 
+             
+                // havaDerece[i].innerHTML +=  date.getDate();
         }
     });
+    // setTimeout('havaDurumu()', 14400000);
 }
 
 function koordinat() {
@@ -49,10 +62,10 @@ function koordinat() {
 }
 
 function getPosition(position) {
-    var lat = position.coords.latitude;
-    var long = position.coords.longitude;
+    lat = position.coords.latitude;
+    long = position.coords.longitude;
     
-    havaDurumu(lat, long);
+    havaDurumu();
 }
 
 koordinat();
@@ -91,10 +104,13 @@ function gunuGoster() {
 // SAAT GÖLGESİ
 
 function saatGolge() {
+    var style = getComputedStyle(document.body);
+    golgeRenk = style.getPropertyValue('--renk-4');
+
     let saat = document.getElementById('saat');
     let shadow = '';
     for(let i = 0; i < 500; i++) {
-        shadow += (shadow ? ',' : '') + i * 1 + 'px ' + i * 1 + 'px 0 #9d2c00';        
+        shadow += (shadow ? ',' : '') + i * 1 + 'px ' + i * 1 + 'px 0 ' + golgeRenk;        
     }
     saat.style.textShadow = shadow;
 }

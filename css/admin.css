@@ -1,10 +1,22 @@
+
+@font-face {
+  font-family:'sfpro';
+  src: url('../font/SF-Pro-Display-Regular.otf');
+}
+
+@font-face {
+  font-family:'sfpro';
+  src: url('../font/SF-Pro-Display-Bold.otf');
+  font-weight: bold;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   font-size: 1.70vmin;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'sfpro';
   margin-bottom: 4%;
 }
 
@@ -13,13 +25,18 @@ button,
 textarea,
 select {
   font-size: 1.70vmin;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'sfpro', sans-serif;
 }
 
 textarea {
   min-width: 100%;
   max-width: 100%;
   padding: 1%;
+}
+
+select {
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 a,
@@ -241,6 +258,13 @@ td img {
   margin-left: 0.7rem;
   font-weight: bold;
   color: whitesmoke;
+}
+
+.color-group {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 2%;
 }
 
 /* DUYURULAR */

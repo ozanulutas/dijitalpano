@@ -12,7 +12,7 @@
     <div class="prog-secenek-wrapper">
 
         <div class="select-group">
-            <select name="sube_id" id="subeSec" class="sec form-item">     
+            <select name="sube_id" id="subeSec" class="sec form-item"> 
                 <?php foreach($data['subeler'] as $sube) { ?>
                 <option value="<?php echo $sube->id; ?>" <?php if(isset($_GET['sube_id'])) echo ($_GET['sube_id'] == $sube->id) ? 'selected' : '' ?>>
                     <?php echo $sube->isim; ?>

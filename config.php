@@ -39,5 +39,6 @@ require_once 'model/Resim.php';
 require_once 'model/Program.php';
 require_once 'model/Video.php';
 require_once 'model/Thumbnail.php';
+require_once 'model/Css.php';
 
 include 'vendor/autoload.php';

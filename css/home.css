@@ -7,10 +7,29 @@
 
 */
 
+:root {
+    --renk-1: #ff5f01; /* BG: saat, tarih, program */
+    --renk-2: #feac00; /* BG: duyuru, resim çerçevesi */
+    --renk-3: #ffb933; /* BG: slide */
+    --renk-4: #800000;  /* saat gölgesi, tarih */
+    --renk-5: #ffc933; /* BG: hava durumu gün */
+    --renk-6: #ff9100; /* BG: hava durumu gövde */
+}
 
-@font-face{
+@font-face {
     font-family:'digital';
     src: url('../font/digital-7.ttf');
+}
+
+@font-face {
+    font-family:'sfpro';
+    src: url('../font/SF-Pro-Display-Regular.otf');
+}
+
+@font-face {
+    font-family:'sfpro';
+    src: url('../font/SF-Pro-Display-Bold.otf');
+    font-weight: bold;
 }
 
 * {
@@ -31,19 +50,27 @@ body {
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
-    font-family: 'Open Sans', sans-serif;    
-    font-weight: 700;        
+    font-family: 'sfpro';    
     margin: 0px;
-    /* font-size: 1.5rem; */   
     
     font-size: 1.75vmin; 
 }
 
+input,
+button,
+select {
+  font-family: 'sfpro';
+  font-size: 1.70vmin;
+}
+
 h1 { font-size: 3vw; }
-h2 { font-size: 3.0vmin; }
+h2,
+.custom-btn { font-size: 3.0vmin; }
 p { font-size: 2.5vmin; } 
 
 a { text-decoration: none;}
+
+hr { opacity: 0.3; }
 
 /* HEADER */
 
@@ -53,8 +80,7 @@ a { text-decoration: none;}
 }
 
 .header-baslik {
-    font-weight: 700;
-    font-weight: bold;
+    margin: 0;
     color: white;
     text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.5), 
                  2px -2px 4px rgba(255, 255, 255, 0.9); 
@@ -66,8 +92,7 @@ a { text-decoration: none;}
     display: flex;
     flex-direction: column;
     font-size: 1.75vmin; 
-    background-color: #ff5f01;
-    /* box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5); */
+    background-color: var(--renk-1);/*#ff5f01;*/
     box-shadow: 0 12px 28px -10px black;
 
     width: 0; 
@@ -86,26 +111,26 @@ a { text-decoration: none;}
     text-overflow: ellipsis;
 }
 
-#sidenav a {     
+.giris-wrapper a {     
     color:black;
     transition: 0.3s;    
 }
 
-#sidenav .closenav-wrapper {
+.closenav-wrapper {
     display: flex;
     justify-content: flex-end;
 }
 
-.closenav {   
-    /* margin: -2%;    */
-    font-size: 3.0vmin;
-    color:black;
+.closenav,
+.opennav {   
     transition: 0.3s;    
+    cursor: pointer;
+    font-weight: bolder;
 }
 
+.opennav:hover,
 .closenav:hover,
-a:hover {
-    cursor: pointer;
+.giris-wrapper a:hover {
     color: #f1f1f1;    
 }
 
@@ -115,22 +140,10 @@ a:hover {
     white-space: nowrap;
 }
 
-#subeSec {
-    font-size: 1.70vmin;
-}
-
 .opennav {
-  position: fixed;
-  font-size: 20px;
-  cursor: pointer;
-  background-color: #111;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-}
-
-.opennav:hover {
-  background-color: #444;
+    font-weight: bold;  
+    position: fixed;
+    margin: 0 1%;  
 }
 
 /* LOGIN MODAL */
@@ -172,13 +185,16 @@ a:hover {
     margin-bottom: 1%;    
 }
 
+.kalin {
+    font-weight: bold;
+}
+
 .submit-btn {
     padding: 2%;
     margin-top: 3%;
     border-style: none;
     background-color: rgb(3, 187, 3);
     color: white;
-    font-weight: bold;
     font-size: 2vmin;
     transition: 0.3s;
 }
@@ -187,14 +203,9 @@ a:hover {
     opacity: 0.8;
 }
 
-#close-modal {
-    display: flex;
-    justify-content: flex-end;    
-}
-
 #close-modal:hover,
 #close-modal:focus {
-    color: #ff5f01; 
+    color: red; 
 }
 
 /* MAIN */
@@ -226,15 +237,16 @@ a:hover {
     grid-template-rows: auto 1fr auto; /*auto auto 1fr; */
     padding: 0.5rem;
     overflow: hidden;
+    max-width: 100%;
 }
 .alan3 {
     grid-area: alan3;
     padding: 1rem;
     margin: 0.5rem;
-    background-color: #feac00;
+    background-color: var(--renk-2); /*#feac00;*/
     display: flex;
     justify-content: space-between;
-    font-family: 'Comic Neue', cursive;
+    /* font-family: 'Comic Neue', cursive; */
     font-style: italic;
     text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.5), 
                  2px -2px 4px rgba(255, 255, 255, 0.9); 
@@ -243,10 +255,6 @@ a:hover {
 /* BÖLÜM İÇERİKLERİ */
 
 /* alan1 */
-
-.header-baslik {
-    margin: 0;
-}
 
 .video-wrapper {
     text-align: center;
@@ -278,9 +286,8 @@ a:hover {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    font-weight: normal;
     padding: 1% 2%;
-    background-color: #ff5f01;
+    background-color: var(--renk-1);
 }
 
 .prog h2 {
@@ -316,58 +323,89 @@ a:hover {
 }
 
 #saat {
-    background-color: #ff5f01;
+    background-color: var(--renk-1);
     overflow: hidden;
     padding: 3rem;
     margin: 0;
     text-align: center;
     font-family:'digital';
     color: white;
-    /* font-size:6rem; */
-    text-shadow: #9d2c00 1px 1px 1px;
-    font-size: 8vmin;
+    text-shadow: var(--renk-4) 1px 1px 1px; /* #9d2c00 */
+    font-size: 8vmin;    
 }
 
 .hava {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    max-width: 100%;
     overflow: hidden;
-    
 }
 
 .bugun {
     display: flex;
-}
-
-.gun,
-.bugun {
-    background-color: #ffc933;
+    flex: 1;
 }
 
 .tarih {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
-    background-color: #ff5f01;
+    background-color: var(--renk-1);
+    color: var(--renk-4);
+    width: 100%;
+}
+#tarih {
+    font-size: 2.5vmin;
+    line-height: 90%;
+}
+#gun {
+    font-size: 7vmin;
+    line-height: 90%;
 }
 
 .hafta {
     display: flex;
+    flex: 1;
     width: 100%;   
+    height: 100%;  
+    justify-content: space-between;
 }
 
 .hafta-gun {
+    display: flex;
+    flex-direction: column;
     text-align: center;
-    /* width: 16%; */
+    max-width: 100%;
+    
+}
+
+.hafta-gun:not(:last-child) {
+    margin-right: 1%;    
 }
 
 .gun {
     text-align: center;
-    font-size: 1vmin;
+    font-size: 1.25vmin;
+    background-color: var(--renk-5); /* #ffc933 */
 }
 
 .hava-durum {
-    background-color: #feac00;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--renk-6); /* #ff9100 */
+    height: 100%;
 }
 .hava-durum img {
-    max-width: 100%;
-    background-color: dodgerblue;
+    max-width: 90%;
+    /* margin-bottom: -1vh; */
+}
+.hava-derece {
+    color: whitesmoke;
+    font-size: 2.5vmin; 
+    
 }
 
 /* alan3 */
@@ -381,19 +419,21 @@ a:hover {
 }
 
 .alan3-sol .dikey-baslik{
-    margin: auto 1.5rem auto -1rem;
+    margin: auto 1.5rem auto -4vmin;
     transform: rotate(-90deg);
     position: fixed;
+    font-style: normal;
+    color: black;
 }
 
 .alan3-sol-icerik {
     display: flex;
     flex-direction: column;
-    margin-left: 8vmin;
+    margin-left: 5vmin;
 }
 
 .alan3-sag {
-    background-color: #ffb933;
+    background-color: var(--renk-3); /* #ffb933;*/
     padding: 0 1rem;
     display: flex;
     flex-direction: row;
@@ -419,7 +459,7 @@ a:hover {
     /* width: 30vmin; */
     margin-right: 1%;
     max-height: 98%;
-    border: 5px solid #feac00;
+    border: 5px solid var(--renk-2);
 }
 
 /* Slide */
@@ -448,7 +488,7 @@ a:hover {
     height: 10px;
     width: 10px;
     margin: 2px;
-    background-color: #ff5f01;
+    background-color: var(--renk-1);
     border-radius: 50%;
     display: inline-flex;
     transition: background-color 0.6s ease;      

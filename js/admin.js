@@ -390,5 +390,31 @@ $(function() {
     });
 });
 
+// TEMA
+
+$(function() {
+    $('.cssSubeSec').click(function() {
+
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: {
+                section: 'css',
+                action: 'show',
+                sube_id: $('#cssSubeSec').val(),
+            },
+            dataType: 'json',
+
+            success: function(data) {
+                console.log(data);
+                $('.css_id').each(function(i) {
+                    $(this).val(data.css[i].id);
+                    console.log($(this).val());
+                });
+            }
+        });
+    });
+});
+
 
 
