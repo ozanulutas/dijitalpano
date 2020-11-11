@@ -12,6 +12,7 @@ class Program extends Entity {
             'id',
             'gun',
             'saat',
+            'bitis_saat',
             'etkinlik',
             'sube_id'
         ];

@@ -483,6 +483,7 @@ td img {
   box-shadow: 0 2px 15px -10px black;
   border-radius: 10px;
   color: white;
+  font-weight: bold;
   display: none;
 }
 

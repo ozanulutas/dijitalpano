@@ -16,7 +16,7 @@
             <div class="gallery-item">
                 <div class="video-baslik"><?php $isim = explode('/', $thumb->yol); echo end($isim); ?></div>          
                 <img src="<?php echo $thumb->yol; ?>" id="<?php echo $thumb->video_id; ?>" onclick="videoGoster(this.id)">  
-                <input type="radio" name="video_id" value="<?php echo $thumb->video_id; ?>" class="radio"
+                <input type="radio" name="video_id" class="radio video-sec" value="<?php echo $thumb->video_id; ?>" 
                  <?php echo ($data['videolar'][$thumb->video_id][0]->goster == true) ? ' checked' : ''; ?>>
             </div> <?php
             } ?>
@@ -27,7 +27,9 @@
             <span class="create" id="yayinla" onclick="yayinla()">Seçili Videoyu Yayınla</span>
 
             <div class="btn-sil-wrapper">
-                <button type="submit" name="sil" class="btn-sil" onclick="return deleteControl('Seçili videoyu Silmek İstediğinize Emin Misiniz?')">Videoyu Sil</button> 
+                <button type="submit" name="sil" class="btn-sil" id="videoSil" onclick="return deleteControl('Seçili videoyu Silmek İstediğinize Emin Misiniz?')">
+                    Videoyu Sil
+                </button> 
             </div>
         </div> <?php
         } ?>  
@@ -41,6 +43,8 @@
 <div class="form-wrapper">
  
     <form class="form" id="uploadForm" action="index.php?section=video&action=<?php echo $data['action']; ?>" method="post" enctype="multipart/form-data">
+
+        <div id="error"></div>
         <input type="hidden" name="uri" id="uri" value="">
         <input type="hidden" name="fname" id="fname" value="">
 
@@ -60,17 +64,6 @@
         <button name="iptal" formnovalidate class="form-item cancel-btn" id="videoCancel">İptal</button> <br>
 
     </form>
-
-
-    <!-- <div class="progress-bar" id="progressBar">
-            <div class="progress-bar-fill">
-                <span class="progress-bar-text">
-                    0%
-                </span>
-            </div>
-        </div> -->
-
-
 
 </div>
 

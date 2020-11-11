@@ -3,7 +3,7 @@
     <h2 class="baslik"> <?php echo $data['baslik']; ?> </h2>
 </div>
 
-    <hr>
+<hr>
 
 <div class="form-wrapper">
 
@@ -11,10 +11,10 @@
         <input type="hidden" name="id" value="<?php echo $data['slide']->id ?? ''; ?>"> 
 
         <h3 class="form-item">Slide Başlığı</h3>
-        <input type="text" name="baslik" id="" value="<?php echo $data['slide']->baslik ?? ''; ?>"> <br>
+        <input type="text" name="baslik" id="" value="<?php echo $data['slide']->baslik ?? ''; ?>" required> <br>
 
         <h3 class="form-item">Slide Metni</h3>
-        <textarea name="metin" id="" cols="30" rows="10"><?php echo $data['slide']->metin ?? ''; ?></textarea> <br>
+        <textarea name="metin" id="" cols="30" rows="10" required><?php echo $data['slide']->metin ?? ''; ?></textarea> <br>
 
         <input type="hidden" name="tarih" value="<?php echo date("Y-m-d"); ?>"> <br>
 

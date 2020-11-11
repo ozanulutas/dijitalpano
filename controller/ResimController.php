@@ -38,15 +38,14 @@ class ResimController extends Controller {
 
             $upload = new Upload('img', IMG_SLIDE_DIR);
             if($yol = $upload->uploadFile()) {
-                echo $yol;
+                
                 $resim = new Resim($dbc);
                 $resim->setValues(['yol' => $yol]);
                 $resim->insert();
-            }
-      
-            header("Location: index.php?section=resim&action=default");
+            }      
         }
-
+        else
+            header("Location: index.php?section=resim");
     }
 
 
@@ -65,7 +64,7 @@ class ResimController extends Controller {
                 unlink($resim->yol);
             }            
         }
-        header("Location: index.php?section=resim&action=default");
+        header("Location: index.php?section=resim");
     }
 
 }

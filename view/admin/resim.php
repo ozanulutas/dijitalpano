@@ -3,7 +3,7 @@
     <h2 class="baslik"> <?php echo $data['baslik']; ?> </h2>
 </div>
 
-    <hr>
+<hr>
 
 <div class="form-wrapper gallery-wrapper">
 
@@ -14,7 +14,7 @@
             <?php foreach($data['resimler'] as $resim) { ?>            
             <div class="gallery-item">
                 <img src="<?php echo $resim->yol; ?>" id="<?php echo $resim->id; ?>" onclick="goster(this.id)">            
-                <input type="checkbox" name="id[]" value="<?php echo $resim->id; ?>">
+                <input type="checkbox" name="id[]" class="resim-sec" value="<?php echo $resim->id; ?>">
             </div> <?php
             } ?>
 
@@ -22,7 +22,9 @@
         
         <?php if($data['resimler']) { ?> 
         <div class="btn-sil-wrapper">
-            <button type="submit" name="sil" class="btn-sil" onclick="return deleteControl('Seçili Resimleri Silmek İstediğinize Emin Misiniz?');">Seçili Resimleri Sil</button>
+            <button type="submit" name="sil" class="btn-sil" id="resimSil" onclick="return deleteControl('Seçili resimleri silmek istediğinize emin misiniz?');">
+                Seçili Resimleri Sil
+            </button>
         </div> <?php
         } ?>
 
@@ -34,7 +36,9 @@
 
 <div class="form-wrapper">
 
-    <form action="index.php?section=resim&action=<?php echo $data['action']; ?>" method="post" class="form" enctype="multipart/form-data">
+    <form action="index.php?section=resim&action=<?php echo $data['action']; ?>" method="post" class="form" id="resimForm" enctype="multipart/form-data">
+        <div id="error"></div>    
+
         <h3 class="form-item">Resim Yükle</h3>
         <input type="file" name="yol" accept="image/*" required> <br>
         

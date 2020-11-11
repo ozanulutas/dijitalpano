@@ -68,7 +68,7 @@ function getPosition(position) {
     havaDurumu();
 }
 
-koordinat();
+//koordinat();
 
 // GUNLER
 
@@ -234,7 +234,40 @@ function showSlides() {
     marquee();
     
     // setTimeout(showSlides, 4000);     
-} 
+}
+
+// LOGIN
+
+$(function() {
+    $('#giris').click(function(e){ 
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: {
+                section: 'home', 
+                action: 'login',
+                k_adi: $('#k_adi').val(),
+                sifre: $('#sifre').val(),
+            },
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                if(data.k_id) {
+                    $('#k_adi').val('');
+                    $('#sifre').val('');
+                    location = "index.php?section=sube";
+                }
+                else {
+                    $("#error").html(data);
+                    $("#error").show();
+                    $('#error').delay(5000).fadeOut('slow');
+                }
+            },
+        });
+    });
+});
 
 // PROGRAM GOSTER 
 
@@ -243,15 +276,19 @@ function progGoster() {
     let gunler = gunuGoster();
 
     if((typeof prog !== 'undefined') && (typeof prog[gunler[zaman.getDay()]] !== 'undefined')) {      
-        
+        var progSira = 0;
         for (let i = 0; i < prog[gunler[zaman.getDay()]].length; i++) {
             if(prog[gunler[zaman.getDay()]][i]['saat'] <= simdi()) {
+                progSira = i;
                 var simdiki = prog[gunler[zaman.getDay()]][i];
-                var sonraki = prog[gunler[zaman.getDay()]][i + 1];   
+                var sonraki = prog[gunler[zaman.getDay()]][i + 1];  
+                if(i == prog[gunler[zaman.getDay()]].length - 1) sonraki = prog[gunler[zaman.getDay()]][0];
                 var fark = ((typeof sonraki !== 'undefined') && (typeof simdiki !== 'undefined')) ? zamanFarki(simdi(), sonraki['saat']) : '';                                  
             }
         }
+        // if(progSira == prog[gunler[zaman.getDay()]].length - 1) sonraki = prog[gunler[zaman.getDay()]][0];
     }
+    console.log(sonraki);
     
     if(typeof simdiki === 'undefined') {
         $('.simdi').hide();
@@ -294,7 +331,7 @@ function goster() {
         },
         dataType: 'json',
         success: function(data) {  
-            console.log(data);
+
             // DUYURU GOSTER  
 
             $('#duyuru').empty();

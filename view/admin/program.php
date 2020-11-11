@@ -33,7 +33,7 @@
                 <hr>
                 
                 <form method="post" action="index.php?section=program&action=export" id="exportForm">
-                    <input type="hidden" name="sube_id" val="" class="subeId">
+                    <input type="hidden" name="sube_id" class="subeId">
                     <select name="file_type" id="fileType" class="sec form-item">
                         <option value="Xlsx">Xlsx</option>
                         <option value="Xls">Xls</option>
@@ -53,7 +53,7 @@
         <span class="create" onclick="create('program')">Yeni Etkinlik Ekle</span>
 
         <form action="index.php?section=program&action=delete" method="post" id="progSil">
-            <input type="hidden" name="sube_id" val="" class="subeId">
+            <input type="hidden" name="sube_id" class="subeId">
             <div class="btn-sil-wrapper">
                 <button type="submit" name="topluSil" class="btn-sil" onclick="return deleteControl('Seçili şubeye ait programı silmek istediğinize emin misiniz?')">Programı Sil</button>
             </div>

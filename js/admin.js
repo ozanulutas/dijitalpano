@@ -12,12 +12,12 @@ function deleteControl(text) {
 }
 
 function edit(section, id) {
-    location="index.php?section=" + section + "&action=edit&id=" + id;        
+    location = "index.php?section=" + section + "&action=edit&id=" + id;        
 }  
 
 function create(section) {
     let id = $('#subeSec').val();
-    location="index.php?section=" + section + "&action=create&sube_id=" + id; 
+    location = "index.php?section=" + section + "&action=create&sube_id=" + id; 
 }
 
 // AKORDİYON
@@ -33,9 +33,9 @@ function akordiyon() {
             var panel = this.nextElementSibling;
             if (panel.style.maxHeight) {
                 panel.style.maxHeight = null;
-              } else {
+            } else {
                 panel.style.maxHeight = panel.scrollHeight + "px";
-              } 
+            } 
         });
     }
 } 
@@ -103,6 +103,58 @@ function showPassword() {
     }
 }
 
+// RESİM CHECKBOX KONTROL
+
+resimSecKontrol();
+
+function resimSecKontrol() {
+
+    if(!$('.resim-sec').is(':checked')) {
+        $('#resimSil').prop('disabled', true);
+    }
+    $('.resim-sec').click(function() {
+        $('#resimSil').prop('disabled', false);
+    
+        if(!$('.resim-sec').is(':checked')) {
+            $('#resimSil').prop('disabled', true);
+        }
+    });
+}
+
+// RESİM YÜKLE
+
+$(function() {
+    $('#resimForm').submit(function(e) {
+        e.preventDefault();
+        formData = new FormData(this);
+        formData.append('section', 'resim');
+        formData.append('action', 'create');
+        formData.append('kaydet', 'kaydet');
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: formData,
+            contentType:false,
+            cache:false,
+            processData:false,
+            success: function(data) {
+                if(data) {
+                    $("#error").html(data);
+                    $("#error").show();
+                    $('#error').delay(5000).fadeOut('slow');
+                } else {
+                    location.reload();
+                }
+            },
+            error: function() {
+                $("#error").html('Hata');
+                $("#error").show();
+                $('#error').delay(5000).fadeOut('slow');
+            }
+        });
+    }); 
+});
+
 // AJAX - PRGORAM GOSTER
 
 progGoster();
@@ -147,12 +199,7 @@ function progGoster() {
                 $('#progTable > tbody:last-child').append(row);
             }
         },
-        error: function() {
-            //$('#header').html('hata');
-        }
     });
-
-    // $('#subeId').val($('#subeSec').val());
     $('.subeId').each(function(){
         $(this).val($('#subeSec').val());
     });
@@ -162,10 +209,8 @@ $(function() {
     $('#subeSec').change(function() {        
         progGoster();
         
-        // $('#subeId').val($('#subeSec').val());
-        $('.subeId').each(function(){
-            $(this).val($('#subeSec').val());
-        });
+
+
     }); 
 });
 
@@ -175,7 +220,6 @@ $(function() {
 $(function() {
     $('#progEkle').click(function(e) {
         e.preventDefault();
-        
         $.ajax({
             type: 'POST',
             url: 'index.php?section=program&action=ajax',
@@ -189,13 +233,20 @@ $(function() {
                 saat: $('#saat').val(),
                 gun: $('#gun').val(),
             },
-            success: function(data) {   
-                $("#success").html(data);
-                $("#success").show();
-                $('#success').delay(5000).fadeOut('slow');
-
-                $('#etkinlik').val('');
-                $('#saat').val('');
+            dataType: 'json',
+            success: function(data) {
+                if(data.id > 0) {
+                    $("#success").html('Kayıt başarıyla eklendi.');
+                    $("#success").show();
+                    $('#success').delay(5000).fadeOut('slow');
+                    
+                    $('#etkinlik').val('');
+                    $('#saat').val('');
+                } else {
+                    $("#error").html('Tüm alanları doldurun.');
+                    $("#error").show();
+                    $('#error').delay(5000).fadeOut('slow');
+                }
             },
             error: function() {
                 $("#error").html('Kayıt ekleme başarısız.');
@@ -217,18 +268,18 @@ $(document).ready(function(){
         formData.append('import', 'import');
         formData.append('sube_id', $('#subeSec').val());
         $.ajax({
-            url:"index.php",
-            method:"POST",
+            url: "index.php",
+            method: "POST",
             data: formData,
-            contentType:false,
-            cache:false,
-            processData:false,
-            beforeSend:function() {
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
                 $('#import').attr('disabled', 'disabled');
                 $('#import').css('cursor', 'default');
                 $('#import').text('Aktarılıyor...');
             },
-            success:function(data) {
+            success: function(data) {
                 console.log(data);
                 $("#success").html(data);
                 $("#success").show();
@@ -238,8 +289,10 @@ $(document).ready(function(){
                 $('#import').attr('disabled', false);
                 $('#import').text('İçe Aktar');
                 $('#import').css('cursor', 'pointer');
+
+                progGoster();
             }
-        })
+        });
     });
 });
 
@@ -281,6 +334,26 @@ function thumbnail() {
 }
 thumbnail();
 
+// VIDEO RADIO KONTROL
+
+videoSecKontrol();
+
+function videoSecKontrol() {
+
+    if(!$('.video-sec').is(':checked')) {
+        $('#videoSil').prop('disabled', true);
+    }
+
+    $('.video-sec').click(function() {
+        $('#videoSil').prop('disabled', false);
+        $('#yayinla').prop('disabled', false);
+    
+        if(!$('.video-sec').is(':checked')) {
+            $('#videoSil').prop('disabled', true);
+        }
+    });
+}
+
 // VIDEO GOSTER
 
 function videoGoster(id) {
@@ -319,7 +392,7 @@ function videoGoster(id) {
     });            
 }
 
-// VIDEO YAYIINLA
+// VIDEO YAYINLA
 
 function yayinla() {
 
@@ -335,15 +408,18 @@ function yayinla() {
             },
 
             success: function(data) {  
-                $("#success").html(data);
-                $("#success").show();
-                $('#success').delay(5000).fadeOut('slow');
+                if(data != '') {
+
+                    $("#success").html(data);
+                    $("#success").show();
+                    $('#success').delay(5000).fadeOut('slow');
+                }                
             }            
         });
     });
 } 
 
-// UPLOAD
+// VİDEO UPLOAD
 
 $(function() {  
     $('#uploadForm').on('submit', function(e) {
@@ -379,8 +455,18 @@ $(function() {
                 $('#yukle').attr('disabled', 'disabled');
                 $('#progressBar').fadeIn();            
             },            
-            success: function() {  
-                location.reload();
+            success: function(data) {  
+                if(data) {
+                    $('#progressBar').hide();
+                    $('#yukle').show();
+                    $('#yukle').attr('disabled', false);
+                    $('#videoCancel').hide();
+                    $("#error").html(data);
+                    $("#error").show();
+                    $('#error').delay(5000).fadeOut('slow');
+                } else {
+                    location.reload();
+                }
             }            
         });
     });
@@ -401,7 +487,7 @@ $(function() {
         cssGoster();       
     });
 
-    $('#form').submit(function(e) {
+    $('#cssForm').submit(function(e) {
         e.preventDefault();
         cssKaydet();
     });
@@ -426,7 +512,7 @@ function cssGoster() {
             var cssId = document.getElementsByClassName('css_id');
             var cssValue = document.getElementsByClassName('css_value');
 
-            $('#form').attr('action', data.action);
+            $('#cssForm').attr('action', data.action);
             
             for(let i = 0; i < cssId.length; i++) {
                 if(data.css.length > 0) {
@@ -457,7 +543,7 @@ function cssKaydet() {
         url: 'index.php',
         data: {
             section: 'css',
-            action: $('#form').attr('action'),
+            action: $('#cssForm').attr('action'),
             sube_id: $('#cssSubeSec').val(),
             css_id: $('.css_id').serializeArray(),
             css_name: $('.css_name').serializeArray(),
@@ -470,3 +556,30 @@ function cssKaydet() {
         }
     });
 }
+
+// KULLANICI ADI KONTROL
+
+$('#k_adi').blur(function() {
+    $.ajax({
+        type: 'POST',
+        url: 'index.php',
+        data: {
+            section: 'kullanici',
+            action: 'validate',
+            k_adi: $('#k_adi').val(),
+            validate: 'validate',
+            currAction: $('#currAction').val(),
+        },
+        success: function(data) {
+            if(data != "") {
+                $("#error").html(data);
+                $("#error").show();
+                $('#error').delay(5000).fadeOut('slow');
+
+                $('#kullaniciKaydet').prop('disabled', true);
+            } else {
+                $('#kullaniciKaydet').prop('disabled', false);
+            }
+        }
+    });
+});

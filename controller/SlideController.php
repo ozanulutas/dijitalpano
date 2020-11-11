@@ -11,6 +11,7 @@ class SlideController extends Controller {
         return true;
     }
 
+
     public function defaultAction() {
 
         $dbh = DatabaseConnection::getInstance();
@@ -49,10 +50,10 @@ class SlideController extends Controller {
             $slide->setValues($_POST);
             $slide->insert();
             
-            header("Location: index.php?section=slide&action=default");
+            header("Location: index.php?section=slide");
         }
         elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=slide&action=default");
+            header("Location: index.php?section=slide");
         }
         else {
             $data['slide'] = new Slide();
@@ -80,12 +81,12 @@ class SlideController extends Controller {
             $slide->setValues($_POST);
             $slide->update();
          
-            header("Location: index.php?section=slide&action=default");
+            header("Location: index.php?section=slide");
         }
         elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=slide&action=default");
+            header("Location: index.php?section=slide");
         }
-        else {
+        elseif(isset($_GET['id'])) {
 
             $slide = new Slide($dbc);
             $resim = new Resim($dbc);
@@ -95,6 +96,8 @@ class SlideController extends Controller {
             $template = new Template('admin');
             $template->view('admin/slide-duzenle', $data);
         }
+        else 
+            header("Location: index.php?section=slide");
     }
 
 
@@ -107,6 +110,6 @@ class SlideController extends Controller {
         $slide->findBy('id', $_GET['id']);
         $slide->delete();
 
-        header("Location: index.php?section=slide&action=default");
+        header("Location: index.php?section=slide");
     }
 }

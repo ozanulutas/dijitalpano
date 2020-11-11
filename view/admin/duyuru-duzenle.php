@@ -11,14 +11,14 @@
         <input type="hidden" name="id" value="<?php echo $data['duyuru']->id ?? ''; ?>"> 
 
         <h3 class="form-item">Duyuru Metni</h3>
-        <textarea name="metin" id="" cols="30" rows="10"><?php echo $data['duyuru']->metin ?? ''; ?></textarea> <br>
+        <textarea name="metin" id="" cols="30" rows="10" required><?php echo $data['duyuru']->metin ?? ''; ?></textarea> <br>
 
         <h3 class="form-item">Yayınlanacak Tarih</h3>
-        <input type="date" name="yayin_tarih" value="<?php echo $data['duyuru']->yayin_tarih ?? '1000-01-01'; ?>"> 
+        <input type="date" name="yayin_tarih" value="<?php echo $data['duyuru']->yayin_tarih ?? ''; ?>" required> 
         <!-- <input type="time" name="yayin_saat" value="<?php //echo $data['duyuru']->yayin_saat ?? '00:00'; ?>"> <br> -->
 
         <h3 class="form-item">Yayından Kalkış Tarihi</h3>
-        <input type="date" name="bitis_tarih" value="<?php echo $data['duyuru']->bitis_tarih ?? '1000-01-01'; ?>"> 
+        <input type="date" name="bitis_tarih" value="<?php echo $data['duyuru']->bitis_tarih ?? ''; ?>" required> 
         <!-- <input type="time" name="bitis_saat" value="<?php //echo $data['duyuru']->bitis_saat ?? '00:00'; ?>"> <br> -->
 
         <div>

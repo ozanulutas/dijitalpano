@@ -24,7 +24,6 @@ class SubeController extends Controller {
         $sube = new Sube($dbc);
         $data['subeler'] = $sube->list();
 
-
         $template = new Template('admin');
         $template->view('admin/sube', $data);
     }
@@ -45,10 +44,10 @@ class SubeController extends Controller {
             $sube->setValues($_POST);
             $sube->insert();
            
-            header("Location: index.php?section=sube&action=default");
+            header("Location: index.php?section=sube");
         }
         elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=sube&action=default");
+            header("Location: index.php?section=sube");
         }
         else {
             $data['sube'] = new Sube();
@@ -74,12 +73,12 @@ class SubeController extends Controller {
             $sube->setValues($_POST);
             $sube->update();
          
-            header("Location: index.php?section=sube&action=default");
+            header("Location: index.php?section=sube");
         }
         elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=sube&action=default");
+            header("Location: index.php?section=sube");
         }
-        else {
+        elseif(isset($_GET['id'])) {
 
             $sube = new Sube($dbc);
             $data['sube'] = $sube->findBy('id', $_GET['id']); 
@@ -87,6 +86,8 @@ class SubeController extends Controller {
             $template = new Template('admin');
             $template->view('admin/sube-duzenle', $data);
         }
+        else
+            header("Location: index.php?section=sube");
     }
 
 
@@ -99,7 +100,7 @@ class SubeController extends Controller {
         $sube->findBy('id', $_GET['id']);
         $sube->delete();
 
-        header("Location: index.php?section=sube&action=default");
+        header("Location: index.php?section=sube");
     }
 
 }

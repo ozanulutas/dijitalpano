@@ -45,18 +45,16 @@ class VideoController extends Controller {
 
             $upload = new Upload('video', VIDEO_DIR);
             if($yol = $upload->uploadFile()) {
-                //echo $yol;
+                
                 $video = new Video($dbc);
                 $video->setValues(['yol' => $yol]);
                 $video->insert();
 
                 $this->thumb($video->id);
             }
-            //header("Location: index.php?section=video&action=default");
         }
-        elseif(isset($_POST['iptal'])) {
-            //header("Location: index.php?section=video&action=default");
-        }
+        else
+            header("Location: index.php?section=video");
     }
 
 
@@ -74,11 +72,7 @@ class VideoController extends Controller {
         unlink($video->yol); 
         unlink($thumbnail->yol); 
         
-        echo "<pre>";
-        print_r($thumbnail);
-        echo "</pre>";  
-        
-        header("Location: index.php?section=video&action=default");
+        header("Location: index.php?section=video");
     }
 
 
@@ -87,7 +81,7 @@ class VideoController extends Controller {
         $dbh = DatabaseConnection::getInstance();
         $dbc = $dbh->getConnection();
 
-        if(isset($_POST['command'])) {
+        if(isset($_POST['command']) && isset($_POST['video_id'])) {
 
             if($_POST['command'] == 'show') {
                 
@@ -108,21 +102,12 @@ class VideoController extends Controller {
                 $video->goster = true;
                 $video->update();
 
-                echo 'Video Yayında.';
+                if($video)
+                    echo 'Video Yayında.';
             }
-            // elseif($_POST['command'] == 'create') {  
-            //     echo "meko";              
-            //     $this->createAction();
-                
-            // }
-            // elseif($_POST['command'] == 'cancel') {
-                
-            //     $key =  ini_get("session.upload_progress.name");
-            //     //print_r($_SESSION[$key]);
-            //     $_SESSION[$key]["cancel_upload"] = true;
-            //     echo print_r($_SESSION[$key]);
-            // }
         }
+        else
+            header("Location: index.php?section=video");
     }
     
 
@@ -138,10 +123,7 @@ class VideoController extends Controller {
             'yol' => IMG_THUMB_DIR . $_POST['fname'],
             'video_id' => $video_id]);
         $thumbnail->insert();
-    }
-
-
-  
+    } 
 
 
 }

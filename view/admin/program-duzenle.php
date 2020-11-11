@@ -10,7 +10,7 @@
     <div id="success" class="fade"></div>
     <div id="error" class="fade"></div>
 
-    <form  class="form" id="form" action="index.php?section=program&action=<?php echo $data['action']; ?>" method="post">
+    <form  class="form" id="progForm" action="index.php?section=program&action=<?php echo $data['action']; ?>" method="post">
 
         <?php if($data['action'] == 'edit') { ?>
         <div class="btn-sil-wrapper">
@@ -48,6 +48,9 @@
         
         <h3 class="form-item">Ders Saati</h3>
         <input type="time" name="saat" id="saat" value="<?php echo $data['program']->saat ?? ''; ?>" class="form-item"> <br>
+
+        <input type="hidden" name="bitis_saat" id="bitis_saat" value="<?php echo $data['program']->bitis_saat ?? ''; ?>">
+
         <hr style="width:100%">
         
         <button type="submit" name="kaydet" class="form-item submit-btn" id="<?php echo $data['action'] == 'create' ? 'progEkle' : ''; ?>">Kaydet</button> <br>

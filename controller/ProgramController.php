@@ -25,12 +25,6 @@ class ProgramController extends Controller {
 
         $sube = new Sube($dbc);        
         $data['subeler'] = $sube->list();
-        
-        // $program = new Program($dbc);
-        // $result['programlar'] = $program->list('sube_id', 2, ['gun', 'saat']);
-        // foreach($result['programlar'] as $program) {
-        //     $data['programlar'][$program->gun][] = $program;
-        // }
 
         $template = new Template('admin');
         $template->view('admin/program', $data);
@@ -46,30 +40,29 @@ class ProgramController extends Controller {
         $data['baslik'] = 'Etkinlik Oluştur';
         $data['action'] = 'create';
 
-        if(isset($_POST['kaydet'])) {
+        /*if(isset($_POST['kaydet'])) {
 
             $program = new Program($dbc);
             $program->setValues($_POST);
             $program->insert();
 
-            // $data['sube_id'] = $_POST['sube_id'];
-            // $_POST['sube_id'] = $program->sube_id;
-            // echo "<pre>";
-            // print_r($program);
-            // echo "</pre>";
+            $data['sube_id'] = $_POST['sube_id'];
+            $_POST['sube_id'] = $program->sube_id;
+            echo "<pre>";
+            print_r($program);
+            echo "</pre>";
             header("Location: index.php?section=program&action=create");
 
-        }
-        elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=program&action=default");
+        }*/
+        if(isset($_POST['iptal'])) {
+            header("Location: index.php?section=program");
         }
         else {
             $data['program'] = new Program();
             $sube = new Sube($dbc);
 
             $data['subeler'] = $sube->list();
-            $data['sube_id'] = $_GET['sube_id'];
-
+            $data['sube_id'] = $_GET['sube_id'] ?? '';
 
             $template = new Template('admin');
             $template->view('admin/program-duzenle', $data);
@@ -92,13 +85,12 @@ class ProgramController extends Controller {
             $program->setValues($_POST);            
             $program->update();
          
-            header("Location: index.php?section=program&action=default&sube_id=" . $program->sube_id);
+            header("Location: index.php?section=program&sube_id=" . $program->sube_id);
         }
         elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=program&action=default");
+            header("Location: index.php?section=program");
         }
-        else {
-
+        elseif(isset($_GET['id'])) {
             $program = new Program($dbc);
             $sube = new Sube($dbc);
 
@@ -109,6 +101,8 @@ class ProgramController extends Controller {
             $template = new Template('admin');
             $template->view('admin/program-duzenle', $data);
         }
+        else
+            header("Location: index.php?section=program");
     }
 
 
@@ -122,12 +116,12 @@ class ProgramController extends Controller {
         if(isset($_POST['topluSil'])) {
             $program->deleteBy('sube_id', $_POST['sube_id']);
         }
-        else {
+        elseif(isset($_GET['id'])) {
             $program->findBy('id', $_GET['id']);
             $program->delete();
         }
 
-        header("Location: index.php?section=program&action=default&sube_id=" . $program->sube_id);
+        header("Location: index.php?section=program&sube_id=" . $program->sube_id);
     }
 
 
@@ -161,15 +155,14 @@ class ProgramController extends Controller {
                     'Pazar' => 6
                 ];
 
-                for($i = 0, $j = 0; $i < 7; $i++, $j += 5) {
-            
+                for($i = 0, $j = 0; $i < 7; $i++, $j += 5) {            
                     foreach($data['sheet'] as $row) {
-
                         $k = 0;
                         if(!empty($row[$k])) {                    
                             $values = array(
                                 'gun'  => $gunler[$row[0 + $j]] ?? null,
                                 'saat'  => $row[1 + $j] ?? null,
+                                'bitis_saat'  => $row[2 + $j] ?? null,
                                 'etkinlik'  => $row[3 + $j] ?? null,
                                 'sube_id'  => $_POST['sube_id'] ?? null
                             );
@@ -183,6 +176,8 @@ class ProgramController extends Controller {
                 echo "Dosya başarıyla içe aktarıldı.";
             }
         }        
+        else
+            header("Location: index.php?section=program");
     }
 
 
@@ -226,7 +221,7 @@ class ProgramController extends Controller {
                 $sut = $ilkSut;
                 $active_sheet->setCellValue($sut . $count, GUNLER[$program->gun]);
                 $active_sheet->setCellValue(++$sut . $count, $program->saat);
-                $active_sheet->setCellValue(++$sut . $count, " - ");
+                $active_sheet->setCellValue(++$sut . $count, $program->bitis_saat);
                 $active_sheet->setCellValue(++$sut . $count, $program->etkinlik);
                 $count++;
             }    
@@ -245,6 +240,8 @@ class ProgramController extends Controller {
             
             exit;
         }
+        else
+            header("Location: index.php?section=program");
     }
 
 
@@ -257,10 +254,14 @@ class ProgramController extends Controller {
 
             if($_POST['command'] == 'insert') {
                 
-                $program = new Program($dbc);
-                $program->setValues($_POST);
-                $program->insert();
-                echo 'Kayıt başarıyla eklendi.';
+                if($_POST['etkinlik'] && $_POST['saat']) {
+                    $program = new Program($dbc);
+                    $program->setValues($_POST);
+                    $program->insert();
+                    echo json_encode($program);
+                } else {
+                    echo json_encode('error');
+                }
 
             }
             elseif($_POST['command'] == 'goster') {
@@ -275,6 +276,8 @@ class ProgramController extends Controller {
                 echo json_encode($data);
             }
         }
+        else
+            header("Location: index.php?section=program");
     }
 
 

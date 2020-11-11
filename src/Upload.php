@@ -22,41 +22,43 @@ class Upload {
         $this->targetFile = $this->targetDir . basename($_FILES['yol']['name']);
         $fileType = strtolower(pathinfo($this->targetFile, PATHINFO_EXTENSION));
 
+        $data['mesaj'] = array();
+
         if(file_exists($this->targetFile)) {
-            echo "Aynı isimde bir dosya zaten var!";
+            $data['mesaj'] =  "Aynı isimde bir dosya zaten var!";
             $this->uploadOk = 0;
         }
 
         if($this->media == 'img') {
             if($fileType != "jpg" && $fileType != "png" && $fileType != "jpeg" && $fileType != "gif") {
-                echo "Sadece JPG, JPEG, PNG & GIF formatındaki resimler desteklenmektedir.";
+                $data['mesaj'] =  "Sadece JPG, JPEG, PNG & GIF formatındaki resimler desteklenmektedir.";
                 $this->uploadOk = 0;
             }
 
         } elseif($this->media == 'video') {
             if($fileType != "mp4" && $fileType != "avi" && $fileType != "mov" && $fileType != "3gp" && $fileType != "mpeg") {
-                echo "Sadece MP4, AVI, MOV, 3GP & MPEG formatındaki videolar desteklenmektedir.";
+                $data['mesaj'] =  "Sadece MP4, AVI, MOV, 3GP & MPEG formatındaki videolar desteklenmektedir.";
                 $this->uploadOk = 0;
             }
 
         } elseif($this->media == 'sheet') {
             if($fileType != "xls" && $fileType != "csv" && $fileType != "xlsx") {
-                echo "Sadece XLS, XLSX, CSV formatındaki dosyalar desteklenmektedir.";
+                $data['mesaj'] =  "Sadece XLS, XLSX, CSV formatındaki dosyalar desteklenmektedir.";
                 $this->uploadOk = 0;
             }
         }
 
-        if ($this->uploadOk == 0) {
-            echo "Dosya desteklenmiyor.";
-        } else {                        
+        if ($this->uploadOk == 1) {
+            
             if (move_uploaded_file($_FILES["yol"]["tmp_name"], $this->targetFile)) {
 
                 return $this->targetFile;
 
             } else {
-                echo "Dosya yüklenirken bir hata oluştu.";                
+                $data['mesaj'] = "Dosya yüklenirken bir hata oluştu.";                
             }
         }   
+        echo $data['mesaj'];
 
         return false;
     }

@@ -79,13 +79,11 @@ class DuyuruController extends Controller{
                 $subeDuyuru->insert(); 
             }            
 
-            //$this->defaultAction();
-            header("Location: index.php?section=duyuru&action=default");
-            
+            header("Location: index.php?section=duyuru");            
         }
         elseif(isset($_POST['iptal'])) {
 
-            header("Location: index.php?section=duyuru&action=default");
+            header("Location: index.php?section=duyuru");
         }
         else {
             $data['duyuru'] = new Duyuru();
@@ -140,15 +138,13 @@ class DuyuruController extends Controller{
                     $subeDuyuru->insert(); 
                 }
             }
-
-            //$this->defaultAction();            
-            header("Location: index.php?section=duyuru&action=default");
+                      
+            header("Location: index.php?section=duyuru");
         }
         elseif(isset($_POST['iptal'])) {
-            //$this->defaultAction();
-            header("Location: index.php?section=duyuru&action=default");
+            header("Location: index.php?section=duyuru");
         }
-        else {
+        elseif(isset($_GET['id'])) {
 
             $duyuru = new Duyuru($dbc);
             $data['duyuru'] = $duyuru->findBy('id', $_GET['id']); 
@@ -165,6 +161,8 @@ class DuyuruController extends Controller{
             $template = new Template('admin');
             $template->view('admin/duyuru-duzenle', $data);
         }
+        else
+            header("Location: index.php?section=duyuru");
     }
 
     public function deleteAction() {
@@ -176,6 +174,6 @@ class DuyuruController extends Controller{
         $duyuru->findBy('id', $_GET['id']);
         $duyuru->delete();
 
-        header("Location: index.php?section=duyuru&action=default");
+        header("Location: index.php?section=duyuru");
     }
 }

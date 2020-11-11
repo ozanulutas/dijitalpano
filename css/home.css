@@ -111,9 +111,11 @@ hr { opacity: 0.3; }
     text-overflow: ellipsis;
 }
 
-.giris-wrapper a {     
+.giris-wrapper a,
+.giris-wrapper span {     
     color:black;
-    transition: 0.3s;    
+    transition: 0.3s; 
+    cursor: pointer;   
 }
 
 .closenav-wrapper {
@@ -130,7 +132,8 @@ hr { opacity: 0.3; }
 
 .opennav:hover,
 .closenav:hover,
-.giris-wrapper a:hover {
+.giris-wrapper a:hover,
+.giris-wrapper span:hover {
     color: #f1f1f1;    
 }
 
@@ -206,6 +209,16 @@ hr { opacity: 0.3; }
 #close-modal:hover,
 #close-modal:focus {
     color: red; 
+}
+
+#error {
+    background-color: rgba(231, 34, 34, 0.829);
+    padding: 1%;
+    text-align: center;
+    box-shadow: 0 2px 15px -10px black;
+    border-radius: 10px;
+    color: white;
+    display: none;
 }
 
 /* MAIN */

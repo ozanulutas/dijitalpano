@@ -43,10 +43,10 @@ class KullaniciController extends Controller {
             $kullanici->setValues($_POST);
             $kullanici->insert();
            
-            header("Location: index.php?section=kullanici&action=default");
+            header("Location: index.php?section=kullanici");
         }
         elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=kullanici&action=default");
+            header("Location: index.php?section=kullanici");
         }
         else {
             $data['kullanici'] = new Kullanici();
@@ -75,7 +75,7 @@ class KullaniciController extends Controller {
             header("Location: index.php?section=kullanici&action=edit");
         }
         elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=kullanici&action=edit");
+            header("Location: index.php?section=kullanici");
         }
         else {
 
@@ -90,14 +90,38 @@ class KullaniciController extends Controller {
 
     public function deleteAction() {
 
-        $dbh = DatabaseConnection::getInstance();
-        $dbc = $dbh->getConnection();
+        if(isset($_POST['sil'])) {
 
-        $kullanici = new Kullanici($dbc);
-        $kullanici->findBy('id', $_SESSION['k_id']);
-        $kullanici->delete();
+            $dbh = DatabaseConnection::getInstance();
+            $dbc = $dbh->getConnection();
+            
+            $kullanici = new Kullanici($dbc);
+            $kullanici->findBy('id', $_SESSION['k_id']);
+            $kullanici->delete();
+            
+            $this->logoutAction();
+        }
+        else
+            header("Location: index.php?section=kullanici");
+    }
 
-        $this->logoutAction();
+
+    public function validateAction() {
+
+        if(isset($_POST['validate'])) {
+            $dbh = DatabaseConnection::getInstance();
+            $dbc = $dbh->getConnection();
+            
+            $kullanici = new Kullanici($dbc);
+            $mevcutKullanici = new Kullanici($dbc);
+            $mevcutKullanici->findBy('id', $_SESSION['k_id']);
+            $kullanici->findBy('k_adi', $_POST['k_adi']);
+
+            if($kullanici->id && ((($mevcutKullanici->k_adi != $kullanici->k_adi) && ($_POST['currAction'] == 'edit')) || ($_POST['currAction'] == 'create')))
+                echo 'Aynı isimde bir kullanıcı zaten var.';
+        }
+        else
+            header("Location: index.php?section=kullanici");
     }
 
 
