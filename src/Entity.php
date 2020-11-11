@@ -32,12 +32,13 @@ class Entity {
     }
 
 
-    public function list($fieldName = null, $fieldValue = null, $order = array()/**/) {
+    public function list($fieldName = null, $fieldValue = null, $order = array(), $sort = null) {
 
         $where = $fieldName ? " WHERE $fieldName = :value" : "";
         $orderBy = $order ? (' ORDER BY ' . implode(', ', $order)) : '';
+        $sortBy = $sort ? " $sort" : '';
 
-        $sql = "SELECT * FROM " . $this->tableName . $where . $orderBy;
+        $sql = "SELECT * FROM " . $this->tableName . $where . $orderBy . $sortBy;
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute(['value' => $fieldValue]);
 
@@ -71,10 +72,12 @@ class Entity {
     }
 
 
-    public function whereInBtwDate($fieldName, $fieldValues = array()) {
+    public function whereInBtwDate($fieldName, $fieldValues = array(), $order = array(), $sort = null) {
 
         $in = str_repeat('?, ', count($fieldValues) - 1) . '?';
-        $sql = "SELECT * FROM " . $this->tableName . " WHERE $fieldName IN ($in) AND yayin_tarih <= curdate() AND bitis_tarih >= curdate()";
+        $orderBy = $order ? (' ORDER BY ' . implode(', ', $order)) : '';
+        $sortBy = $sort ? $sort : '';
+        $sql = "SELECT * FROM " . $this->tableName . " WHERE $fieldName IN ($in) AND yayin_tarih <= curdate() AND bitis_tarih >= curdate() $orderBy $sortBy";
 
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute($fieldValues);

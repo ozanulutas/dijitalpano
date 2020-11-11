@@ -70,20 +70,6 @@ function getPosition(position) {
 
 koordinat();
 
-// !function(d, s, id) {
-//     var js, fjs = d.getElementsByTagName(s)[0];
-//     if(!d.getElementById(id)) {
-//         js = d.createElement(s);
-//         js.id = id;
-//         js.src = 'https://weatherwidget.io/js/widget.min.js';
-//         fjs.parentNode.insertBefore(js, fjs);
-//     }
-// }(document, 'script', 'weatherwidget-io-js');
-
-
-// hava.setAttribute('data-label_1', zaman.getDate() + ' ' + aylar[zaman.getMonth()]);
-// hava.setAttribute('data-label_2', gunler[zaman.getDay()]);
-
 // GUNLER
 
 function gunuGoster() {
@@ -247,10 +233,10 @@ function showSlides() {
     
     marquee();
     
-    //setTimeout(showSlides, 4000);     
+    // setTimeout(showSlides, 4000);     
 } 
 
-// GOSTER - AJAX
+// PROGRAM GOSTER 
 
 function progGoster() {
 
@@ -292,44 +278,73 @@ function progGoster() {
     setTimeout(progGoster, 60000);
 }
 
+// GOSTER
+
+const cssVarName = ['--renk-1', '--renk-2', '--renk-3', '--renk-4', '--renk-5', '--renk-6'];
+const cssVarVal = ['#ff5f01', '#feac00', '#ffb933', '#800000', '#ffc933', '#ff9100'];
+
 function goster() {
     $.ajax({
         type: 'POST',
         url: 'index.php',
         data: {
             section: 'home', 
-            action: 'ajax',
-            command: 'goster',
+            action: 'show',
             sube_id: $('#subeSec').val()
         },
         dataType: 'json',
         success: function(data) {  
-
+            console.log(data);
             // DUYURU GOSTER  
 
             $('#duyuru').empty();
+            if(data.duyurular.length > 0) {
 
-            for (let i in data.duyurular) {
-                var item = data.duyurular[i]['metin'];
-                $('#duyuru').append($('<p>', {
-                    text: item
-                }));                    
+                for (let i in data.duyurular) {
+                    var item = data.duyurular[i]['metin'];
+                    $('#duyuru').append($('<p>', {
+                        text: item
+                    }));                    
+                }
+                marquee();
             }
-            marquee();
 
             // PROGRAM GOSTER
 
-            prog = data.programlar;            
-            progGoster();      
+            if(data.programlar) {
+                $('#progIcerik').show();
+                prog = data.programlar;            
+                progGoster();      
+            } else {
+                $('#progIcerik').hide();
+            }
             
             // BAŞLIK GOSTER
 
             $('.header-baslik').text(data.sube['isim']);
             $('title').text(data.sube['isim']);
+
+            // CSS GOSTER
+
+            if(data.css.length > 0) {
+                for (let i in data.css) {
+                    document.documentElement.style.setProperty(data.css[i].name, data.css[i].value);                    
+                }
+            } 
+            else {
+                for (let i = 0; i < cssVarName.length; i++) {
+                    document.documentElement.style.setProperty(cssVarName[i], cssVarVal[i]);
+                }
+            }
             
         },
         error: function() {
-            //$('#header').html('hata');
+            $('#duyuru').empty();
+            $('#progIcerik').hide();
+
+            for (let i = 0; i < cssVarName.length; i++) {
+                document.documentElement.style.setProperty(cssVarName[i], cssVarVal[i]);
+            }
         }
     });
 }

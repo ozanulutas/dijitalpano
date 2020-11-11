@@ -10,75 +10,53 @@ class HomeController extends Controller {
         $data = array();
 
         $sube = new Sube($dbc);
-        // $duyuru = new Duyuru($dbc);
-        // $subeDuyuru = new SubeDuyuru($dbc);
         $slide = new Slide($dbc);
         $resim = new Resim($dbc);
 
         $data['subeler'] = $sube->list();
-
-        // $subeDuyurular = $subeDuyuru->list('sube_id', 1);  
-
-        // $id = array();
-        // foreach($subeDuyurular as $sd) {
-        //     $id[] = $sd->duyuru_id;         
-        // }        
-
-        // $data['duyurular'] = $duyuru->whereIn('id', $id);
-
-
-        $data['slidelar'] = $slide->list();
+        $data['slidelar'] = $slide->list(null, null, ['tarih'], 'DESC');
         $result['resimler'] = $resim->list();
 
         foreach($result['resimler'] as $resim) {
             $data['resimler'][$resim->id] = $resim;
-        }
-   
-        // $program = new Program($dbc);
-        // $data['programlar'] = $program->list('sube_id', 2, ['saat']);
-        // echo "<pre>";
-        // print_r($data['programlar']);
-        // echo "</pre>";    
+        } 
         
         $template = new Template('home');
         $template->view('pano', $data);
-
     }
 
 
-    public function ajaxAction() {
+    public function showAction() {
 
         $dbh = DatabaseConnection::getInstance();
         $dbc = $dbh->getConnection();
 
-        if(isset($_POST['command'])) {
-            if($_POST['command'] == 'goster') {
+        $data = array();
 
-                $duyuru = new Duyuru($dbc);
-                $sube = new Sube($dbc);
-                $subeDuyuru = new SubeDuyuru($dbc);
-                $program = new Program($dbc);
+        $duyuru = new Duyuru($dbc);
+        $sube = new Sube($dbc);
+        $subeDuyuru = new SubeDuyuru($dbc);
+        $program = new Program($dbc);
+        $css = new Css($dbc);
 
-                $data['sube'] = $sube->findBy('id', $_POST['sube_id']);
-                
-                $subeDuyurular = $subeDuyuru->list('sube_id', $_POST['sube_id']);
-                
-                $duyuruId = array();
-                foreach($subeDuyurular as $sd) {
-                    $duyuruId[] = $sd->duyuru_id;         
-                }
-                
-                $data['duyurular'] = $duyuru->whereInBtwDate('id', $duyuruId);                
-                
-                $result['programlar'] = $program->list('sube_id', $_POST['sube_id'], ['gun', 'saat']);
-                foreach($result['programlar'] as $program) {
-                    $data['programlar'][$program->gun][] = $program;
-                }
-    
-                echo json_encode($data);
-
-            }
+        $data['css'] = $css->list('sube_id', $_POST['sube_id'], ['name']);
+        $data['sube'] = $sube->findBy('id', $_POST['sube_id']);
+        
+        $subeDuyurular = $subeDuyuru->list('sube_id', $_POST['sube_id']);
+        
+        $duyuruId = array();
+        foreach($subeDuyurular as $sd) {
+            $duyuruId[] = $sd->duyuru_id;         
         }
+        
+        $data['duyurular'] = $duyuru->whereInBtwDate('id', $duyuruId, ['yayin_tarih'], 'DESC');                
+        
+        $result['programlar'] = $program->list('sube_id', $_POST['sube_id'], ['gun', 'saat']);
+        foreach($result['programlar'] as $program) {
+            $data['programlar'][$program->gun][] = $program;
+        }
+
+        echo json_encode($data);
     }
     
 

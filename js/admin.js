@@ -394,19 +394,21 @@ $(function() {
 
 const defaultColor = ["#ff5f01", "#feac00", "#ffb933", "#800000", "#ffc933", "#ff9100"];
 
-
 $(function() {
     cssGoster();
 
     $('.cssSubeSec').click(function() {
-        cssGoster(); 
-        console.log($('.css_id').serializeArray());       
+        cssGoster();       
     });
 
-    // $('#form').submit(function(e) {
-    //     e.preventDefault();
-    //     cssKaydet();
-    // });
+    $('#form').submit(function(e) {
+        e.preventDefault();
+        cssKaydet();
+    });
+
+    $('#varsayilan').click(function() {
+        cssVarsayilan();
+    });
 });
 
 function cssGoster() {
@@ -421,13 +423,10 @@ function cssGoster() {
         dataType: 'json',
 
         success: function(data) {
-            // console.log(data);
             var cssId = document.getElementsByClassName('css_id');
             var cssValue = document.getElementsByClassName('css_value');
 
             $('#form').attr('action', data.action);
-            // act = data.action;
-            // console.log($('#form').attr('action'));
             
             for(let i = 0; i < cssId.length; i++) {
                 if(data.css.length > 0) {
@@ -441,32 +440,33 @@ function cssGoster() {
     });
 }
 
+// TEMA VARSAYILAN
+
+function cssVarsayilan() {
+    var cssValue = document.getElementsByClassName('css_value');
+    for(let i = 0; i < cssValue.length; i++) {
+        cssValue[i].value = defaultColor[i];
+    }
+}
+
 // TEMA KAYDET
-
-$('#form').submit(function(e) {
-    e.preventDefault();
     
-    // function cssKaydet() {
-        $.ajax({
-            type: 'POST',
-            url: 'index.php',
-            data: {
-                section: 'css',
-                action: $('#form').attr('action'),
-                sube_id: $('#cssSubeSec').val(),
-                css_id: $('.css_id').serializeArray(),
-                css_name: $('.css_name').serializeArray(),
-                css_value: $('.css_value').serializeArray(),
-            },
-            success: function(data) {
-                console.log(data);
-                $("#success").html(data);
-                $("#success").show();
-                $('#success').delay(5000).fadeOut('slow');
-            }
-        });
-    // }
-});
-
-
-
+function cssKaydet() {
+    $.ajax({
+        type: 'POST',
+        url: 'index.php',
+        data: {
+            section: 'css',
+            action: $('#form').attr('action'),
+            sube_id: $('#cssSubeSec').val(),
+            css_id: $('.css_id').serializeArray(),
+            css_name: $('.css_name').serializeArray(),
+            css_value: $('.css_value').serializeArray(),
+        },
+        success: function(data) {
+            $("#success").html(data);
+            $("#success").show();
+            $('#success').delay(5000).fadeOut('slow');
+        }
+    });
+}

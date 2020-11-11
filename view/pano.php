@@ -88,6 +88,7 @@
 
         <div class="prog" id="prog">
             <h2>GÜNLÜK PROGRAM</h2>
+            <div id="progIcerik">
             <p class="simdi">
                 <span id="simdi-saat"> &nbsp; </span> 
                 <span id="simdi"> &nbsp; </span>
@@ -98,7 +99,7 @@
                 <span id="sonra-saat"> &nbsp; </span> 
                 <span id="sonra"> &nbsp; </span>             
             </p>               
-            
+            </div>
         </div>
     </div>
 

@@ -10,6 +10,12 @@
     <div id="success" class="fade"></div>
     <div id="error" class="fade"></div>
 
+    <div class="btn-sil-wrapper">
+        <a href="#" class="" id="varsayilan">
+            Varsayılan Ayarlara Dön
+        </a>
+    </div>        
+
     <form  class="form" id="form" action="" method="post">    
 
         <h3 class="form-item">Şube</h3>
