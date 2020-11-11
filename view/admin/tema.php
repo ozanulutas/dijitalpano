@@ -10,7 +10,7 @@
     <div id="success" class="fade"></div>
     <div id="error" class="fade"></div>
 
-    <form  class="form" id="form" action="index.php?section=css&action=create" method="post">    
+    <form  class="form" id="form" action="" method="post">    
 
         <h3 class="form-item">Şube</h3>
         <select name="sube_id" id="cssSubeSec">           
@@ -24,40 +24,40 @@
         <div class="color-group">
             <div>
                 <h3>Renk 1</h3>
-                <input type="hidden" name="id[]" class="css_id" value="<?php echo $data['--renk-1']->id ?? ''; ?>"> 
+                <input type="hidden" name="id[]" class="css_id" value=""> 
                 <input type="hidden" name="name[]" class="css_name" value="--renk-1"> 
-                <input type="color" name="value[]" class="css_value" value="<?php echo $data['--renk-1']->value ?? '#ff5f01'; ?>">
+                <input type="color" name="value[]" class="css_value" value="#ff5f01">
             </div>
             <div>
                 <h3>Renk 2</h3>
-                <input type="hidden" name="id[]" class="css_id" value="<?php echo $data['--renk-2']->id ?? ''; ?>"> 
+                <input type="hidden" name="id[]" class="css_id" value=""> 
                 <input type="hidden" name="name[]" class="css_name" value="--renk-2"> 
-                <input type="color" name="value[]" class="css_value" value="<?php echo $data['--renk-2']->value ?? '#feac00'; ?>">
+                <input type="color" name="value[]" class="css_value" value="#feac00">
             </div>
 
             <div>
                 <h3>Renk 3</h3>
-                <input type="hidden" name="id[]" class="css_id" value="<?php echo $data['--renk-3']->id ?? ''; ?>"> 
+                <input type="hidden" name="id[]" class="css_id" value=""> 
                 <input type="hidden" name="name[]" class="css_name" value="--renk-3"> 
-                <input type="color" name="value[]" class="css_value" value="<?php echo $data['--renk-3']->value ?? '#ffb933'; ?>">
+                <input type="color" name="value[]" class="css_value" value="#ffb933">
             </div>
             <div>
                 <h3>Renk 4</h3>
-                <input type="hidden" name="id[]" class="css_id" value="<?php echo $data['--renk-4']->id ?? ''; ?>"> 
+                <input type="hidden" name="id[]" class="css_id" value=""> 
                 <input type="hidden" name="name[]" class="css_name" value="--renk-4"> 
-                <input type="color" name="value[]" class="css_value" value="<?php echo $data['--renk-4']->value ?? '#800000'; ?>">
+                <input type="color" name="value[]" class="css_value" value="#800000">
             </div>
             <div>
                 <h3>Renk 5</h3>
-                <input type="hidden" name="id[]" class="css_id" value="<?php echo $data['--renk-5']->id ?? ''; ?>"> 
+                <input type="hidden" name="id[]" class="css_id" value=""> 
                 <input type="hidden" name="name[]" class="css_name" value="--renk-5"> 
-                <input type="color" name="value[]" class="css_value" value="<?php echo $data['--renk-5']->value ?? '#ffc933'; ?>">
+                <input type="color" name="value[]" class="css_value" value="#ffc933">
             </div>
             <div>
                 <h3>Renk 6</h3>
-                <input type="hidden" name="id[]" class="css_id" value="<?php echo $data['--renk-6']->id ?? ''; ?>"> 
+                <input type="hidden" name="id[]" class="css_id" value=""> 
                 <input type="hidden" name="name[]" class="css_name" value="--renk-6"> 
-                <input type="color" name="value[]" class="css_value" value="<?php echo $data['--renk-6']->value ?? '#ff9100'; ?>">
+                <input type="color" name="value[]" class="css_value" value="#ff9100">
             </div>
         </div>
         

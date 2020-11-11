@@ -36,19 +36,18 @@ class CssController extends Controller {
         $dbc = $dbh->getConnection();
 
         $data = array();
-        $data['action'] = 'create';
 
-        if(isset($_POST['kaydet'])) {
+        if(isset($_POST['sube_id'])) {
 
             $css = new Css($dbc);
             $css->findBy('sube_id', $_POST['sube_id']);
 
             if(empty($css->id)) {
                 
-                for($i = 0; $i < count($_POST['name']); $i++) {
+                for($i = 0; $i < count($_POST['css_name']); $i++) {
                     $values = [
-                        'name' => $_POST['name'][$i],
-                        'value' => $_POST['value'][$i],
+                        'name' => $_POST['css_name'][$i]['value'],
+                        'value' => $_POST['css_value'][$i]['value'],
                         'sube_id' => $_POST['sube_id']
                     ];
                     
@@ -56,21 +55,7 @@ class CssController extends Controller {
                     $css->insert();
                 }
             }
-
-
-            echo "<pre>";
-            print_r($_POST);
-            echo "</pre>";
-            // header("Location: index.php?section=css&action=default");
-        }
-        elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=css&action=default");
-        }
-        else {
-            $data['css'] = new Css();
-
-            $template = new Template('admin');
-            $template->view('admin/css-duzenle', $data);
+            echo 'Tema renkleri deiştirildi.';
         }
     }
 
@@ -81,27 +66,28 @@ class CssController extends Controller {
         $dbc = $dbh->getConnection();
 
         $data = array();
-        $data['baslik'] = 'Şube Düzenle';
-        $data['action'] = 'edit';
 
-        if(isset($_POST['kaydet'])) {
+        if(isset($_POST['sube_id'])) {
 
-            $sube = new Sube($dbc);
-            $sube->setValues($_POST);
-            $sube->update();
-         
-            header("Location: index.php?section=sube&action=default");
-        }
-        elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=sube&action=default");
-        }
-        else {
+            $css = new Css($dbc);
+            $css->findBy('sube_id', $_POST['sube_id']);
 
-            $sube = new Sube($dbc);
-            $data['sube'] = $sube->findBy('id', $_GET['id']); 
+            if(!empty($css->id)) {
+                
+                for($i = 0; $i < count($_POST['css_id']); $i++) {
+                    $values = [
+                        'id' => $_POST['css_id'][$i]['value'],
+                        'name' => $_POST['css_name'][$i]['value'],
+                        'value' => $_POST['css_value'][$i]['value'],
+                        'sube_id' => $_POST['sube_id']
+                    ];
+                    
+                    $css->setValues($values);
+                    $css->update();
 
-            $template = new Template('admin');
-            $template->view('admin/sube-duzenle', $data);
+                }
+            }
+            echo 'Tema renkleri deiştirildi.';
         }
     }
 
@@ -115,10 +101,7 @@ class CssController extends Controller {
         $css = new Css($dbc);
         $data['css'] = $css->list('sube_id', $_POST['sube_id'], ['name']);
 
-        // foreach($result['css'] as $css) {
-        //     // $data['css'][$css->name] = $css;
-        //     $data['css'][] = $css;
-        // }
+        $data['action'] = (empty($data['css'])) ? 'create' : 'edit';
 
         echo json_encode($data);
     }

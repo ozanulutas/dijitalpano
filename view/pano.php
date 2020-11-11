@@ -25,6 +25,7 @@
         </div>
 
         <div class="hava">
+        
             <div class="bugun">
                 <div class="hafta-gun">
                     <div class="gun kalin"> Bugün </div>                                       
