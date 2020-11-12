@@ -40,21 +40,23 @@ class ProgramController extends Controller {
         $data['baslik'] = 'Etkinlik Oluştur';
         $data['action'] = 'create';
 
-        /*if(isset($_POST['kaydet'])) {
-
+        if(isset($_POST['formData'])){
             $program = new Program($dbc);
             $program->setValues($_POST);
-            $program->insert();
 
-            $data['sube_id'] = $_POST['sube_id'];
-            $_POST['sube_id'] = $program->sube_id;
-            echo "<pre>";
-            print_r($program);
-            echo "</pre>";
-            header("Location: index.php?section=program&action=create");
-
-        }*/
-        if(isset($_POST['iptal'])) {
+            $values = array();
+            parse_str($_POST['formData'], $values);
+            
+            if($values['etkinlik'] && $values['saat'] && $values['bitis_saat']) {
+                $program = new Program($dbc);
+                $program->setValues($values);
+                $program->insert();
+                echo json_encode($program);
+            } else {
+                echo json_encode('error');
+            }
+        }
+        elseif(isset($_POST['iptal'])) {
             header("Location: index.php?section=program");
         }
         else {
@@ -97,6 +99,7 @@ class ProgramController extends Controller {
             $data['subeler'] = $sube->list(); 
             $data['program'] = $program->findBy('id', $_GET['id']); 
             $data['program']->saat = $this->formatTime($program->saat);
+            $data['program']->bitis_saat = $this->formatTime($program->bitis_saat);
 
             $template = new Template('admin');
             $template->view('admin/program-duzenle', $data);
@@ -122,6 +125,27 @@ class ProgramController extends Controller {
         }
 
         header("Location: index.php?section=program&sube_id=" . $program->sube_id);
+    }
+
+
+    public function showAction() {
+
+        if($_POST['sube_id']) {
+
+            $dbh = DatabaseConnection::getInstance();
+            $dbc = $dbh->getConnection();
+
+            $data = array();
+            $program = new Program($dbc);
+            $result['programlar'] = $program->list('sube_id', $_POST['sube_id'], ['gun', 'saat']);
+            foreach($result['programlar'] as $program) {
+                $data['programlar'][$program->gun][] = $program;
+            }
+
+            echo json_encode($data);
+        }    
+        else
+            header("Location: index.php?section=program");
     }
 
 
@@ -243,42 +267,5 @@ class ProgramController extends Controller {
         else
             header("Location: index.php?section=program");
     }
-
-
-    public function ajaxAction() {
-
-        $dbh = DatabaseConnection::getInstance();
-        $dbc = $dbh->getConnection();
-
-        if(isset($_POST['command'])) {
-
-            if($_POST['command'] == 'insert') {
-                
-                if($_POST['etkinlik'] && $_POST['saat']) {
-                    $program = new Program($dbc);
-                    $program->setValues($_POST);
-                    $program->insert();
-                    echo json_encode($program);
-                } else {
-                    echo json_encode('error');
-                }
-
-            }
-            elseif($_POST['command'] == 'goster') {
-
-                $data = array();
-                $program = new Program($dbc);
-                $result['programlar'] = $program->list('sube_id', $_POST['sube_id'], ['gun', 'saat']);
-                foreach($result['programlar'] as $program) {
-                    $data['programlar'][$program->gun][] = $program;
-                }
-    
-                echo json_encode($data);
-            }
-        }
-        else
-            header("Location: index.php?section=program");
-    }
-
 
 }

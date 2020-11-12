@@ -158,14 +158,15 @@ $(function() {
 // AJAX - PRGORAM GOSTER
 
 progGoster();
+
 function progGoster() {
+
     $.ajax({
         type: 'POST',
         url: 'index.php',
         data: {
             section: 'program', 
-            action: 'ajax',
-            command: 'goster',
+            action: 'show',
             sube_id: $('#subeSec').val()
         },
         dataType: 'json',
@@ -220,21 +221,18 @@ $(function() {
 $(function() {
     $('#progEkle').click(function(e) {
         e.preventDefault();
+
         $.ajax({
             type: 'POST',
-            url: 'index.php?section=program&action=ajax',
-            //data: $("#form").serialize(),
+            url: 'index.php',
             data: {
-                // section: 'program', 
-                // action: 'ajax',
-                command: 'insert',
-                sube_id: $('#sube_id').val(),
-                etkinlik: $('#etkinlik').val(),
-                saat: $('#saat').val(),
-                gun: $('#gun').val(),
+                section: 'program', 
+                action: 'create',
+                formData: $("#progForm").serialize(),
             },
             dataType: 'json',
             success: function(data) {
+                console.log(data);
                 if(data.id > 0) {
                     $("#success").html('Kayıt başarıyla eklendi.');
                     $("#success").show();
@@ -242,8 +240,9 @@ $(function() {
                     
                     $('#etkinlik').val('');
                     $('#saat').val('');
+                    $('#bitis_saat').val('');
                 } else {
-                    $("#error").html('Tüm alanları doldurun.');
+                    $("#error").html('Lütfen tüm alanları doldurun.');
                     $("#error").show();
                     $('#error').delay(5000).fadeOut('slow');
                 }

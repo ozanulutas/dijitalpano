@@ -192,7 +192,6 @@ var span = document.getElementById("close-modal");
 if(btn !== null) {
     btn.onclick = function() {
         modal.style.display = "block";
-        console.log(modal);
     }
 }
 
@@ -239,7 +238,7 @@ function showSlides() {
 // LOGIN
 
 $(function() {
-    $('#giris').click(function(e){ 
+    $('#loginForm').submit(function(e){ 
         e.preventDefault();
 
         $.ajax({
@@ -253,7 +252,7 @@ $(function() {
             },
             dataType: 'json',
             success: function(data) {
-                console.log(data);
+
                 if(data.k_id) {
                     $('#k_adi').val('');
                     $('#sifre').val('');
@@ -288,7 +287,6 @@ function progGoster() {
         }
         // if(progSira == prog[gunler[zaman.getDay()]].length - 1) sonraki = prog[gunler[zaman.getDay()]][0];
     }
-    console.log(sonraki);
     
     if(typeof simdiki === 'undefined') {
         $('.simdi').hide();

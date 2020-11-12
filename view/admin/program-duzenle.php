@@ -44,12 +44,13 @@
         </select> 
 
         <h3 class="form-item">Ders Adı</h3>
-        <input type="text" name="etkinlik" id="etkinlik" value="<?php echo $data['program']->etkinlik ?? ''; ?>" class="form-item"> <br>
+        <input type="text" name="etkinlik" id="etkinlik" value="<?php echo $data['program']->etkinlik ?? ''; ?>" class="form-item" <?php echo $data['action'] == 'edit' ? ' required' : ''; ?>> 
         
-        <h3 class="form-item">Ders Saati</h3>
-        <input type="time" name="saat" id="saat" value="<?php echo $data['program']->saat ?? ''; ?>" class="form-item"> <br>
-
-        <input type="hidden" name="bitis_saat" id="bitis_saat" value="<?php echo $data['program']->bitis_saat ?? ''; ?>">
+        <h3 class="form-item">Saat Aralığı</h3>
+        <div class="group">
+            <input type="time" name="saat" id="saat" value="<?php echo $data['program']->saat ?? ''; ?>" class="form-item" <?php echo $data['action'] == 'edit' ? ' required' : ''; ?>> 
+            <input type="time" name="bitis_saat" id="bitis_saat" value="<?php echo $data['program']->bitis_saat ?? ''; ?>" class="form-item" <?php echo $data['action'] == 'edit' ? ' required' : ''; ?>>
+        </div>
 
         <hr style="width:100%">
         

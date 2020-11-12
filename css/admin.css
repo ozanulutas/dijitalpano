@@ -39,6 +39,11 @@ select {
   text-overflow: ellipsis;
 }
 
+hr {
+  width: 100%;
+  opacity: 0.5;
+}
+
 a,
 .select-all span,
 .create {
@@ -250,14 +255,23 @@ td img {
   background-color: rgb(3, 187, 3);
   display: flex;
   align-items: center;
-  transition: width 0.25s;
-  
+  transition: width 0.25s;  
 }
 
 .progress-bar-text {
   margin-left: 0.7rem;
   font-weight: bold;
   color: whitesmoke;
+}
+
+.group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2%;
+}
+
+.group .form-item {
+  width: 48%;
 }
 
 .color-group {
