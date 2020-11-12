@@ -6,7 +6,8 @@
     <a href="index.php?section=resim">Resimler</a>
     <a href="index.php?section=video">Videolar</a>
     <a href="index.php?section=kullanici">Kullanıcılar</a>
-    <a href="index.php?section=css">Tema</a>
+    <!-- <a href="index.php?section=css">Tema</a> -->
+    <a href="index.php?section=tercih">Tercihler</a>
     <a href="index.php?section=kullanici&action=edit">Hesap Ayarları</a>
     <a href="index.php?section=kullanici&action=logout">Oturumu Kapat</a>
     <a href="index.php?section=home">Panoya Dön</a>

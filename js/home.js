@@ -232,7 +232,7 @@ function showSlides() {
     
     marquee();
     
-    // setTimeout(showSlides, 4000);     
+    // setTimeout(showSlides, slide_hiz);     
 }
 
 // LOGIN

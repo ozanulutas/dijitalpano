@@ -29,7 +29,7 @@
             <td onclick="edit('slide', <?php echo $slide->id; ?>)">
                 <img src="<?php echo $data['resimler'][$slide->resim_id]->yol ?? ''; ?>" alt="">                
             </td>
-            <td>
+            <td class="td-empty">
                 <a href="index.php?section=slide&action=delete&id=<?php echo $slide->id; ?>"
                     onclick="return deleteControl('Slide\'ı silmek istediğinize emin misiniz?')"
                     class="sil">

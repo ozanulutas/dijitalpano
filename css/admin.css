@@ -44,6 +44,10 @@ hr {
   opacity: 0.5;
 }
 
+a { color: rgb(0, 125, 250); }  
+
+a:hover { transform: scale(1.5, 1.5); }
+
 a,
 .select-all span,
 .create {
@@ -54,13 +58,12 @@ a,
 a:hover,
 .select-all span:hover,
 .create:hover {
-  opacity: 0.6;
+  opacity: 0.6;  
 }
 
 .container {
   display: flex;
-  flex-direction: column;
-  
+  flex-direction: column;  
   max-width: 80vw;
   margin: auto;
 }
@@ -82,7 +85,6 @@ a:hover,
   display: flex;
   flex-direction: column;
   padding: 1%;
-  /* border: 5px solid red; */
   white-space: nowrap;
   border-right: 2px solid rgba(128, 128, 128, 0.719);
 }
@@ -93,15 +95,12 @@ a:hover,
   display: flex;
   flex-direction: row;            
   padding: 1%;
-  /* border: 5px solid orange; */
 }
 
 #main-admin {
   padding: 1%;
   margin: auto;
   width: 100%;
-  /* border: 5px solid orchid; */
-
 }
 
 /* Table */
@@ -120,6 +119,8 @@ tr, th, td {
   padding: 10px;
   margin: 0;
   text-align: left;
+  /* width: 100%;
+  height: 100%; */
 }
 
 table, th {
@@ -129,7 +130,7 @@ table, th {
 td {
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis;  
 }
 
 th {
@@ -159,7 +160,10 @@ tr:hover {
 }
 
 td img {
-  max-width: 100%;
+  display: block;
+  width: 100%;
+  height: auto; 
+  /* vertical-align: bottom; */
 }
 
 /* FORM */
@@ -167,7 +171,7 @@ td img {
 .form-wrapper {
   margin: auto;
   max-width: 50vmin;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .form {
@@ -408,8 +412,9 @@ td img {
   border-radius: 5px;
 }
 
-.prog-empty:hover {
+.td-empty:hover {
   cursor: default;
+  
 }
 
 .islem-group {
@@ -444,7 +449,7 @@ td img {
   background-color: #eee;
   color: #444;
   cursor: pointer;
-  padding: 2%;
+  padding: 1.5%;
   /* max-width: 100%; */
   text-align: left;
   transition: 0.4s;
@@ -479,11 +484,59 @@ td img {
   cursor: default;
 }
 
+/* TOOLTIP */
+
+.tooltip {
+  position: relative;
+  /* display: inline-block;
+  border-bottom: 1px dotted black; */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 250%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  /* padding: 5px 0; */
+  
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 50%;
+  margin-left: -60px;
+  padding: 10%;
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 1.3s;
+  
+}
+
+/* Tooltip arrow */
+/* .tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%; 
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent; 
+}*/
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 /* ÇEŞİTLİ */
 
 #success {
   background-color: lightgreen;
   padding: 1%;
+  margin-bottom: 1%;
   text-align: center;
   box-shadow: 0 2px 15px -10px black;
   border-radius: 10px;
@@ -518,7 +571,44 @@ td img {
 .video-baslik {
   margin: auto;
   margin-bottom: 1%;
+
+  width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;  
 }
+
+/* MEDIA QUERY */
+
+@media (max-width: 992px) {
+  .container {
+    max-width: 100%;    
+  }
+  .form-wrapper {
+    max-width: 100%;
+  }
+  .form,
+  .bolum-baslik {
+    max-width: 65%;
+    margin: auto;
+  }
+} 
+
+@media (max-width: 600px) {  
+  .form,
+  .bolum-baslik {
+    max-width: 100%;
+    margin: auto;
+  }
+
+  body,  
+  input,
+  button,
+  textarea,
+  select {
+    font-size: 0.7rem;
+  }
+} 
 
 
 

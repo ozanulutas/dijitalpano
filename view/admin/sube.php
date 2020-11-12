@@ -20,7 +20,7 @@
             <td onclick="edit('sube', <?php echo $sube->id; ?>)">
                 <?php echo $sube->adres; ?>
             </td>
-            <td>
+            <td class="td-empty">
                 <a href="index.php?section=sube&action=delete&id=<?php echo $sube->id; ?>"
                     onclick="return deleteControl('Şubeyi silmek istediğinize emin misiniz?')"
                     class="sil">

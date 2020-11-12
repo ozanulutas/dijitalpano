@@ -14,6 +14,8 @@
     --renk-4: #800000;  /* saat gölgesi, tarih */
     --renk-5: #ffc933; /* BG: hava durumu gün */
     --renk-6: #ff9100; /* BG: hava durumu gövde */
+
+    --marquee-hiz: 15s;
 }
 
 @font-face {
@@ -276,7 +278,7 @@ hr { opacity: 0.3; }
 }
 .video {
     margin: 1rem;
-    background-color: white;
+    background-color: black;
     max-width: 95%;
     /* height: 90%; */
     height: 60vh;
@@ -535,7 +537,7 @@ hr { opacity: 0.3; }
     top: 6em;
     position: relative;
     box-sizing: border-box;
-    animation: marquee 15s linear infinite;
+    animation: marquee var(--marquee-hiz) linear infinite;
 }
 .marquee:hover {
     animation-play-state: paused;

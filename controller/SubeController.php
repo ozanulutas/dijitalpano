@@ -22,7 +22,7 @@ class SubeController extends Controller {
         $data['baslik'] = 'Şubeler';
 
         $sube = new Sube($dbc);
-        $data['subeler'] = $sube->list();
+        $data['subeler'] = $sube->list(null, null, ['isim']);
 
         $template = new Template('admin');
         $template->view('admin/sube', $data);

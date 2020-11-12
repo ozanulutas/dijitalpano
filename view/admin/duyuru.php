@@ -27,20 +27,9 @@
                 <?php echo $duyuru->bitis_tarih; ?>
             </td>
             <td onclick="edit('duyuru', <?php echo $duyuru->id; ?>)">
-                <?php 
-                // if(isset($data['sube_duyuru'][$duyuru->id])) {
-                //     $subeler = '';
-                //     foreach ($data['sube_duyuru'][$duyuru->id] as $sd) {
-                //         $subeler .=  $data['subeler'][$sd->sube_id]->isim . ", ";
-                //     }
-                //     $subeler = rtrim($subeler, ', ');
-                //     echo $subeler;
-                // }
-
-                echo $data['sube'][$duyuru->id] ?? '';
-                ?>
+                <?php echo $data['sube'][$duyuru->id] ?? ''; ?>                
             </td>
-            <td>
+            <td class="td-empty">
                 <a href="index.php?section=duyuru&action=delete&id=<?php echo $duyuru->id; ?>"
                     onclick="return deleteControl('Duyuruyu silmek istediğinize emin misiniz?')"
                     class="sil">

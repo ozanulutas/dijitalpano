@@ -1,5 +1,5 @@
 
-<div class="form-wrapper">
+<div class="form-wrapper bolum-baslik">
     <h2 class="baslik"> <?php echo $data['baslik']; ?> </h2>
 </div>
 

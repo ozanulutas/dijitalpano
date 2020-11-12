@@ -25,7 +25,7 @@ class DuyuruController extends Controller{
         $sube = new Sube($dbc);
         $subeDuyuru = new SubeDuyuru($dbc);
 
-        $data['duyurular'] = $duyuru->list();     
+        $data['duyurular'] = $duyuru->list(null, null, ['yayin_tarih'], 'DESC');     
         
         $result['subeler'] = $sube->list();
         $data['subeler'] = array();        

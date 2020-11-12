@@ -11,7 +11,7 @@
 
         <div class="video-wrapper">
             <video class="video" controls>
-                <!-- <source src="/home/karpuz/İndirilenler/Laravel PHP Framework Tutorial - Full Course for Beginners (2019).mp4" type="video/mp4">                 -->
+                <source src="<?php echo $data['video']->yol ?? ''; ?>" type="video/mp4">                
             </video> 
         </div>
 
@@ -113,9 +113,6 @@
             <div class="alan3-sol-icerik">
                 <div name="marquee" id="duyuru">  
                     &nbsp;               
-                    <!-- <?php /*foreach($data['duyurular'] as $duyuru) { ?>
-                        <p><?php echo $duyuru->metin; ?></p> <?php
-                    } */?>                         -->
                 </div>
             </div>
         </div>

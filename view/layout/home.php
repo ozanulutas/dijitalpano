@@ -19,6 +19,17 @@
     <?php include 'view/' . $template . '.php'; ?>
 
 
+    <script type="text/javascript">
+
+        // TERCİHLER
+
+        const marquee_hiz = <?php echo $data['tercihler']['marquee_hiz']->deger; ?>;
+        const slide_hiz = <?php echo $data['tercihler']['slide_hiz']->deger; ?>;
+
+        document.documentElement.style.setProperty('--marquee-hiz', marquee_hiz + 's');
+
+    </script>
+
     <script type="text/javascript" src="./js/home.js"></script>
     
 </body>

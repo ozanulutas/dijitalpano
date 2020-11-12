@@ -20,7 +20,7 @@ class KullaniciController extends Controller {
         $data['baslik'] = 'Kullanıcılar';
 
         $kullanici = new Kullanici($dbc);
-        $data['kullanicilar'] = $kullanici->list();
+        $data['kullanicilar'] = $kullanici->list(null, null, ['k_adi']);
 
 
         $template = new Template('admin');

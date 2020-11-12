@@ -12,13 +12,21 @@ class HomeController extends Controller {
         $sube = new Sube($dbc);
         $slide = new Slide($dbc);
         $resim = new Resim($dbc);
+        $tercih = new Tercih($dbc);
+        $video = new Video($dbc);
 
         $data['subeler'] = $sube->list();
         $data['slidelar'] = $slide->list(null, null, ['tarih'], 'DESC');
+        $data['video'] = $video->findBy('goster', true);
         $result['resimler'] = $resim->list();
+        $result['tercihler'] = $tercih->list();
 
         foreach($result['resimler'] as $resim) {
             $data['resimler'][$resim->id] = $resim;
+        } 
+
+        foreach($result['tercihler'] as $tercih) {
+            $data['tercihler'][$tercih->ozellik] = $tercih;
         } 
         
         $template = new Template('home');

@@ -23,7 +23,7 @@ class SlideController extends Controller {
         $slide = new Slide($dbc);
         $resim = new Resim($dbc);
 
-        $data['slidelar'] = $slide->list();
+        $data['slidelar'] = $slide->list(null, null, ['tarih'], 'DESC');
         $result['resimler'] = $resim->list();
 
         foreach($result['resimler'] as $resim) {

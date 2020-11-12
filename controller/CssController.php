@@ -13,21 +13,21 @@ class CssController extends Controller {
     }
 
 
-    public function defaultAction() {
+    // public function defaultAction() {
 
-        $dbh = DatabaseConnection::getInstance();
-        $dbc = $dbh->getConnection();
+    //     $dbh = DatabaseConnection::getInstance();
+    //     $dbc = $dbh->getConnection();
 
-        $data = array();
-        $data['baslik'] = 'Renk Ayarları';
+    //     $data = array();
+    //     $data['baslik'] = 'Renk Ayarları';
 
-        $sube = new Sube($dbc);
-        $data['subeler'] = $sube->list();
+    //     $sube = new Sube($dbc);
+    //     $data['subeler'] = $sube->list();
 
 
-        $template = new Template('admin');
-        $template->view('admin/tema', $data);
-    }
+    //     $template = new Template('admin');
+    //     $template->view('admin/tema', $data);
+    // }
 
 
     public function createAction() {
@@ -55,8 +55,10 @@ class CssController extends Controller {
                     $css->insert();
                 }
             }
-            echo 'Tema renkleri deiştirildi.';
+            echo 'Tercihler güncellendi.'; 
         }
+        else
+            header('Location: index.php?section=tercih');
     }
 
 
@@ -87,22 +89,29 @@ class CssController extends Controller {
 
                 }
             }
-            echo 'Tema renkleri deiştirildi.';
+            echo 'Tercihler güncellendi.'; 
         }
+        else 
+            header('Location: index.php?section=tercih');
     }
 
 
     public function showAction() {
 
-        $dbh = DatabaseConnection::getInstance();
-        $dbc = $dbh->getConnection();
+        if($_POST) {
 
-        $data = array();
-        $css = new Css($dbc);
-        $data['css'] = $css->list('sube_id', $_POST['sube_id'], ['name']);
-
-        $data['action'] = (empty($data['css'])) ? 'create' : 'edit';
-
-        echo json_encode($data);
+            $dbh = DatabaseConnection::getInstance();
+            $dbc = $dbh->getConnection();
+            
+            $data = array();
+            $css = new Css($dbc);
+            $data['css'] = $css->list('sube_id', $_POST['sube_id'], ['name']);
+            
+            $data['action'] = (empty($data['css'])) ? 'create' : 'edit';
+            
+            echo json_encode($data);
+        } 
+        else 
+            header('Location: index.php?section=tercih');
     }
 }

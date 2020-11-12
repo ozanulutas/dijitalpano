@@ -22,6 +22,7 @@ function create(section) {
 
 // AKORDİYON
 
+akordiyon();
 
 function akordiyon() {
     var acc = document.getElementsByClassName("accordion");
@@ -33,13 +34,17 @@ function akordiyon() {
             var panel = this.nextElementSibling;
             if (panel.style.maxHeight) {
                 panel.style.maxHeight = null;
+                panel.style.overflow = 'hidden';
+                
             } else {
                 panel.style.maxHeight = panel.scrollHeight + "px";
+                setTimeout(function() { 
+                    panel.style.overflow = 'visible'; 
+                }, 200);
             } 
         });
     }
 } 
-akordiyon();
 
 // MODAL
 
@@ -189,11 +194,13 @@ function progGoster() {
                     
                     if ((typeof data.programlar[j] !== 'undefined') && (typeof data.programlar[j][i] !== 'undefined')) {
                         row += '<td onclick="edit(\'program\', ' + data.programlar[j][i]['id'] + ');" class="prog-edit">' 
-                        + (formatTime(data.programlar[j][i]['saat']) + '<br>' + data.programlar[j][i]['etkinlik']) 
+                        + formatTime(data.programlar[j][i]['saat']) 
+                        + '<br>' 
+                        + data.programlar[j][i]['etkinlik'].substr(0, 10)
                         + '</td>';
                     }
                     else {
-                        row += '<td class="prog-empty"></td>'; 
+                        row += '<td class="td-empty"></td>'; 
                     }
                 } 
                 row += '</tr>';
@@ -534,7 +541,7 @@ function cssVarsayilan() {
     }
 }
 
-// TEMA KAYDET
+// TEMA KAYDET & GÜNCELLE
     
 function cssKaydet() {
     $.ajax({
@@ -556,29 +563,55 @@ function cssKaydet() {
     });
 }
 
+// TERCİH GÜNCELLE
+
+$(function() {
+    $('#tercihForm').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: {
+                section: 'tercih',
+                action: 'edit',
+                ozellik: $('.ozellik').serializeArray(),
+                deger: $('.deger').serializeArray(),
+            },
+            success: function(data) {
+                $("#success").html(data);
+                $("#success").show();
+                $('#success').delay(5000).fadeOut('slow');
+            }
+        });
+    });
+});
+
 // KULLANICI ADI KONTROL
 
-$('#k_adi').blur(function() {
-    $.ajax({
-        type: 'POST',
-        url: 'index.php',
-        data: {
-            section: 'kullanici',
-            action: 'validate',
-            k_adi: $('#k_adi').val(),
-            validate: 'validate',
-            currAction: $('#currAction').val(),
-        },
-        success: function(data) {
-            if(data != "") {
-                $("#error").html(data);
-                $("#error").show();
-                $('#error').delay(5000).fadeOut('slow');
+$(function() {
+    $('#k_adi').blur(function() {
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: {
+                section: 'kullanici',
+                action: 'validate',
+                k_adi: $('#k_adi').val(),
+                validate: 'validate',
+                currAction: $('#currAction').val(),
+            },
+            success: function(data) {
+                if(data != "") {
+                    $("#error").html(data);
+                    $("#error").show();
+                    $('#error').delay(5000).fadeOut('slow');
 
-                $('#kullaniciKaydet').prop('disabled', true);
-            } else {
-                $('#kullaniciKaydet').prop('disabled', false);
+                    $('#kullaniciKaydet').prop('disabled', true);
+                } else {
+                    $('#kullaniciKaydet').prop('disabled', false);
+                }
             }
-        }
+        });
     });
 });

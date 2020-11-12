@@ -133,11 +133,6 @@ class Entity {
         
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute($param);
-
-       
-        // echo "<pre>";
-        // print_r($this->fields);
-        // echo "</pre>";
     }
 
 

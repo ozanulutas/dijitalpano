@@ -1,5 +1,5 @@
 
-<div class="form-wrapper">
+<div class="form-wrapper bolum-baslik">
     <h2 class="baslik"> <?php echo $data['baslik']; ?> </h2>
 </div>
 
@@ -8,7 +8,7 @@
 <div class="form-wrapper">
 
     <?php if($data['action'] == 'edit') { ?> 
-    <form action="index.php?section=kullanici&action=delete" method="post">
+    <form action="index.php?section=kullanici&action=delete" method="post" class="form">
 
         <div class="btn-sil-wrapper">
             <button type="submit" name="sil" class="btn-sil" onclick="return deleteControl('Hesabınızı silmek istediğinize emin misiniz?');">
