@@ -21,6 +21,11 @@ class HomeController extends Controller {
         $result['resimler'] = $resim->list();
         $result['tercihler'] = $tercih->list();
 
+        if(!$data['video']->id) {
+            $videoEmbed = new VideoEmbed($dbc);
+            $data['videoEmbed'] = $videoEmbed->findBy('id', 1);
+        }
+
         foreach($result['resimler'] as $resim) {
             $data['resimler'][$resim->id] = $resim;
         } 

@@ -64,18 +64,18 @@ class KullaniciController extends Controller {
 
         $data = array();
         $data['baslik'] = 'Hesap Ayarları';
-        $data['action'] = 'edit';
-
-        if(isset($_POST['kaydet'])) {
+        $data['action'] = 'edit';        
+        
+        if(isset($_POST['formData'])) {
+                
+            $values = array();
+            parse_str($_POST['formData'], $values);
 
             $kullanici = new Kullanici($dbc);
-            $kullanici->setValues($_POST);
+            $kullanici->setValues($values);
             $kullanici->update();
-         
-            header("Location: index.php?section=kullanici&action=edit");
-        }
-        elseif(isset($_POST['iptal'])) {
-            header("Location: index.php?section=kullanici");
+
+            echo 'Hesap bilgileri güncellendi.';
         }
         else {
 

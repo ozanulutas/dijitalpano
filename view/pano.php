@@ -5,25 +5,37 @@
     <!-- ALAN1 -->
 
     <div class="alan1">
+
+        <!-- HEADER -->
         <header id="header">
             <h1 class="header-baslik"> &nbsp; </h1>
         </header>
 
+        <!-- VIDEO -->
         <div class="video-wrapper">
-            <video class="video" controls>
+            <?php 
+            if(($data['video']->yol)) { ?>
+            <video class="video" controls> 
                 <source src="<?php echo $data['video']->yol ?? ''; ?>" type="video/mp4">                
-            </video> 
+            </video> <?php
+            }
+            elseif(isset($data['videoEmbed'])) {
+                echo $data['videoEmbed']->link;
+            }
+            ?>            
         </div>
 
     </div>
 
     <!-- ALAN2 -->
 
+    <!-- SAAT -->
     <div class="alan2">
         <div id="saat">
             <h1> &nbsp; </h1>
         </div>
 
+        <!-- HAVA DURUMU -->
         <div class="hava">
         
             <div class="bugun">
@@ -86,6 +98,7 @@
             </div>
         </div>
 
+        <!-- PROGRAM -->
         <div class="prog" id="prog">
             <h2>GÜNLÜK PROGRAM</h2>
             <div id="progIcerik">
@@ -108,6 +121,7 @@
 
     <div class="alan3">
 
+        <!-- DUYURULAR -->
         <div class="alan3-sol overflow">
             <h2 class="dikey-baslik">DUYURU</h2>
             <div class="alan3-sol-icerik">
@@ -118,6 +132,7 @@
         </div>
 
 
+        <!-- SLIDE -->
         <div class="slideshow-container">  
             
         <?php foreach($data['slidelar'] as $slide) { ?>

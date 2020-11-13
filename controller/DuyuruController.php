@@ -43,11 +43,14 @@ class DuyuruController extends Controller{
             if(isset($data['sube_duyuru'][$duyuru->id])) {
                 
                 $subeler = '';
+                $subeFiltre = '';
                 foreach ($data['sube_duyuru'][$duyuru->id] as $sd) {
                     $subeler .=  $data['subeler'][$sd->sube_id]->isim . ", ";
+                    $subeFiltre .= "sbf-" . $data['subeler'][$sd->sube_id]->id . " ";
                 }
                 $subeler = rtrim($subeler, ', ');
                 $data['sube'][$duyuru->id] = $subeler;
+                $data['subeFiltre'][$duyuru->id] = $subeFiltre;
             }
         }
 

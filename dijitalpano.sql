@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost
--- Üretim Zamanı: 07 Kas 2020, 19:14:47
+-- Üretim Zamanı: 13 Kas 2020, 20:18:24
 -- Sunucu sürümü: 10.4.14-MariaDB
 -- PHP Sürümü: 7.4.10
 
@@ -20,6 +20,43 @@ SET time_zone = "+00:00";
 --
 -- Veritabanı: `dijitalpano`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `css`
+--
+
+CREATE TABLE `css` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `value` varchar(150) NOT NULL,
+  `sube_id` smallint(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Tablo döküm verisi `css`
+--
+
+INSERT INTO `css` (`id`, `name`, `value`, `sube_id`) VALUES
+(1, '--renk-1', '#ff5f01', 1),
+(2, '--renk-2', '#feac00', 1),
+(3, '--renk-3', '#ffb933', 1),
+(4, '--renk-4', '#800000', 1),
+(5, '--renk-5', '#ffc933', 1),
+(6, '--renk-6', '#ff9100', 1),
+(7, '--renk-1', '#ff5f01', 2),
+(8, '--renk-2', '#feac00', 2),
+(9, '--renk-3', '#ffb933', 2),
+(10, '--renk-4', '#800000', 2),
+(11, '--renk-5', '#ffc933', 2),
+(12, '--renk-6', '#ff9100', 2),
+(13, '--renk-1', '#ff5f01', 3),
+(14, '--renk-2', '#feac00', 3),
+(15, '--renk-3', '#ffb933', 3),
+(16, '--renk-4', '#800000', 3),
+(17, '--renk-5', '#ffc933', 3),
+(18, '--renk-6', '#ff00c1', 3);
 
 -- --------------------------------------------------------
 
@@ -41,15 +78,11 @@ CREATE TABLE `duyuru` (
 --
 
 INSERT INTO `duyuru` (`id`, `metin`, `yayin_tarih`, `yayin_saat`, `bitis_tarih`, `bitis_saat`) VALUES
-(1, '5 Aralık Tarihinde 11. sınıflara deneme sınavı yapılacaktır.', '2020-10-28', '11:11:00', '2020-11-07', '00:00:00'),
-(2, '22 Ocak\'ta Abant gezisi yapılacaktır. Katılmak isteyenler sınıf öğretmenlerine başvuruda bulunabilir.', '2020-10-30', NULL, '2020-11-05', NULL),
+(1, '5 Aralık Tarihinde 11. sınıflara deneme sınavı yapılacaktır.', '2020-10-28', '11:11:00', '2020-11-28', '00:00:00'),
+(2, '22 Ocak\'ta Abant gezisi yapılacaktır. Katılmak isteyenler sınıf öğretmenlerine başvuruda bulunabilir.', '2020-10-30', NULL, '2020-11-27', NULL),
 (3, '8 Aralık tarihli deneme sınavının sonuçları katlardaki panolara asılmıştır.', '2020-10-28', NULL, '2020-11-13', NULL),
 (4, '30 Ekim tarihinde yapılacak olan akşam etütü bir gün sonra (31 Ekim) yapılacaktır .', '2020-10-29', '00:00:00', '2020-11-30', '00:00:00'),
-(16, 'Duyuru-5', '2020-10-14', '00:00:00', '2020-10-21', '00:00:00'),
-(32, 'Duyuru-6', '1000-01-01', '00:00:00', '1000-01-01', '00:00:00'),
-(33, 'Duyuru-7', '1000-01-01', '00:00:00', '1000-01-01', '00:00:00'),
-(34, 'Duyuru-8', '2020-10-30', NULL, '2020-11-08', NULL),
-(35, 'Duyuru-9', '1000-01-01', NULL, '1000-01-01', NULL);
+(16, 'Duyuru-5', '2020-10-14', '00:00:00', '2020-10-21', '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -68,7 +101,11 @@ CREATE TABLE `kullanici` (
 --
 
 INSERT INTO `kullanici` (`id`, `k_adi`, `sifre`) VALUES
-(1, 'admin', '.');
+(3, 'admin', '.'),
+(4, 'admina', 'a'),
+(5, 'adminaa', 'ü'),
+(6, 'adminaz', 's'),
+(7, 'adminella', '123');
 
 -- --------------------------------------------------------
 
@@ -80,6 +117,7 @@ CREATE TABLE `program` (
   `id` int(11) NOT NULL,
   `gun` varchar(10) NOT NULL,
   `saat` time NOT NULL,
+  `bitis_saat` time DEFAULT NULL,
   `etkinlik` varchar(100) NOT NULL,
   `sube_id` smallint(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -88,385 +126,219 @@ CREATE TABLE `program` (
 -- Tablo döküm verisi `program`
 --
 
-INSERT INTO `program` (`id`, `gun`, `saat`, `etkinlik`, `sube_id`) VALUES
-(190, 'Pazartesi', '00:00:00', 'İSTİRAHAT', 3),
-(191, 'Pazartesi', '06:30:00', 'NAMAZA HAZIRLIK', 3),
-(192, 'Pazartesi', '06:45:00', 'SABAH NAMAZI', 3),
-(193, 'Pazartesi', '07:00:00', 'YÜRÜÜYŞ', 3),
-(194, 'Pazartesi', '07:30:00', 'DUŞ', 3),
-(195, 'Pazartesi', '07:45:00', 'KAHVALTI', 3),
-(196, 'Pazartesi', '08:15:00', 'DERS 1', 3),
-(197, 'Pazartesi', '09:10:00', 'TENEFFÜS', 3),
-(198, 'Pazartesi', '09:20:00', 'DERS 2', 3),
-(199, 'Pazartesi', '10:10:00', 'TEMİZLİK', 3),
-(200, 'Pazartesi', '10:30:00', 'EBA CANLI DERS', 3),
-(201, 'Pazartesi', '13:30:00', 'ÖĞLE YEMEĞİ', 3),
-(202, 'Pazartesi', '13:50:00', 'EBA CANLI DERS', 3),
-(203, 'Pazartesi', '14:10:00', 'ÖĞLE NAMAZI', 3),
-(204, 'Pazartesi', '14:30:00', 'ETÜT 1', 3),
-(205, 'Pazartesi', '15:30:00', 'TENEFFÜS', 3),
-(206, 'Pazartesi', '15:45:00', 'ETÜT 2', 3),
-(207, 'Pazartesi', '16:45:00', 'İKİNDİ NAMAZI', 3),
-(208, 'Pazartesi', '17:10:00', 'ETÜT 4', 3),
-(209, 'Pazartesi', '17:50:00', 'TENEFFÜS', 3),
-(210, 'Pazartesi', '18:00:00', 'ETÜT 5', 3),
-(211, 'Pazartesi', '18:40:00', 'AKŞAM NAMAZI', 3),
-(212, 'Pazartesi', '19:05:00', 'ETÜT 6', 3),
-(213, 'Pazartesi', '19:45:00', 'KANTİN', 3),
-(214, 'Pazartesi', '21:00:00', 'YATSI NAMAZI', 3),
-(215, 'Pazartesi', '21:30:00', 'SERBEST', 3),
-(216, 'Pazartesi', '22:00:00', 'İSTİRAHAT', 3),
-(217, 'Salı', '00:00:00', 'İSTİRAHAT', 3),
-(218, 'Salı', '06:30:00', 'NAMAZA HAZIRLIK', 3),
-(219, 'Salı', '06:45:00', 'SABAH NAMAZI', 3),
-(220, 'Salı', '07:00:00', 'YÜRÜÜYŞ', 3),
-(221, 'Salı', '07:30:00', 'DUŞ', 3),
-(222, 'Salı', '07:45:00', 'KAHVALTI', 3),
-(223, 'Salı', '08:15:00', 'DERS 1', 3),
-(224, 'Salı', '09:10:00', 'TENEFFÜS', 3),
-(225, 'Salı', '09:20:00', 'DERS 2', 3),
-(226, 'Salı', '10:10:00', 'TEMİZLİK', 3),
-(227, 'Salı', '10:30:00', 'EBA CANLI DERS', 3),
-(228, 'Salı', '13:30:00', 'ÖĞLE YEMEĞİ', 3),
-(229, 'Salı', '13:50:00', 'EBA CANLI DERS', 3),
-(230, 'Salı', '14:10:00', 'ÖĞLE NAMAZI', 3),
-(231, 'Salı', '14:30:00', 'ETÜT 1', 3),
-(232, 'Salı', '15:30:00', 'TENEFFÜS', 3),
-(233, 'Salı', '15:45:00', 'ETÜT 2', 3),
-(234, 'Salı', '16:45:00', 'İKİNDİ NAMAZI', 3),
-(235, 'Salı', '17:10:00', 'ETÜT 4', 3),
-(236, 'Salı', '17:50:00', 'TENEFFÜS', 3),
-(237, 'Salı', '18:00:00', 'ETÜT 5', 3),
-(238, 'Salı', '18:40:00', 'AKŞAM NAMAZI', 3),
-(239, 'Salı', '19:05:00', 'ETÜT 6', 3),
-(240, 'Salı', '19:45:00', 'KANTİN', 3),
-(241, 'Salı', '21:00:00', 'YATSI NAMAZI', 3),
-(242, 'Salı', '21:30:00', 'SERBEST', 3),
-(243, 'Salı', '22:00:00', 'İSTİRAHAT', 3),
-(244, 'Çarşamba', '00:00:00', 'İSTİRAHAT', 3),
-(245, 'Çarşamba', '06:30:00', 'NAMAZA HAZIRLIK', 3),
-(246, 'Çarşamba', '06:45:00', 'SABAH NAMAZI', 3),
-(247, 'Çarşamba', '07:00:00', 'YÜRÜÜYŞ', 3),
-(248, 'Çarşamba', '07:30:00', 'DUŞ', 3),
-(249, 'Çarşamba', '07:45:00', 'KAHVALTI', 3),
-(250, 'Çarşamba', '08:15:00', 'DERS 1', 3),
-(251, 'Çarşamba', '09:10:00', 'TENEFFÜS', 3),
-(252, 'Çarşamba', '09:20:00', 'DERS 2', 3),
-(253, 'Çarşamba', '10:10:00', 'TEMİZLİK', 3),
-(254, 'Çarşamba', '10:30:00', 'EBA CANLI DERS', 3),
-(255, 'Çarşamba', '13:30:00', 'ÖĞLE YEMEĞİ', 3),
-(256, 'Çarşamba', '13:50:00', 'EBA CANLI DERS', 3),
-(257, 'Çarşamba', '14:10:00', 'ÖĞLE NAMAZI', 3),
-(258, 'Çarşamba', '14:30:00', 'ETÜT 1', 3),
-(259, 'Çarşamba', '15:30:00', 'TENEFFÜS', 3),
-(260, 'Çarşamba', '15:45:00', 'ETÜT 2', 3),
-(261, 'Çarşamba', '16:45:00', 'İKİNDİ NAMAZI', 3),
-(262, 'Çarşamba', '17:10:00', 'ETÜT 4', 3),
-(263, 'Çarşamba', '17:50:00', 'TENEFFÜS', 3),
-(264, 'Çarşamba', '18:00:00', 'ETÜT 5', 3),
-(265, 'Çarşamba', '18:40:00', 'AKŞAM NAMAZI', 3),
-(266, 'Çarşamba', '19:05:00', 'ETÜT 6', 3),
-(267, 'Çarşamba', '19:45:00', 'KANTİN', 3),
-(268, 'Çarşamba', '21:00:00', 'YATSI NAMAZI', 3),
-(269, 'Çarşamba', '21:30:00', 'SERBEST', 3),
-(270, 'Çarşamba', '22:00:00', 'İSTİRAHAT', 3),
-(271, 'Perşembe', '00:00:00', 'İSTİRAHAT', 3),
-(272, 'Perşembe', '06:30:00', 'NAMAZA HAZIRLIK', 3),
-(273, 'Perşembe', '06:45:00', 'SABAH NAMAZI', 3),
-(274, 'Perşembe', '07:00:00', 'YÜRÜÜYŞ', 3),
-(275, 'Perşembe', '07:30:00', 'DUŞ', 3),
-(276, 'Perşembe', '07:45:00', 'KAHVALTI', 3),
-(277, 'Perşembe', '08:15:00', 'DERS 1', 3),
-(278, 'Perşembe', '09:10:00', 'TENEFFÜS', 3),
-(279, 'Perşembe', '09:20:00', 'DERS 2', 3),
-(280, 'Perşembe', '10:10:00', 'TEMİZLİK', 3),
-(281, 'Perşembe', '10:30:00', 'EBA CANLI DERS', 3),
-(282, 'Perşembe', '13:30:00', 'ÖĞLE YEMEĞİ', 3),
-(283, 'Perşembe', '13:50:00', 'EBA CANLI DERS', 3),
-(284, 'Perşembe', '14:10:00', 'ÖĞLE NAMAZI', 3),
-(285, 'Perşembe', '14:30:00', 'ETÜT 1', 3),
-(286, 'Perşembe', '15:30:00', 'TENEFFÜS', 3),
-(287, 'Perşembe', '15:45:00', 'ETÜT 2', 3),
-(288, 'Perşembe', '16:45:00', 'İKİNDİ NAMAZI', 3),
-(289, 'Perşembe', '17:10:00', 'ETÜT 4', 3),
-(290, 'Perşembe', '17:50:00', 'TENEFFÜS', 3),
-(291, 'Perşembe', '18:00:00', 'ETÜT 5', 3),
-(292, 'Perşembe', '18:40:00', 'AKŞAM NAMAZI', 3),
-(293, 'Perşembe', '19:05:00', 'ETÜT 6', 3),
-(294, 'Perşembe', '19:45:00', 'KANTİN', 3),
-(295, 'Perşembe', '21:00:00', 'YATSI NAMAZI', 3),
-(296, 'Perşembe', '21:30:00', 'SERBEST', 3),
-(297, 'Perşembe', '22:00:00', 'İSTİRAHAT', 3),
-(298, 'Cuma', '00:00:00', 'İSTİRAHAT', 3),
-(299, 'Cuma', '06:30:00', 'NAMAZA HAZIRLIK', 3),
-(300, 'Cuma', '06:45:00', 'SABAH NAMAZI', 3),
-(301, 'Cuma', '07:00:00', 'YÜRÜÜYŞ', 3),
-(302, 'Cuma', '07:30:00', 'DUŞ', 3),
-(303, 'Cuma', '07:45:00', 'KAHVALTI', 3),
-(304, 'Cuma', '08:15:00', 'DERS 1', 3),
-(305, 'Cuma', '09:10:00', 'TENEFFÜS', 3),
-(306, 'Cuma', '09:20:00', 'DERS 2', 3),
-(307, 'Cuma', '10:10:00', 'TEMİZLİK', 3),
-(308, 'Cuma', '10:30:00', 'EBA CANLI DERS', 3),
-(309, 'Cuma', '13:30:00', 'ÖĞLE YEMEĞİ', 3),
-(310, 'Cuma', '13:50:00', 'EBA CANLI DERS', 3),
-(311, 'Cuma', '14:10:00', 'ÖĞLE NAMAZI', 3),
-(312, 'Cuma', '14:30:00', 'ETÜT 1', 3),
-(313, 'Cuma', '15:30:00', 'TENEFFÜS', 3),
-(314, 'Cuma', '15:45:00', 'ETÜT 2', 3),
-(315, 'Cuma', '16:45:00', 'İKİNDİ NAMAZI', 3),
-(316, 'Cuma', '17:10:00', 'ETÜT 4', 3),
-(317, 'Cuma', '17:50:00', 'TENEFFÜS', 3),
-(318, 'Cuma', '18:00:00', 'ETÜT 5', 3),
-(319, 'Cuma', '18:40:00', 'AKŞAM NAMAZI', 3),
-(320, 'Cuma', '19:05:00', 'ETÜT 6', 3),
-(321, 'Cuma', '19:45:00', 'KANTİN', 3),
-(322, 'Cuma', '21:00:00', 'YATSI NAMAZI', 3),
-(323, 'Cuma', '21:30:00', 'SERBEST', 3),
-(324, 'Cuma', '22:00:00', 'İSTİRAHAT', 3),
-(325, 'Cumartesi', '00:00:00', 'İSTİRAHAT', 3),
-(326, 'Cumartesi', '06:30:00', 'NAMAZA HAZIRLIK', 3),
-(327, 'Cumartesi', '06:45:00', 'SABAH NAMAZI', 3),
-(328, 'Cumartesi', '07:00:00', 'YÜRÜÜYŞ', 3),
-(329, 'Cumartesi', '07:30:00', 'DUŞ', 3),
-(330, 'Cumartesi', '07:45:00', 'KAHVALTI', 3),
-(331, 'Cumartesi', '08:15:00', 'DERS 1', 3),
-(332, 'Cumartesi', '09:10:00', 'TENEFFÜS', 3),
-(333, 'Cumartesi', '09:20:00', 'DERS 2', 3),
-(334, 'Cumartesi', '10:10:00', 'TEMİZLİK', 3),
-(335, 'Cumartesi', '10:30:00', 'EBA CANLI DERS', 3),
-(336, 'Cumartesi', '13:30:00', 'ÖĞLE YEMEĞİ', 3),
-(337, 'Cumartesi', '13:50:00', 'EBA CANLI DERS', 3),
-(338, 'Cumartesi', '14:10:00', 'ÖĞLE NAMAZI', 3),
-(339, 'Cumartesi', '14:30:00', 'ETÜT 1', 3),
-(340, 'Cumartesi', '15:30:00', 'TENEFFÜS', 3),
-(341, 'Cumartesi', '15:45:00', 'ETÜT 2', 3),
-(342, 'Cumartesi', '16:45:00', 'İKİNDİ NAMAZI', 3),
-(343, 'Cumartesi', '17:10:00', 'ETÜT 4', 3),
-(344, 'Cumartesi', '17:50:00', 'TENEFFÜS', 3),
-(345, 'Cumartesi', '18:00:00', 'ETÜT 5', 3),
-(346, 'Cumartesi', '18:40:00', 'AKŞAM NAMAZI', 3),
-(347, 'Cumartesi', '19:05:00', 'ETÜT 6', 3),
-(348, 'Cumartesi', '19:45:00', 'KANTİN', 3),
-(349, 'Cumartesi', '21:00:00', 'YATSI NAMAZI', 3),
-(350, 'Cumartesi', '21:30:00', 'SERBEST', 3),
-(351, 'Cumartesi', '22:00:00', 'İSTİRAHAT', 3),
-(352, 'Pazar', '00:00:00', 'İSTİRAHAT', 3),
-(353, 'Pazar', '06:30:00', 'NAMAZA HAZIRLIK', 3),
-(354, 'Pazar', '06:45:00', 'SABAH NAMAZI', 3),
-(355, 'Pazar', '07:00:00', 'YÜRÜÜYŞ', 3),
-(356, 'Pazar', '07:30:00', 'DUŞ', 3),
-(357, 'Pazar', '07:45:00', 'KAHVALTI', 3),
-(358, 'Pazar', '08:15:00', 'DERS 1', 3),
-(359, 'Pazar', '09:10:00', 'TENEFFÜS', 3),
-(360, 'Pazar', '09:20:00', 'DERS 2', 3),
-(361, 'Pazar', '10:10:00', 'TEMİZLİK', 3),
-(362, 'Pazar', '10:30:00', 'EBA CANLI DERS', 3),
-(363, 'Pazar', '13:30:00', 'ÖĞLE YEMEĞİ', 3),
-(364, 'Pazar', '13:50:00', 'EBA CANLI DERS', 3),
-(365, 'Pazar', '14:10:00', 'ÖĞLE NAMAZI', 3),
-(366, 'Pazar', '14:30:00', 'ETÜT 1', 3),
-(367, 'Pazar', '15:30:00', 'TENEFFÜS', 3),
-(368, 'Pazar', '15:45:00', 'ETÜT 2', 3),
-(369, 'Pazar', '16:45:00', 'İKİNDİ NAMAZI', 3),
-(370, 'Pazar', '17:10:00', 'ETÜT 4', 3),
-(371, 'Pazar', '17:50:00', 'TENEFFÜS', 3),
-(372, 'Pazar', '18:00:00', 'ETÜT 5', 3),
-(373, 'Pazar', '18:40:00', 'AKŞAM NAMAZI', 3),
-(374, 'Pazar', '19:05:00', 'ETÜT 6', 3),
-(375, 'Pazar', '19:45:00', 'KANTİN', 3),
-(376, 'Pazar', '21:00:00', 'YATSI NAMAZI', 3),
-(377, 'Pazar', '21:30:00', 'SERBEST', 3),
-(378, 'Pazar', '22:00:00', 'İSTİRAHAT son', 3),
-(568, 'Pazartesi', '00:00:00', 'İSTİRAHAT', 1),
-(569, 'Pazartesi', '06:30:00', 'NAMAZA HAZIRLIK', 1),
-(570, 'Pazartesi', '06:45:00', 'SABAH NAMAZI', 1),
-(571, 'Pazartesi', '07:00:00', 'YÜRÜÜYŞ', 1),
-(572, 'Pazartesi', '07:30:00', 'DUŞ', 1),
-(573, 'Pazartesi', '07:45:00', 'KAHVALTI', 1),
-(574, 'Pazartesi', '08:15:00', 'DERS 1', 1),
-(575, 'Pazartesi', '09:10:00', 'TENEFFÜS', 1),
-(576, 'Pazartesi', '09:20:00', 'DERS 2', 1),
-(577, 'Pazartesi', '10:10:00', 'TEMİZLİK', 1),
-(578, 'Pazartesi', '10:30:00', 'EBA CANLI DERS', 1),
-(579, 'Pazartesi', '13:30:00', 'ÖĞLE YEMEĞİ', 1),
-(580, 'Pazartesi', '13:50:00', 'EBA CANLI DERS', 1),
-(581, 'Pazartesi', '14:10:00', 'ÖĞLE NAMAZI', 1),
-(582, 'Pazartesi', '14:30:00', 'ETÜT 1', 1),
-(583, 'Pazartesi', '15:30:00', 'TENEFFÜS', 1),
-(584, 'Pazartesi', '15:45:00', 'ETÜT 2', 1),
-(585, 'Pazartesi', '16:45:00', 'İKİNDİ NAMAZI', 1),
-(586, 'Pazartesi', '17:10:00', 'ETÜT 4', 1),
-(587, 'Pazartesi', '17:50:00', 'TENEFFÜS', 1),
-(588, 'Pazartesi', '18:00:00', 'ETÜT 5', 1),
-(589, 'Pazartesi', '18:40:00', 'AKŞAM NAMAZI', 1),
-(590, 'Pazartesi', '19:05:00', 'ETÜT 6', 1),
-(591, 'Pazartesi', '19:45:00', 'KANTİN', 1),
-(592, 'Pazartesi', '21:00:00', 'YATSI NAMAZI', 1),
-(593, 'Pazartesi', '21:30:00', 'SERBEST', 1),
-(594, 'Pazartesi', '22:00:00', 'İSTİRAHAT', 1),
-(595, 'Salı', '00:00:00', 'İSTİRAHAT', 1),
-(596, 'Salı', '06:30:00', 'NAMAZA HAZIRLIK', 1),
-(597, 'Salı', '06:45:00', 'SABAH NAMAZI', 1),
-(598, 'Salı', '07:00:00', 'YÜRÜÜYŞ', 1),
-(599, 'Salı', '07:30:00', 'DUŞ', 1),
-(600, 'Salı', '07:45:00', 'KAHVALTI', 1),
-(601, 'Salı', '08:15:00', 'DERS 1', 1),
-(602, 'Salı', '09:10:00', 'TENEFFÜS', 1),
-(603, 'Salı', '09:20:00', 'DERS 2', 1),
-(604, 'Salı', '10:10:00', 'TEMİZLİK', 1),
-(605, 'Salı', '10:30:00', 'EBA CANLI DERS', 1),
-(606, 'Salı', '13:30:00', 'ÖĞLE YEMEĞİ', 1),
-(607, 'Salı', '13:50:00', 'EBA CANLI DERS', 1),
-(608, 'Salı', '14:10:00', 'ÖĞLE NAMAZI', 1),
-(609, 'Salı', '14:30:00', 'ETÜT 1', 1),
-(610, 'Salı', '15:30:00', 'TENEFFÜS', 1),
-(611, 'Salı', '15:45:00', 'ETÜT 2', 1),
-(612, 'Salı', '16:45:00', 'İKİNDİ NAMAZI', 1),
-(613, 'Salı', '17:10:00', 'ETÜT 4', 1),
-(614, 'Salı', '17:50:00', 'TENEFFÜS', 1),
-(615, 'Salı', '18:00:00', 'ETÜT 5', 1),
-(616, 'Salı', '18:40:00', 'AKŞAM NAMAZI', 1),
-(617, 'Salı', '19:05:00', 'ETÜT 6', 1),
-(618, 'Salı', '19:45:00', 'KANTİN', 1),
-(619, 'Salı', '21:00:00', 'YATSI NAMAZI', 1),
-(620, 'Salı', '21:30:00', 'SERBEST', 1),
-(621, 'Salı', '22:00:00', 'İSTİRAHAT', 1),
-(622, 'Çarşamba', '00:00:00', 'İSTİRAHAT', 1),
-(623, 'Çarşamba', '06:30:00', 'NAMAZA HAZIRLIK', 1),
-(624, 'Çarşamba', '06:45:00', 'SABAH NAMAZI', 1),
-(625, 'Çarşamba', '07:00:00', 'YÜRÜÜYŞ', 1),
-(626, 'Çarşamba', '07:30:00', 'DUŞ', 1),
-(627, 'Çarşamba', '07:45:00', 'KAHVALTI', 1),
-(628, 'Çarşamba', '08:15:00', 'DERS 1', 1),
-(629, 'Çarşamba', '09:10:00', 'TENEFFÜS', 1),
-(630, 'Çarşamba', '09:20:00', 'DERS 2', 1),
-(631, 'Çarşamba', '10:10:00', 'TEMİZLİK', 1),
-(632, 'Çarşamba', '10:30:00', 'EBA CANLI DERS', 1),
-(633, 'Çarşamba', '13:30:00', 'ÖĞLE YEMEĞİ', 1),
-(634, 'Çarşamba', '13:50:00', 'EBA CANLI DERS', 1),
-(635, 'Çarşamba', '14:10:00', 'ÖĞLE NAMAZI', 1),
-(636, 'Çarşamba', '14:30:00', 'ETÜT 1', 1),
-(637, 'Çarşamba', '15:30:00', 'TENEFFÜS', 1),
-(638, 'Çarşamba', '15:45:00', 'ETÜT 2', 1),
-(639, 'Çarşamba', '16:45:00', 'İKİNDİ NAMAZI', 1),
-(640, 'Çarşamba', '17:10:00', 'ETÜT 4', 1),
-(641, 'Çarşamba', '17:50:00', 'TENEFFÜS', 1),
-(642, 'Çarşamba', '18:00:00', 'ETÜT 5', 1),
-(643, 'Çarşamba', '18:40:00', 'AKŞAM NAMAZI', 1),
-(644, 'Çarşamba', '19:05:00', 'ETÜT 6', 1),
-(645, 'Çarşamba', '19:45:00', 'KANTİN', 1),
-(646, 'Çarşamba', '21:00:00', 'YATSI NAMAZI', 1),
-(647, 'Çarşamba', '21:30:00', 'SERBEST', 1),
-(648, 'Çarşamba', '22:00:00', 'İSTİRAHAT', 1),
-(649, 'Perşembe', '00:00:00', 'İSTİRAHAT', 1),
-(650, 'Perşembe', '06:30:00', 'NAMAZA HAZIRLIK', 1),
-(651, 'Perşembe', '06:45:00', 'SABAH NAMAZI', 1),
-(652, 'Perşembe', '07:00:00', 'YÜRÜÜYŞ', 1),
-(653, 'Perşembe', '07:30:00', 'DUŞ', 1),
-(654, 'Perşembe', '07:45:00', 'KAHVALTI', 1),
-(655, 'Perşembe', '08:15:00', 'DERS 1', 1),
-(656, 'Perşembe', '09:10:00', 'TENEFFÜS', 1),
-(657, 'Perşembe', '09:20:00', 'DERS 2', 1),
-(658, 'Perşembe', '10:10:00', 'TEMİZLİK', 1),
-(659, 'Perşembe', '10:30:00', 'EBA CANLI DERS', 1),
-(660, 'Perşembe', '13:30:00', 'ÖĞLE YEMEĞİ', 1),
-(661, 'Perşembe', '13:50:00', 'EBA CANLI DERS', 1),
-(662, 'Perşembe', '14:10:00', 'ÖĞLE NAMAZI', 1),
-(663, 'Perşembe', '14:30:00', 'ETÜT 1', 1),
-(664, 'Perşembe', '15:30:00', 'TENEFFÜS', 1),
-(665, 'Perşembe', '15:45:00', 'ETÜT 2', 1),
-(666, 'Perşembe', '16:45:00', 'İKİNDİ NAMAZI', 1),
-(667, 'Perşembe', '17:10:00', 'ETÜT 4', 1),
-(668, 'Perşembe', '17:50:00', 'TENEFFÜS', 1),
-(669, 'Perşembe', '18:00:00', 'ETÜT 5', 1),
-(670, 'Perşembe', '18:40:00', 'AKŞAM NAMAZI', 1),
-(671, 'Perşembe', '19:05:00', 'ETÜT 6', 1),
-(672, 'Perşembe', '19:45:00', 'KANTİN', 1),
-(673, 'Perşembe', '21:00:00', 'YATSI NAMAZI', 1),
-(674, 'Perşembe', '21:30:00', 'SERBEST', 1),
-(675, 'Perşembe', '22:00:00', 'İSTİRAHAT', 1),
-(676, 'Cuma', '00:00:00', 'İSTİRAHAT', 1),
-(677, 'Cuma', '06:30:00', 'NAMAZA HAZIRLIK', 1),
-(678, 'Cuma', '06:45:00', 'SABAH NAMAZI', 1),
-(679, 'Cuma', '07:00:00', 'YÜRÜÜYŞ', 1),
-(680, 'Cuma', '07:30:00', 'DUŞ', 1),
-(681, 'Cuma', '07:45:00', 'KAHVALTI', 1),
-(682, 'Cuma', '08:15:00', 'DERS 1', 1),
-(683, 'Cuma', '09:10:00', 'TENEFFÜS', 1),
-(684, 'Cuma', '09:20:00', 'DERS 2', 1),
-(685, 'Cuma', '10:10:00', 'TEMİZLİK', 1),
-(686, 'Cuma', '10:30:00', 'EBA CANLI DERS', 1),
-(687, 'Cuma', '13:30:00', 'ÖĞLE YEMEĞİ', 1),
-(688, 'Cuma', '13:50:00', 'EBA CANLI DERS', 1),
-(689, 'Cuma', '14:10:00', 'ÖĞLE NAMAZI', 1),
-(690, 'Cuma', '14:30:00', 'ETÜT 1', 1),
-(691, 'Cuma', '15:30:00', 'TENEFFÜS', 1),
-(692, 'Cuma', '15:45:00', 'ETÜT 2', 1),
-(693, 'Cuma', '16:45:00', 'İKİNDİ NAMAZI', 1),
-(694, 'Cuma', '17:10:00', 'ETÜT 4', 1),
-(695, 'Cuma', '17:50:00', 'TENEFFÜS', 1),
-(696, 'Cuma', '18:00:00', 'ETÜT 5', 1),
-(697, 'Cuma', '18:40:00', 'AKŞAM NAMAZI', 1),
-(698, 'Cuma', '19:05:00', 'ETÜT 6', 1),
-(699, 'Cuma', '19:45:00', 'KANTİN', 1),
-(700, 'Cuma', '21:00:00', 'YATSI NAMAZI', 1),
-(701, 'Cuma', '21:30:00', 'SERBEST', 1),
-(702, 'Cuma', '22:00:00', 'İSTİRAHAT', 1),
-(703, 'Cumartesi', '00:00:00', 'İSTİRAHAT', 1),
-(704, 'Cumartesi', '06:30:00', 'NAMAZA HAZIRLIK', 1),
-(705, 'Cumartesi', '06:45:00', 'SABAH NAMAZI', 1),
-(706, 'Cumartesi', '07:00:00', 'YÜRÜÜYŞ', 1),
-(707, 'Cumartesi', '07:30:00', 'DUŞ', 1),
-(708, 'Cumartesi', '07:45:00', 'KAHVALTI', 1),
-(709, 'Cumartesi', '08:15:00', 'DERS 1', 1),
-(710, 'Cumartesi', '09:10:00', 'TENEFFÜS', 1),
-(711, 'Cumartesi', '09:20:00', 'DERS 2', 1),
-(712, 'Cumartesi', '10:10:00', 'TEMİZLİK', 1),
-(713, 'Cumartesi', '10:30:00', 'EBA CANLI DERS', 1),
-(714, 'Cumartesi', '13:30:00', 'ÖĞLE YEMEĞİ', 1),
-(715, 'Cumartesi', '13:50:00', 'EBA CANLI DERS', 1),
-(716, 'Cumartesi', '14:10:00', 'ÖĞLE NAMAZI', 1),
-(717, 'Cumartesi', '14:30:00', 'ETÜT 1', 1),
-(718, 'Cumartesi', '15:30:00', 'TENEFFÜS', 1),
-(719, 'Cumartesi', '15:45:00', 'ETÜT 2', 1),
-(720, 'Cumartesi', '16:45:00', 'İKİNDİ NAMAZI', 1),
-(721, 'Cumartesi', '17:10:00', 'ETÜT 4', 1),
-(722, 'Cumartesi', '17:50:00', 'TENEFFÜS', 1),
-(723, 'Cumartesi', '18:00:00', 'ETÜT 5', 1),
-(724, 'Cumartesi', '18:40:00', 'AKŞAM NAMAZI', 1),
-(725, 'Cumartesi', '19:05:00', 'ETÜT 6', 1),
-(726, 'Cumartesi', '19:45:00', 'KANTİN', 1),
-(727, 'Cumartesi', '21:00:00', 'YATSI NAMAZI', 1),
-(728, 'Cumartesi', '21:30:00', 'SERBEST', 1),
-(729, 'Cumartesi', '22:00:00', 'İSTİRAHAT', 1),
-(730, 'Pazar', '00:00:00', 'İSTİRAHAT', 1),
-(731, 'Pazar', '06:30:00', 'NAMAZA HAZIRLIK', 1),
-(732, 'Pazar', '06:45:00', 'SABAH NAMAZI', 1),
-(733, 'Pazar', '07:00:00', 'YÜRÜÜYŞ', 1),
-(734, 'Pazar', '07:30:00', 'DUŞ', 1),
-(735, 'Pazar', '07:45:00', 'KAHVALTI', 1),
-(736, 'Pazar', '08:15:00', 'DERS 1', 1),
-(737, 'Pazar', '09:10:00', 'TENEFFÜS', 1),
-(738, 'Pazar', '09:20:00', 'DERS 2', 1),
-(739, 'Pazar', '10:10:00', 'TEMİZLİK', 1),
-(740, 'Pazar', '10:30:00', 'EBA CANLI DERS', 1),
-(741, 'Pazar', '13:30:00', 'ÖĞLE YEMEĞİ', 1),
-(742, 'Pazar', '13:50:00', 'EBA CANLI DERS', 1),
-(743, 'Pazar', '14:10:00', 'ÖĞLE NAMAZI', 1),
-(744, 'Pazar', '14:30:00', 'ETÜT 1', 1),
-(745, 'Pazar', '15:30:00', 'TENEFFÜS', 1),
-(746, 'Pazar', '15:45:00', 'ETÜT 2', 1),
-(747, 'Pazar', '16:45:00', 'İKİNDİ NAMAZI', 1),
-(748, 'Pazar', '17:10:00', 'ETÜT 4', 1),
-(749, 'Pazar', '17:50:00', 'TENEFFÜS', 1),
-(750, 'Pazar', '18:00:00', 'ETÜT 5', 1),
-(751, 'Pazar', '18:40:00', 'AKŞAM NAMAZI', 1),
-(752, 'Pazar', '19:05:00', 'ETÜT 6', 1),
-(753, 'Pazar', '19:45:00', 'KANTİN', 1),
-(754, 'Pazar', '21:00:00', 'YATSI NAMAZI', 1),
-(755, 'Pazar', '21:30:00', 'SERBEST', 1),
-(756, 'Pazar', '22:00:00', 'İSTİRAHAT son', 1);
+INSERT INTO `program` (`id`, `gun`, `saat`, `bitis_saat`, `etkinlik`, `sube_id`) VALUES
+(1, '0', '05:07:00', '06:30:00', 'ist', 1),
+(2, '0', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 1),
+(3, '0', '06:45:00', '07:00:00', 'SABAH NAMAZI', 1),
+(4, '0', '07:00:00', '07:30:00', 'YÜRÜÜYŞ', 1),
+(5, '0', '07:30:00', '07:45:00', 'DUŞ', 1),
+(6, '0', '07:45:00', '08:15:00', 'KAHVALTI', 1),
+(7, '0', '08:15:00', '09:10:00', 'DERS 1', 1),
+(8, '0', '09:10:00', '09:20:00', 'TENEFFÜS', 1),
+(9, '0', '09:20:00', '10:10:00', 'DERS 2', 1),
+(10, '0', '10:10:00', '10:30:00', 'TEMİZLİK', 1),
+(11, '0', '10:30:00', '13:30:00', 'EBA CANLI DERS', 1),
+(12, '0', '13:30:00', '13:50:00', 'ÖĞLE YEMEĞİ', 1),
+(13, '0', '13:50:00', '14:10:00', 'EBA CANLI DERS', 1),
+(14, '0', '14:10:00', '14:30:00', 'ÖĞLE NAMAZI', 1),
+(15, '0', '14:30:00', '15:30:00', 'ETÜT 1', 1),
+(16, '0', '15:30:00', '15:45:00', 'TENEFFÜS', 1),
+(17, '0', '15:45:00', '16:45:00', 'ETÜT 2', 1),
+(18, '0', '16:45:00', '17:10:00', 'İKİNDİ NAMAZI', 1),
+(19, '0', '17:10:00', '17:50:00', 'ETÜT 4', 1),
+(20, '0', '17:50:00', '18:00:00', 'TENEFFÜS', 1),
+(21, '0', '18:00:00', '18:40:00', 'ETÜT 5', 1),
+(22, '0', '18:40:00', '19:05:00', 'AKŞAM NAMAZI', 1),
+(23, '0', '19:05:00', '19:45:00', 'ETÜT 6', 1),
+(24, '0', '19:45:00', '21:00:00', 'KANTİN', 1),
+(25, '0', '21:00:00', '21:30:00', 'YATSI NAMAZI', 1),
+(26, '0', '21:30:00', '22:00:00', 'SERBEST', 1),
+(27, '0', '22:00:00', '23:59:00', 'İSTİRAHAT', 1),
+(28, '1', '00:00:00', '06:30:00', 'İSTİRAHAT', 1),
+(29, '1', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 1),
+(30, '1', '06:45:00', '07:00:00', 'SABAH NAMAZI', 1),
+(31, '1', '07:00:00', '07:30:00', 'YÜRÜÜYŞ', 1),
+(32, '1', '07:30:00', '07:45:00', 'DUŞ', 1),
+(33, '1', '07:45:00', '08:15:00', 'KAHVALTI', 1),
+(34, '1', '08:15:00', '09:10:00', 'DERS 1', 1),
+(35, '1', '09:10:00', '09:20:00', 'TENEFFÜS', 1),
+(36, '1', '09:20:00', '10:10:00', 'DERS 2', 1),
+(37, '1', '10:10:00', '10:30:00', 'TEMİZLİK', 1),
+(38, '1', '10:30:00', '13:30:00', 'EBA CANLI DERS', 1),
+(39, '1', '13:30:00', '13:50:00', 'ÖĞLE YEMEĞİ', 1),
+(40, '1', '13:50:00', '14:10:00', 'EBA CANLI DERS', 1),
+(41, '1', '14:10:00', '14:30:00', 'ÖĞLE NAMAZI', 1),
+(42, '1', '14:30:00', '15:30:00', 'ETÜT 1', 1),
+(43, '1', '15:30:00', '15:45:00', 'TENEFFÜS', 1),
+(44, '1', '15:45:00', '16:45:00', 'ETÜT 2', 1),
+(45, '1', '16:45:00', '17:10:00', 'İKİNDİ NAMAZI', 1),
+(46, '1', '17:10:00', '17:50:00', 'ETÜT 4', 1),
+(47, '1', '17:50:00', '18:00:00', 'TENEFFÜS', 1),
+(48, '1', '18:00:00', '18:40:00', 'ETÜT 5', 1),
+(49, '1', '18:40:00', '19:05:00', 'AKŞAM NAMAZI', 1),
+(50, '1', '19:05:00', '19:45:00', 'ETÜT 6', 1),
+(51, '1', '19:45:00', '21:00:00', 'KANTİN', 1),
+(52, '1', '21:00:00', '21:30:00', 'YATSI NAMAZI', 1),
+(53, '1', '21:30:00', '22:00:00', 'SERBEST', 1),
+(54, '1', '22:00:00', '23:59:00', 'İSTİRAHAT', 1),
+(55, '2', '23:59:00', '06:30:00', 'İSTİRAHAT', 1),
+(56, '2', '06:30:00', '08:45:00', 'NAMAZA HAZIRLIK', 1),
+(57, '2', '06:45:00', '07:00:00', 'SABAH NAMAZI', 1),
+(58, '2', '07:00:00', '07:30:00', 'YÜRÜÜYŞ', 1),
+(59, '2', '07:30:00', '07:45:00', 'DUŞ', 1),
+(60, '2', '07:45:00', '08:15:00', 'KAHVALTI', 1),
+(61, '2', '08:15:00', '09:10:00', 'DERS 1', 1),
+(62, '2', '09:10:00', '09:20:00', 'TENEFFÜS', 1),
+(63, '2', '09:20:00', '10:10:00', 'DERS 2', 1),
+(64, '2', '10:10:00', '10:30:00', 'TEMİZLİK', 1),
+(65, '2', '10:30:00', '13:30:00', 'EBA CANLI DERS', 1),
+(66, '2', '13:30:00', '13:50:00', 'ÖĞLE YEMEĞİ', 1),
+(67, '2', '13:50:00', '14:10:00', 'EBA CANLI DERS', 1),
+(68, '2', '14:10:00', '14:30:00', 'ÖĞLE NAMAZI', 1),
+(69, '2', '14:30:00', '15:30:00', 'ETÜT 1', 1),
+(70, '2', '15:30:00', '15:45:00', 'TENEFFÜS', 1),
+(71, '2', '15:45:00', '16:45:00', 'ETÜT 2', 1),
+(72, '2', '16:45:00', '17:10:00', 'İKİNDİ NAMAZI', 1),
+(73, '2', '17:10:00', '17:50:00', 'ETÜT 4', 1),
+(74, '2', '17:50:00', '18:00:00', 'TENEFFÜS', 1),
+(75, '2', '18:00:00', '18:40:00', 'ETÜT 5', 1),
+(76, '2', '18:40:00', '19:05:00', 'AKŞAM NAMAZI', 1),
+(77, '2', '19:05:00', '19:45:00', 'ETÜT 6', 1),
+(78, '2', '19:45:00', '21:00:00', 'KANTİN', 1),
+(79, '2', '21:00:00', '21:30:00', 'YATSI NAMAZI', 1),
+(80, '2', '21:30:00', '22:00:00', 'SERBEST', 1),
+(81, '2', '22:00:00', '23:59:00', 'İSTİRAHAT', 1),
+(82, '3', '00:00:00', '06:30:00', 'İSTİRAHAT', 1),
+(83, '3', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 1),
+(84, '3', '06:45:00', '08:00:00', 'SABAH NAMAZI', 1),
+(85, '3', '07:00:00', '07:30:00', 'YÜRÜÜYŞ', 1),
+(86, '3', '07:30:00', '07:45:00', 'DUŞ', 1),
+(87, '3', '07:45:00', '08:15:00', 'KAHVALTI', 1),
+(88, '3', '08:15:00', '09:10:00', 'DERS 1', 1),
+(89, '3', '09:10:00', '09:20:00', 'TENEFFÜS', 1),
+(90, '3', '09:20:00', '10:10:00', 'DERS 2', 1),
+(91, '3', '10:10:00', '10:30:00', 'TEMİZLİK', 1),
+(92, '3', '10:30:00', '13:30:00', 'EBA CANLI DERS', 1),
+(93, '3', '13:30:00', '13:50:00', 'ÖĞLE YEMEĞİ', 1),
+(94, '3', '13:50:00', '14:10:00', 'EBA CANLI DERS', 1),
+(95, '3', '14:10:00', '14:30:00', 'ÖĞLE NAMAZI', 1),
+(96, '3', '14:30:00', '15:30:00', 'ETÜT 1', 1),
+(97, '3', '15:30:00', '15:45:00', 'TENEFFÜS', 1),
+(98, '3', '15:45:00', '16:45:00', 'ETÜT 2', 1),
+(99, '3', '16:45:00', '17:10:00', 'İKİNDİ NAMAZI', 1),
+(100, '3', '17:10:00', '17:50:00', 'ETÜT 4', 1),
+(101, '3', '17:50:00', '18:00:00', 'TENEFFÜS', 1),
+(102, '3', '18:00:00', '18:40:00', 'ETÜT 5', 1),
+(103, '3', '18:40:00', '19:05:00', 'AKŞAM NAMAZI', 1),
+(104, '3', '19:05:00', '19:45:00', 'ETÜT 6', 1),
+(105, '3', '19:45:00', '21:00:00', 'KANTİN', 1),
+(106, '3', '21:00:00', '21:30:00', 'YATSI NAMAZI', 1),
+(107, '3', '21:30:00', '22:00:00', 'SERBEST', 1),
+(108, '3', '22:00:00', '23:59:00', 'İSTİRAHAT', 1),
+(109, '4', '00:00:00', '06:30:00', 'İSTİRAHAT', 1),
+(110, '4', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 1),
+(111, '4', '06:45:00', '07:00:00', 'SABAH NAMAZI', 1),
+(112, '4', '07:00:00', '07:30:00', 'YÜRÜÜYŞ', 1),
+(113, '4', '07:30:00', '07:45:00', 'DUŞ', 1),
+(114, '4', '07:45:00', '08:15:00', 'KAHVALTI', 1),
+(115, '4', '08:15:00', '09:10:00', 'DERS 1', 1),
+(116, '4', '09:10:00', '09:20:00', 'TENEFFÜS', 1),
+(117, '4', '09:20:00', '10:10:00', 'DERS 2', 1),
+(118, '4', '10:10:00', '10:30:00', 'TEMİZLİK', 1),
+(119, '4', '10:30:00', '13:30:00', 'EBA CANLI DERS', 1),
+(120, '4', '13:30:00', '13:50:00', 'ÖĞLE YEMEĞİ', 1),
+(121, '4', '13:50:00', '14:10:00', 'EBA CANLI DERS', 1),
+(122, '4', '14:10:00', '14:30:00', 'ÖĞLE NAMAZI', 1),
+(123, '4', '14:30:00', '15:30:00', 'ETÜT 1', 1),
+(124, '4', '15:30:00', '15:45:00', 'TENEFFÜS', 1),
+(125, '4', '15:45:00', '16:45:00', 'ETÜT 2', 1),
+(126, '4', '16:45:00', '17:10:00', 'İKİNDİ NAMAZI', 1),
+(127, '4', '17:10:00', '17:50:00', 'ETÜT 4', 1),
+(128, '4', '17:50:00', '18:00:00', 'TENEFFÜS', 1),
+(129, '4', '18:00:00', '18:40:00', 'ETÜT 5', 1),
+(130, '4', '18:40:00', '19:05:00', 'AKŞAM NAMAZI', 1),
+(131, '4', '19:05:00', '19:45:00', 'ETÜT 6', 1),
+(132, '4', '19:45:00', '21:00:00', 'KANTİN', 1),
+(133, '4', '21:00:00', '21:30:00', 'YATSI NAMAZI', 1),
+(134, '4', '21:30:00', '22:00:00', 'SERBEST', 1),
+(135, '4', '22:00:00', '23:59:00', 'İSTİRAHAT', 1),
+(136, '5', '00:00:00', '06:30:00', 'İSTİRAHAT', 1),
+(137, '5', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 1),
+(138, '5', '06:45:00', '07:00:00', 'SABAH NAMAZI', 1),
+(139, '5', '07:00:00', '07:30:00', 'YÜRÜÜYŞ', 1),
+(140, '5', '07:30:00', '07:45:00', 'DUŞ', 1),
+(141, '5', '07:45:00', '08:15:00', 'KAHVALTI', 1),
+(142, '5', '08:15:00', '09:10:00', 'DERS 1', 1),
+(143, '5', '09:10:00', '09:20:00', 'TENEFFÜS', 1),
+(144, '5', '09:20:00', '10:10:00', 'DERS 2', 1),
+(145, '5', '10:10:00', '10:30:00', 'TEMİZLİK', 1),
+(146, '5', '10:30:00', '13:30:00', 'EBA CANLI DERS', 1),
+(147, '5', '13:30:00', '13:50:00', 'ÖĞLE YEMEĞİ', 1),
+(148, '5', '13:50:00', '14:10:00', 'EBA CANLI DERS', 1),
+(149, '5', '14:10:00', '14:30:00', 'ÖĞLE NAMAZI', 1),
+(150, '5', '14:30:00', '15:30:00', 'ETÜT 1', 1),
+(151, '5', '15:30:00', '15:45:00', 'TENEFFÜS', 1),
+(152, '5', '15:45:00', '16:45:00', 'ETÜT 2', 1),
+(153, '5', '16:45:00', '17:10:00', 'İKİNDİ NAMAZI', 1),
+(154, '5', '17:10:00', '17:50:00', 'ETÜT 4', 1),
+(155, '5', '17:50:00', '18:00:00', 'TENEFFÜS', 1),
+(156, '5', '18:00:00', '18:40:00', 'ETÜT 5', 1),
+(157, '5', '18:40:00', '19:05:00', 'AKŞAM NAMAZI', 1),
+(158, '5', '19:05:00', '19:45:00', 'ETÜT 6', 1),
+(159, '5', '19:45:00', '21:00:00', 'KANTİN', 1),
+(160, '5', '21:00:00', '21:30:00', 'YATSI NAMAZI', 1),
+(161, '5', '21:30:00', '22:00:00', 'SERBEST', 1),
+(162, '5', '22:00:00', '23:59:00', 'İSTİRAHAT', 1),
+(163, '6', '00:00:00', '06:30:00', 'İSTİRAHAT', 1),
+(164, '6', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 1),
+(165, '6', '06:45:00', '07:00:00', 'SABAH NAMAZI', 1),
+(166, '6', '07:00:00', '07:30:00', 'YÜRÜÜYŞ', 1),
+(167, '6', '07:30:00', '07:45:00', 'DUŞ', 1),
+(168, '6', '07:45:00', '08:15:00', 'KAHVALTI', 1),
+(169, '6', '08:15:00', '09:10:00', 'DERS 1', 1),
+(170, '6', '09:10:00', '09:20:00', 'TENEFFÜS', 1),
+(171, '6', '09:20:00', '10:10:00', 'DERS 2', 1),
+(172, '6', '10:10:00', '10:30:00', 'TEMİZLİK', 1),
+(173, '6', '10:30:00', '13:30:00', 'EBA CANLI DERS', 1),
+(174, '6', '13:30:00', '13:50:00', 'ÖĞLE YEMEĞİ', 1),
+(175, '6', '13:50:00', '14:10:00', 'EBA CANLI DERS', 1),
+(176, '6', '14:10:00', '14:30:00', 'ÖĞLE NAMAZI', 1),
+(177, '6', '14:30:00', '15:30:00', 'ETÜT 1', 1),
+(178, '6', '15:30:00', '15:45:00', 'TENEFFÜS', 1),
+(179, '6', '15:45:00', '16:45:00', 'ETÜT 2', 1),
+(180, '6', '16:45:00', '17:10:00', 'İKİNDİ NAMAZI', 1),
+(181, '6', '17:10:00', '17:50:00', 'ETÜT 4', 1),
+(182, '6', '17:50:00', '18:00:00', 'TENEFFÜS', 1),
+(183, '6', '18:00:00', '18:40:00', 'ETÜT 5', 1),
+(184, '6', '18:40:00', '19:05:00', 'AKŞAM NAMAZI', 1),
+(185, '6', '19:05:00', '19:45:00', 'ETÜT 6', 1),
+(186, '6', '19:45:00', '21:00:00', 'KANTİN', 1),
+(187, '6', '21:00:00', '21:30:00', 'YATSI NAMAZI', 1),
+(188, '6', '21:30:00', '22:00:00', 'SERBEST', 1),
+(189, '6', '22:00:00', '23:59:00', 'İSTİRAHAT son', 1),
+(191, '0', '00:00:00', '06:30:00', 'İSTİRAHAT', 2),
+(192, '0', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 2),
+(193, '1', '00:00:00', '06:30:00', 'İSTİRAHAT', 2),
+(194, '1', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 2),
+(195, '2', '00:00:00', '06:30:00', 'İSTİRAHAT', 2),
+(196, '2', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 2),
+(197, '3', '00:00:00', '06:30:00', 'İSTİRAHAT', 2),
+(198, '3', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 2),
+(199, '4', '00:00:00', '06:30:00', 'İSTİRAHAT', 2),
+(200, '4', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 2),
+(201, '5', '00:00:00', '06:30:00', 'İSTİRAHAT', 2),
+(202, '5', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 2),
+(203, '6', '00:00:00', '06:30:00', 'İSTİRAHAT', 2),
+(204, '6', '06:30:00', '06:45:00', 'NAMAZA HAZIRLIK', 2),
+(206, '0', '00:01:00', NULL, 'asd', 1),
+(207, '0', '00:00:00', NULL, 'fvgfd', 2),
+(208, '1', '00:00:00', NULL, 'razaamaz', 1),
+(209, '0', '03:04:00', NULL, 'qwe', 1),
+(210, '1', '00:00:00', '11:11:00', 'aaa', 1),
+(211, '0', '00:00:00', '12:03:00', 'asd', 1),
+(212, '0', '03:01:00', '04:05:00', 'ssss', 1),
+(213, '0', '00:01:00', '02:08:00', 'asdasdasd', 1),
+(214, '6', '12:03:00', '12:03:00', '123', 30);
 
 -- --------------------------------------------------------
 
@@ -478,6 +350,13 @@ CREATE TABLE `resim` (
   `id` mediumint(9) NOT NULL,
   `yol` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Tablo döküm verisi `resim`
+--
+
+INSERT INTO `resim` (`id`, `yol`) VALUES
+(41, 'upload/img/slide/resim1.jpg');
 
 -- --------------------------------------------------------
 
@@ -498,8 +377,8 @@ CREATE TABLE `slide` (
 --
 
 INSERT INTO `slide` (`id`, `baslik`, `metin`, `tarih`, `resim_id`) VALUES
-(1, 'Sonuçlar', '1-Kaynarca 2-Ferhatlar 3-Süleymaniye 4-Dudullu 5-Atakent 6-Yamanevler', '2020-11-05', NULL),
-(2, 'What is Lorem Ipsum?', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', '2020-11-05', NULL),
+(1, 'Sonuçlar', '1-Kaynarca 2-Ferhatlar 3-Süleymaniye 4-Dudullu 5-Atakent 6-Yamanevler', '2020-11-12', 41),
+(2, 'What is Lorem Ipsum?', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', '2020-11-12', NULL),
 (3, 'Why do we use it?', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.', '2020-11-02', NULL);
 
 -- --------------------------------------------------------
@@ -522,7 +401,7 @@ INSERT INTO `sube` (`id`, `isim`, `adres`) VALUES
 (1, 'Şube-1', 'Seyhan'),
 (2, 'Şube-2', 'Sarıyer'),
 (3, 'Sube-3', 'Ankara'),
-(4, 'Sube-4', 'Tekirdağ');
+(30, 'Şube-4', 'Ardahan');
 
 -- --------------------------------------------------------
 
@@ -541,19 +420,35 @@ CREATE TABLE `sube_duyuru` (
 --
 
 INSERT INTO `sube_duyuru` (`id`, `sube_id`, `duyuru_id`) VALUES
-(2, 1, 2),
-(3, 1, 3),
-(4, 2, 3),
-(5, 3, 3),
-(6, 4, 3),
-(8, 4, 4),
 (9, 3, 4),
-(49, 3, 35),
-(51, 2, 32),
-(56, 1, 1),
-(57, 2, 1),
-(58, 3, 1),
-(59, 4, 1);
+(67, 1, 2),
+(70, 1, 3),
+(71, 3, 3),
+(72, 1, 16),
+(73, 3, 16),
+(78, 1, 1),
+(79, 2, 1),
+(80, 3, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tercih`
+--
+
+CREATE TABLE `tercih` (
+  `id` smallint(6) NOT NULL,
+  `ozellik` varchar(100) NOT NULL,
+  `deger` mediumint(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Tablo döküm verisi `tercih`
+--
+
+INSERT INTO `tercih` (`id`, `ozellik`, `deger`) VALUES
+(1, 'marquee_hiz', 15),
+(2, 'slide_hiz', 5000);
 
 -- --------------------------------------------------------
 
@@ -579,9 +474,27 @@ CREATE TABLE `video` (
   `goster` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `video_embed`
+--
+
+CREATE TABLE `video_embed` (
+  `id` smallint(6) NOT NULL,
+  `link` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Dökümü yapılmış tablolar için indeksler
 --
+
+--
+-- Tablo için indeksler `css`
+--
+ALTER TABLE `css`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sube_id` (`sube_id`);
 
 --
 -- Tablo için indeksler `duyuru`
@@ -630,6 +543,12 @@ ALTER TABLE `sube_duyuru`
   ADD KEY `duyuru_id` (`duyuru_id`);
 
 --
+-- Tablo için indeksler `tercih`
+--
+ALTER TABLE `tercih`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Tablo için indeksler `thumbnail`
 --
 ALTER TABLE `thumbnail`
@@ -643,66 +562,96 @@ ALTER TABLE `video`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Tablo için indeksler `video_embed`
+--
+ALTER TABLE `video_embed`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Dökümü yapılmış tablolar için AUTO_INCREMENT değeri
 --
+
+--
+-- Tablo için AUTO_INCREMENT değeri `css`
+--
+ALTER TABLE `css`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `duyuru`
 --
 ALTER TABLE `duyuru`
-  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `kullanici`
 --
 ALTER TABLE `kullanici`
-  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `program`
 --
 ALTER TABLE `program`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=757;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `resim`
 --
 ALTER TABLE `resim`
-  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `slide`
 --
 ALTER TABLE `slide`
-  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `sube`
 --
 ALTER TABLE `sube`
-  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `sube_duyuru`
 --
 ALTER TABLE `sube_duyuru`
-  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+
+--
+-- Tablo için AUTO_INCREMENT değeri `tercih`
+--
+ALTER TABLE `tercih`
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `thumbnail`
 --
 ALTER TABLE `thumbnail`
-  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `video`
 --
 ALTER TABLE `video`
-  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- Tablo için AUTO_INCREMENT değeri `video_embed`
+--
+ALTER TABLE `video_embed`
+  MODIFY `id` smallint(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- Dökümü yapılmış tablolar için kısıtlamalar
 --
+
+--
+-- Tablo kısıtlamaları `css`
+--
+ALTER TABLE `css`
+  ADD CONSTRAINT `css_ibfk_1` FOREIGN KEY (`sube_id`) REFERENCES `sube` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Tablo kısıtlamaları `program`

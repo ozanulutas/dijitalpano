@@ -7,6 +7,17 @@
 
 <div class="form-wrapper duyuru-wrapper">
 
+    <div class="select-group">
+        <select class="sec form-item"> 
+            <option onclick="filter('hepsi')">Hepsini Göster</option>
+            <?php foreach($data['subeler'] as $sube) { ?>
+            <option onclick="filter(<?php echo '\'sbf-' . $sube->id . '\''; ?>)" >
+                <?php echo $sube->isim; ?>
+            </option>
+            <?php } ?>
+        </select>  
+    </div> 
+
     <table class="duyuru-table">
         <tr>
             <th>Duyuru Metni</th>
@@ -16,7 +27,7 @@
         </tr>
         
         <?php foreach($data['duyurular'] as $duyuru) { ?>
-        <tr>
+        <tr class="filter <?php echo $data['subeFiltre'][$duyuru->id] ?? ''; ?>">
             <td class="duyuru-metin" onclick="edit('duyuru', <?php echo $duyuru->id; ?>)">
                 <?php echo $duyuru->metin; ?>
             </td>

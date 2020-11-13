@@ -7,6 +7,9 @@
 
 <div class="form-wrapper">
 
+    <div id="success"></div>
+    <div id="error"></div>
+
     <?php if($data['action'] == 'edit') { ?> 
     <form action="index.php?section=kullanici&action=delete" method="post" class="form">
 
@@ -19,9 +22,9 @@
     </form> <?php
     } ?>
 
-    <form action="index.php?section=kullanici&action=<?php echo $data['action']; ?>" method="post" class="form">
+    <form action="index.php?section=kullanici&action=<?php echo $data['action']; ?>" method="post" class="form" id="<?php echo ($data['action'] == 'edit') ? 'kullaniciEditForm' : ''; ?>" >
 
-        <div id="error"></div>
+
         <input type="hidden" name="currAction" id="currAction" value="<?php echo $data['action']; ?>" class="form-item">
 
         <input type="hidden" name="id" value="<?php echo $data['kullanici']->id ?? ''; ?>" class="form-item"> 
@@ -36,7 +39,7 @@
         </div>
 
         <button type="submit" name="kaydet" id="kullaniciKaydet" class="form-item submit-btn">Kaydet</button> <br>
-        <button type="submit" name="iptal" formnovalidate class="form-item cancel-btn">İptal</button> <br>
+        <button type="submit" name="iptal" formnovalidate class="form-item cancel-btn" id="kullaniciFormIptal">İptal</button> <br>
     </form>
 
 </div>

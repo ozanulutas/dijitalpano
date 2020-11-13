@@ -30,8 +30,8 @@ function havaDurumu() {
 
         var unix_timestamp, date, icon, temp;
 
-            unix_timestamp = data.current.dt;
-            date = new Date(unix_timestamp * 1000);            
+            // unix_timestamp = data.current.dt;
+            // date = new Date(unix_timestamp * 1000);            
 
         temp = data.current.temp;
         icon = data.current.weather[0].icon;
@@ -51,10 +51,10 @@ function havaDurumu() {
             havaIcon[i].src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";  
             havaDerece[i].innerHTML = Math.round(temp) + '&deg;'; 
              
-                havaDerece[i].innerHTML +=  date.getDate();
+                // havaDerece[i].innerHTML +=  date.getDate();
         }
     });
-    // setTimeout('havaDurumu()', 14400000);
+    setTimeout('havaDurumu()', 14400000);
 }
 
 function koordinat() {
@@ -68,7 +68,7 @@ function getPosition(position) {
     havaDurumu();
 }
 
-//koordinat();
+koordinat();
 
 // GUNLER
 
@@ -232,7 +232,7 @@ function showSlides() {
     
     marquee();
     
-    // setTimeout(showSlides, slide_hiz);     
+    setTimeout(showSlides, slide_hiz);     
 }
 
 // LOGIN

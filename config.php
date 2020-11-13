@@ -38,6 +38,7 @@ require_once 'model/Slide.php';
 require_once 'model/Resim.php';
 require_once 'model/Program.php';
 require_once 'model/Video.php';
+require_once 'model/VideoEmbed.php';
 require_once 'model/Thumbnail.php';
 require_once 'model/Css.php';
 require_once 'model/Tercih.php';

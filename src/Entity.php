@@ -130,7 +130,7 @@ class Entity {
         $sql .= " WHERE $id = :$id";
         
         $param[$id] = $this->$id;
-        
+
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute($param);
     }

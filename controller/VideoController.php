@@ -57,6 +57,73 @@ class VideoController extends Controller {
             header("Location: index.php?section=video");
     }
 
+    public function editAction() {
+
+        $dbh = DatabaseConnection::getInstance();
+        $dbc = $dbh->getConnection();
+
+        if(isset($_POST['video_id'])) {
+            
+            if($_POST['command'] == 'yayinla') {
+                
+                $video = new Video($dbc);
+                $video->findBy('goster', true);
+                $video->goster = null;
+                $video->update();
+                
+                // $video = new Video($dbc);
+                $video->findBy('id', $_POST['video_id']);
+                $video->goster = true;
+                $video->update();
+                
+                if($video)
+                    echo 'Video yayında.';
+            }
+            elseif($_POST['command'] == 'yayindanKaldir') {
+                
+                $video = new Video($dbc);
+                $video->findBy('id', $_POST['video_id']);
+                $video->goster = null;
+                $video->update();
+                
+                if($video)
+                    echo 'Video yayından kaldırıldı.';
+            }
+        }
+    }
+
+
+    public function embedAction() {
+
+        if($_POST) {
+
+            $dbh = DatabaseConnection::getInstance();
+            $dbc = $dbh->getConnection();
+            
+            $video = new Video($dbc);
+
+            if($video->findBy('goster', true)->id) {
+                echo 'err';                
+            }
+            else {                
+                $videoEmbed = new VideoEmbed($dbc);
+                $videoEmbed->findBy('id', 1);
+
+                if(!empty($videoEmbed->id)) {
+                    $videoEmbed->link = $_POST['link'];
+                    $videoEmbed->update();
+                }
+                else {
+                    $videoEmbed->setValues($_POST);
+                    $videoEmbed->insert();
+                }
+                echo "succ";
+            }
+        }
+        else
+            header("Location: index.php?section=video");
+    }
+
 
     public function deleteAction() {        
 
@@ -89,21 +156,6 @@ class VideoController extends Controller {
                 $data['video'] = $video->findBy('id', $_POST['video_id']);
 
                 echo json_encode($data);
-            }
-            elseif($_POST['command'] == 'edit') {
-                
-                $video = new Video($dbc);
-                $video->findBy('goster', true);
-                $video->goster = null;
-                $video->update();
-
-                $video = new Video($dbc);
-                $video->findBy('id', $_POST['video_id']);
-                $video->goster = true;
-                $video->update();
-
-                if($video)
-                    echo 'Video Yayında.';
             }
         }
         else

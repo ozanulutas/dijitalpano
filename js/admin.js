@@ -1,4 +1,15 @@
 
+// RESPONSIVE-NAV
+
+function responsive() {
+    var nav = document.getElementById("nav-admin");
+    if (nav.className === "nav-admin") {
+      nav.className += " responsive";
+    } else {
+      nav.className = "nav-admin";
+    }
+} 
+
 // SAAT FORMAT
 
 function formatTime(saat) {
@@ -342,23 +353,23 @@ thumbnail();
 
 // VIDEO RADIO KONTROL
 
-videoSecKontrol();
+// videoSecKontrol();
 
-function videoSecKontrol() {
+// function videoSecKontrol() {
 
-    if(!$('.video-sec').is(':checked')) {
-        $('#videoSil').prop('disabled', true);
-    }
+//     if(!$('.video-sec').is(':checked')) {
+//         $('#videoSil').prop('disabled', true);
+//     }
 
-    $('.video-sec').click(function() {
-        $('#videoSil').prop('disabled', false);
-        $('#yayinla').prop('disabled', false);
+//     $('.video-sec').click(function() {
+//         $('#videoSil').prop('disabled', false);
+//         $('#yayinla').prop('disabled', false);
     
-        if(!$('.video-sec').is(':checked')) {
-            $('#videoSil').prop('disabled', true);
-        }
-    });
-}
+//         if(!$('.video-sec').is(':checked')) {
+//             $('#videoSil').prop('disabled', true);
+//         }
+//     });
+// }
 
 // VIDEO GOSTER
 
@@ -408,8 +419,10 @@ function yayinla() {
             url: 'index.php',
             data: {
                 section: 'video', 
-                action: 'ajax',
-                command: 'edit',
+                // action: 'ajax',
+                // command: 'edit',
+                action: 'edit',
+                command: 'yayinla',
                 video_id: $('input[name=video_id]:checked').val()
             },
 
@@ -424,6 +437,70 @@ function yayinla() {
         });
     });
 } 
+
+// VIDEO YAYINDAN KALDIR
+
+function yayindanKaldir() {
+
+    $(function() {    
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: {
+                section: 'video', 
+                action: 'edit',
+                command: 'yayindanKaldir',
+                video_id: $('input[name=video_id]:checked').val()
+            },
+
+            success: function(data) {  
+                if(data != '') {
+
+                    $('input[name=video_id]:checked').prop('checked', false);
+
+                    $("#success").html(data);
+                    $("#success").show();
+                    $('#success').delay(5000).fadeOut('slow');
+                }                
+            }      
+        });
+    });
+} 
+
+// VIDEO EMBED
+
+$(function() {  
+    $('#embedForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $(function() {    
+            $.ajax({
+                type: 'POST',
+                url: 'index.php',
+                data: {
+                    section: 'video', 
+                    action: 'embed',
+                    link: $('#embedLink').val()
+                },
+    
+                success: function(data) { 
+                    console.log(data); 
+                    if(data == 'err') {
+                        $("#error").html('Önce yayındaki videoyu kaldırın.');
+                        $("#error").show();
+                        $('#error').delay(5000).fadeOut('slow');
+
+                    }  
+                    else if(data == 'succ') {
+                        $("#success").html('Video yayında.');
+                        $("#success").show();
+                        $('#success').delay(5000).fadeOut('slow');
+                    }             
+                }      
+            });
+        });
+    });
+});
 
 // VİDEO UPLOAD
 
@@ -587,6 +664,34 @@ $(function() {
     });
 });
 
+// KULLANICI GÜNCELLE
+
+$(function() {
+    $('#kullaniciFormIptal').click(function(e) {
+        e.preventDefault();
+        location = "index.php?section=kullanici";  
+    });
+
+    $('#kullaniciEditForm').submit(function(e) {
+        e.preventDefault();
+        console.log($('#kullaniciEditForm').serialize());
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: {
+                section: 'kullanici',
+                action: 'edit',
+                formData: $('#kullaniciEditForm').serialize(),
+            },
+            success: function(data) {
+                $("#success").html(data);
+                $("#success").show();
+                $('#success').delay(5000).fadeOut('slow');
+            }
+        });
+    });
+});
+
 // KULLANICI ADI KONTROL
 
 $(function() {
@@ -615,3 +720,16 @@ $(function() {
         });
     });
 });
+
+// DUYURU FİLTRE
+
+filter('hepsi');
+
+function filter(sube) {
+    if(sube == 'hepsi') 
+        $('.filter').show();
+    else {
+        $('.filter').hide();
+        $('.' + sube).show();
+    }
+}

@@ -12,11 +12,11 @@
 </head>
 <body>
     
-    <header id="header">
-        <h1>ADMİN PANELİ</h1>
-    </header>
     
     <div class="container">
+        <header id="header">
+            <h1>ADMİN PANELİ</h1>
+        </header>
         
 
         <div class="main-wrapper">   
