@@ -533,16 +533,16 @@ $(function() {
                 return xhr;
             },
             beforeSend: function() {
-                $('#yukle').hide();
+                $('#videoYukle').hide();
                 $('#videoCancel').show();
-                $('#yukle').attr('disabled', 'disabled');
+                $('#videoYukle').attr('disabled', 'disabled');
                 $('#progressBar').fadeIn();            
             },            
             success: function(data) {  
                 if(data) {
                     $('#progressBar').hide();
-                    $('#yukle').show();
-                    $('#yukle').attr('disabled', false);
+                    $('#videoYukle').show();
+                    $('#videoYukle').attr('disabled', false);
                     $('#videoCancel').hide();
                     $("#error").html(data);
                     $("#error").show();

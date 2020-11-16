@@ -58,7 +58,7 @@
                 <h3>Video Linki</h3>
                 <input type="text" name="link" id="embedLink" required>
 
-                <button type="submit" name="yayinla" class="form-item submit-btn" id="yukle">Yayınla</button>
+                <button type="submit" name="yayinla" class="form-item submit-btn">Yayınla</button>
                 
             </form>
         </div>
@@ -76,7 +76,7 @@
                 <h3 class="form-item">Video Yükle</h3>
                 <input type="file" name="yol" id="inpFile" accept="video/*" required> <br>        
                 
-                <button type="submit" name="kaydet" class="form-item submit-btn" id="yukle">Yükle</button> <br>        
+                <button type="submit" name="kaydet" class="form-item submit-btn" id="videoYukle">Yükle</button> <br>        
 
                 <div class="progress-bar" id="progressBar">
                     <div class="progress-bar-fill">

@@ -15,6 +15,13 @@ function tarihGoster() {
 
     document.getElementById('tarih').innerHTML = dt + ' ' + month;
     document.getElementById('gun').innerHTML = gun;
+
+    // göstermelik
+    var divGun = document.getElementsByClassName('gun');    
+    for(let i = 1; i < divGun.length; i++) {
+        divGun[i].innerHTML = gunler[date.getDay() + i];
+        if(date.getDay() + i == 7)  divGun[i].innerHTML = gunler[0];
+    }
 }
 
 // HAVA
@@ -68,7 +75,7 @@ function getPosition(position) {
     havaDurumu();
 }
 
-koordinat();
+// koordinat();
 
 // GUNLER
 
@@ -98,7 +105,9 @@ function saatGolge() {
     for(let i = 0; i < 500; i++) {
         shadow += (shadow ? ',' : '') + i * 1 + 'px ' + i * 1 + 'px 0 ' + golgeRenk;        
     }
-    saat.style.textShadow = shadow;
+
+    if(saat)
+        saat.style.textShadow = shadow;
 }
 saatGolge();
 
@@ -119,10 +128,12 @@ saatGoster();
 
 // ZAMAN FARKI
 
-function zamanFarki(simdi, sonra) {
+function zamanFarki(simdi, sonra) {    
     let fark;                    
     let simdiArr = saatFormat(simdi).split(':');
     let sonraArr = saatFormat(sonra).split(':');
+    if (simdiArr[0] == '00') simdiArr[0] = '24';
+    if (sonraArr[0] == '00') sonraArr[0] = '24';
 
     let simdiDk = parseInt(simdiArr[1], 10) + parseInt(simdiArr[0], 10) * 60;
     let sonraDk = parseInt(sonraArr[1], 10) + parseInt(sonraArr[0], 10) * 60;
@@ -133,10 +144,10 @@ function zamanFarki(simdi, sonra) {
         if(fark >= 60) {
             let saat = Math.floor(fark / 60);
             let dk = fark % 60;
-            fark = (dk > 0) ? (saat + ' SAAT ' + dk + ' DAKİKA SONRA') : (saat + ' SAAT SONRA');
+            fark = (dk > 0) ? (saat + ' saat ' + dk + ' dakika sonra') : (saat + ' saat sonra');
         }
         else {
-            fark = (sonraDk - simdiDk) + ' DAKİKA SONRA';
+            fark = (sonraDk - simdiDk) + ' dakika sonra';
         }
         return fark;
     }
@@ -185,7 +196,7 @@ function closeNav() {
 
 // MODAL
 
-var modal = document.getElementById("modal");
+/*var modal = document.getElementById("modal");
 var btn = document.getElementById("open-modal");
 var span = document.getElementById("close-modal");
 
@@ -203,7 +214,7 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }    
-} 
+} */
 
 // SLIDE
 
@@ -232,7 +243,7 @@ function showSlides() {
     
     marquee();
     
-    setTimeout(showSlides, slide_hiz);     
+    // setTimeout(showSlides, slide_hiz);     
 }
 
 // LOGIN
@@ -275,10 +286,10 @@ function progGoster() {
     let gunler = gunuGoster();
 
     if((typeof prog !== 'undefined') && (typeof prog[gunler[zaman.getDay()]] !== 'undefined')) {      
-        var progSira = 0;
+        // var progSira = 0;
         for (let i = 0; i < prog[gunler[zaman.getDay()]].length; i++) {
             if(prog[gunler[zaman.getDay()]][i]['saat'] <= simdi()) {
-                progSira = i;
+                // progSira = i;
                 var simdiki = prog[gunler[zaman.getDay()]][i];
                 var sonraki = prog[gunler[zaman.getDay()]][i + 1];  
                 if(i == prog[gunler[zaman.getDay()]].length - 1) sonraki = prog[gunler[zaman.getDay()]][0];
@@ -292,7 +303,7 @@ function progGoster() {
         $('.simdi').hide();
     } else {                
         $('.simdi').show();
-        $('#simdi-saat').text(saatFormat(simdiki['saat']));                  
+        // $('#simdiSaat').text(saatFormat(simdiki['saat']));                  
         $('#simdi').text(simdiki['etkinlik']);  
     }
 
@@ -301,12 +312,13 @@ function progGoster() {
         $('#zaman-fark').hide();
     } else {
         $('.sonra').show();
-        $('#sonra-saat').text(saatFormat(sonraki['saat'])); 
+        // $('#sonraSaat').text(saatFormat(sonraki['saat'])); 
         $('#sonra').text(sonraki['etkinlik']);
     }
 
     if(typeof fark !== 'undefined') {
-        $('#zaman-fark').text(fark);
+        // $('#zaman-fark').text(fark);
+        $('#sonraSaat').text(fark + ':');
         $('#zaman-fark').show();
     }   
 
@@ -390,4 +402,20 @@ $(function() {
     });
     goster();
 });
+
+// VIDEO PLAYLIST
+
+// var playlist = [
+//     "https://r3---sn-nv47lnl7.c.drive.google.com/videoplayback?expire=1605532400&ei=sEKyX5XeAouThgaqr5SwBw&ip=31.145.58.186&cp=QVRFV0ZfUVROQVhPOmt3Uk44bW9MNnZNTzltd2o1RU5rUEFKbXlNeGFxS1pzTTZta29vbUVZSFA&id=a7866fb04127a7bb&itag=18&source=webdrive&requiressl=yes&mh=eY&mm=32&mn=sn-nv47lnl7&ms=su&mv=m&mvi=3&pl=21&sc=yes&ttl=transient&susc=dr&driveid=1LnhBRcrC7nsw5hb8FSxm7SxuwshcB4Ow&app=explorer&mime=video/mp4&vprv=1&prv=1&dur=179.838&lmt=1605275599326930&mt=1605517876&sparams=expire,ei,ip,cp,id,itag,source,requiressl,ttl,susc,driveid,app,mime,vprv,prv,dur,lmt&sig=AOq0QJ8wRgIhAKFnVRv60zQJrnkB_WfP4qB9Jtil7RCGkzXVZVjMEDcvAiEA5XbxpgKybMTOMsyJnzTff7gJqvI41OjbJhtrjUIi9Ac=&lsparams=mh,mm,mn,ms,mv,mvi,pl,sc&lsig=AG3C_xAwRQIhALBH_Dh7pp1kjzq7p6JGs0kDTbymK0BRI49CfURGw8rOAiAV07AuRKFCmEXf8xh9WDwt-WL8Opl5oJfqk7JHlS_3tg==&cpn=J0NXsPi6UX58hux0&c=WEB_EMBEDDED_PLAYER&cver=20201112",
+//     "https://r5---sn-nv47lns7.c.drive.google.com/videoplayback?expire=1605532148&ei=tEGyX9L6K5jLhgbF-LvgDw&ip=31.145.58.186&cp=QVRFV0ZfUVFSSVhPOmt3Uk41cXdMNnZNTzltdG4zRU5rUEFKbXZRZmFxS1pzTTZqb3dvbUVZSFA&id=60283c05c7823af1&itag=22&source=webdrive&requiressl=yes&mh=OC&mm=32&mn=sn-nv47lns7&ms=su&mv=m&mvi=5&pl=21&ttl=transient&susc=dr&driveid=1y5efhVA_2NgOtXZ6gNGl7l8nQ3B1HkYf&app=explorer&mime=video/mp4&vprv=1&prv=1&dur=2966.325&lmt=1604876636715524&mt=1605517635&sparams=expire,ei,ip,cp,id,itag,source,requiressl,ttl,susc,driveid,app,mime,vprv,prv,dur,lmt&sig=AOq0QJ8wRAIgQwAWBI66317orkQh-7dDKDQG6Gmiq3kO5sXfdRPg0CUCICQHzN1s9uklspfPjSf030w7I53Vhjtk2PM0ap_Rq-Px&lsparams=mh,mm,mn,ms,mv,mvi,pl&lsig=AG3C_xAwRAIgQNIo4ZNQq13oTCjJe5kTTX-sP8rehDBSBrZ2F95ZSgsCIBLPDC1WkRRuSckiRM4qzJWJRn3yR8KCIR12a3IIculG&cpn=oGdDoHdR4GxyZ2j4&c=WEB_EMBEDDED_PLAYER&cver=20201112"
+// ];
+// var i = 0;
+// var video = document.getElementById('video');
+// video.addEventListener('ended',myHandler,false);
+
+// function myHandler(e) {
+//     video.src = playlist[i];
+//     i++;
+//     if(i >= playlist.length) i = 0;
+// }
 

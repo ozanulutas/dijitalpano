@@ -25,17 +25,17 @@
     <div class="giris-wrapper">
         <?php if(isset($_SESSION['k_id'])) { ?>
             <a href="index.php?section=sube" class="kalin">Admin Paneli</a> <?php
-        }
+        }/*
         else { ?>
             <span id="open-modal" class="kalin">Giriş</span> <?php
-        } ?>
+        } */?>
     </div>
 
 </nav>       
 
 <!-- LOGIN MODAL -->
 
-<div id="modal">
+<!-- <div id="modal">
     <div class="modal-content">
         
         <div class="closenav-wrapper">
@@ -57,4 +57,4 @@
         </form>
 
     </div>
-</div>
+</div> -->

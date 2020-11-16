@@ -34,11 +34,12 @@
                 
                 <form method="post" action="index.php?section=program&action=export" id="exportForm">
                     <input type="hidden" name="sube_id" class="subeId">
-                    <select name="file_type" id="fileType" class="sec form-item">
+                    <input type="hidden" name="file_type" id="fileType" value="Xls">
+                    <!-- <select name="file_type" id="fileType" class="sec form-item">
                         <option value="Xlsx">Xlsx</option>
                         <option value="Xls">Xls</option>
                         <option value="Csv">Csv</option>
-                    </select>                
+                    </select>                 -->
                     <button type="submit" name="export" class="form-item btn btn-aktar" id="export">Dışa Aktar</button> 
                 </form>                
 

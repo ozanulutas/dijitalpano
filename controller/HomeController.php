@@ -2,6 +2,17 @@
 
 class HomeController extends Controller {
 
+
+    protected function runBeforeAction() {
+
+        if(empty($_SESSION['k_id'])) {
+            header("Location: index.php?section=login");
+            return false;
+        }
+        return true;
+    }
+
+
     public function defaultAction() {
 
         $dbh = DatabaseConnection::getInstance();
@@ -35,7 +46,7 @@ class HomeController extends Controller {
         } 
         
         $template = new Template('home');
-        $template->view('pano', $data);
+        $template->view('home/pano', $data);
     }
 
 
@@ -78,7 +89,7 @@ class HomeController extends Controller {
     }
     
 
-    public function loginAction() {
+    /*public function loginAction() {
 
         if($_POST) {
             $dbh = DatabaseConnection::getInstance();
@@ -88,10 +99,6 @@ class HomeController extends Controller {
 
             $kullanici = new Kullanici($dbc);
             $data['kullanici'] = $kullanici->findUser($_POST['k_adi'], $_POST['sifre']);
-            
-            // echo "<pre>";
-            // print_r($data['kullanici']);
-            // echo "</pre>";
             
             if($data['kullanici']) {
                 $_SESSION['k_id'] = $data['kullanici']->id;
@@ -104,5 +111,5 @@ class HomeController extends Controller {
         else {
             header('Location: index.php');
         }
-    }
+    }*/
 }
