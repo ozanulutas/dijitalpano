@@ -17,19 +17,18 @@ function tarihGoster() {
     document.getElementById('gun').innerHTML = gun;
 
     // göstermelik
-    var divGun = document.getElementsByClassName('gun');    
-    for(let i = 1; i < divGun.length; i++) {
-        divGun[i].innerHTML = gunler[date.getDay() + i];
-        if(date.getDay() + i == 7)  divGun[i].innerHTML = gunler[0];
-    }
+    // var divGun = document.getElementsByClassName('gun');    
+    // for(let i = 1; i < divGun.length; i++) {
+    //     divGun[i].innerHTML = gunler[date.getDay() + i];
+    //     if(date.getDay() + i == 7)  divGun[i].innerHTML = gunler[0];
+    // }
 }
 
 // HAVA
-
+havaDurumu();
 function havaDurumu() {
-
-    $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&lang=tr&exclude=minutely,hourly,alerts&appid=fa13191aaafdf33d06c157515cbd09f8", function(data){
-        
+    // $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&lang=tr&exclude=minutely,hourly,alerts&appid=fa13191aaafdf33d06c157515cbd09f8", function(data){
+        $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=40.976&lon=27.503&units=metric&lang=tr&exclude=minutely,hourly,alerts&appid=fa13191aaafdf33d06c157515cbd09f8", function(data){    
         
         var gun = document.getElementsByClassName('gun');
         var havaIcon = document.getElementsByClassName('hava-icon');
@@ -317,8 +316,8 @@ function progGoster() {
     }
 
     if(typeof fark !== 'undefined') {
-        // $('#zaman-fark').text(fark);
-        $('#sonraSaat').text(fark + ':');
+        $('#zaman-fark').text(fark);
+        // $('#sonraSaat').text(fark + ':');
         $('#zaman-fark').show();
     }   
 

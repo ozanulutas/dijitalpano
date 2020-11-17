@@ -314,7 +314,7 @@ $(document).ready(function(){
 });
 
 // THUMBNAIL KAYDET 
-
+/*
 function thumbnail() {
 
     var input = document.getElementById('inpFile');
@@ -349,27 +349,27 @@ function thumbnail() {
         });
     }
 }
-thumbnail();
+thumbnail();*/
 
 // VIDEO RADIO KONTROL
 
-// videoSecKontrol();
+/*videoSecKontrol();
 
-// function videoSecKontrol() {
+function videoSecKontrol() {
 
-//     if(!$('.video-sec').is(':checked')) {
-//         $('#videoSil').prop('disabled', true);
-//     }
+    if(!$('.video-sec').is(':checked')) {
+        $('#videoSil').prop('disabled', true);
+    }
 
-//     $('.video-sec').click(function() {
-//         $('#videoSil').prop('disabled', false);
-//         $('#yayinla').prop('disabled', false);
+    $('.video-sec').click(function() {
+        $('#videoSil').prop('disabled', false);
+        $('#yayinla').prop('disabled', false);
     
-//         if(!$('.video-sec').is(':checked')) {
-//             $('#videoSil').prop('disabled', true);
-//         }
-//     });
-// }
+        if(!$('.video-sec').is(':checked')) {
+            $('#videoSil').prop('disabled', true);
+        }
+    });
+}*/
 
 // VIDEO GOSTER
 
@@ -388,21 +388,27 @@ function videoGoster(id) {
             dataType: 'json',
 
             success: function(data) {  
-                $('#modalContent video source').attr('src', data.video.yol);
-                $("#modalContent video")[0].load();  
+                // $('#modalContent video source').attr('src', data.video.yol);
+                // $("#modalContent video")[0].load();  
+                $('#modalContent iframe').attr('src', data.video.yol);
+                // $("#modalContent iframe")[0].load(); 
                 
                 var modal = document.getElementById("modal");
                 var captionText = document.getElementById("caption");
-                var caption = data.video.yol.split('/');
+                // var caption = data.video.yol.split('/');
             
                 modal.style.display = "block";
-                captionText.innerHTML = caption[caption.length - 1];
+                // captionText.innerHTML = caption[caption.length - 1];
+                captionText.innerHTML = data.video.isim
             
                 var span = document.getElementsByClassName("close")[0];
                 span.onclick = function() {
                     modal.style.display = "none";
-                    $("#modalContent video")[0].pause();
-                    $("#modalContent video")[0].currentTime = 0;
+                    // $("#modalContent video")[0].pause();
+                    // $("#modalContent video")[0].currentTime = 0;
+                    // $("#modalContent iframe")[0].pause();
+                    // $("#modalContent iframe")[0].currentTime = 0;
+                    $('#modalContent iframe').attr('src', '');
                 }     
             }            
         });
@@ -410,7 +416,62 @@ function videoGoster(id) {
 }
 
 // VIDEO YAYINLA
+// YENİ
+function yayinla() {
 
+    $(function() {    
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: {
+                section: 'video', 
+                action: 'publish',
+                id: $('input[name="id[]"]:checked').serialize(),
+            },
+
+            success: function(data) { 
+                console.log(data); 
+                if(data != '') {
+
+                    $("#success").html(data);
+                    $("#success").show();
+                    $('#success').delay(5000).fadeOut('slow');
+                }                
+            }            
+        });
+    });
+} 
+
+// VIDEO YAYINDAN KALDIR
+// YENİ
+function yayindanKaldir() {
+
+    $(function() {    
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: {
+                section: 'video', 
+                action: 'unpublish',
+                id: $('input[name="id[]"]:checked').serialize(),
+            },
+
+            success: function(data) {  
+                if(data != '') {
+
+                    $('input[name="id[]"]:checked').prop('checked', false);
+
+                    $("#success").html(data);
+                    $("#success").show();
+                    $('#success').delay(5000).fadeOut('slow');
+                }                
+            }      
+        });
+    });
+} 
+
+/*
+// ESKİ
 function yayinla() {
 
     $(function() {    
@@ -437,9 +498,12 @@ function yayinla() {
         });
     });
 } 
+*/
 
 // VIDEO YAYINDAN KALDIR
 
+// ESKİ
+/*
 function yayindanKaldir() {
 
     $(function() {    
@@ -465,10 +529,10 @@ function yayindanKaldir() {
             }      
         });
     });
-} 
+} */
 
 // VIDEO EMBED
-
+/*
 $(function() {  
     $('#embedForm').on('submit', function(e) {
         e.preventDefault();
@@ -501,9 +565,63 @@ $(function() {
         });
     });
 });
+*/
+// VİDEO UPLOAD - DENEME
 
-// VİDEO UPLOAD
+$(function() {  
+    $('#uploadForm').on('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        formData.append('section', 'video');
+        formData.append('action', $('#uploadForm').attr('action'));
+        formData.append('kaydet', 'kaydet');
 
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: formData,
+            contentType:false,
+            cache:false,
+            processData:false,
+            xhr: function () {
+                const progressBarFill = document.querySelector('#progressBar > .progress-bar-fill');
+                const progressBarText = progressBarFill.querySelector('.progress-bar-text');
+                var xhr = new window.XMLHttpRequest();
+
+                xhr.upload.addEventListener('progress', e => {
+                    const percent = e.lengthComputable ? (e.loaded / e.total) * 100 : 0;
+                    progressBarFill.style.width = percent.toFixed(2) + '%';
+                    progressBarText.textContent = percent.toFixed(2) + '%';
+                });
+                return xhr;
+            },
+            beforeSend: function() {
+                $('#videoYukle').hide();
+                $('#videoYukle').attr('disabled', 'disabled');
+                $('#progressBar').fadeIn();            
+            },            
+            success: function(data) {  
+                if(data) {
+                    $('#progressBar').hide();
+                    $('#videoYukle').show();
+                    $('#videoYukle').attr('disabled', false);
+                    $("#error").html(data);
+                    $("#error").show();
+                    $('#error').delay(5000).fadeOut('slow');
+                } else {
+                    location = "index.php?section=video"; 
+                }
+            }            
+        });
+    });
+
+    $('#videoCancel').click(function() {
+        location = "index.php?section=video";
+    });
+});
+
+// VİDEO UPLOAD - ORJ
+/*
 $(function() {  
     $('#uploadForm').on('submit', function(e) {
         e.preventDefault();
@@ -557,7 +675,7 @@ $(function() {
     $('#videoCancel').click(function() {
         location.reload();
     });
-});
+});*/
 
 // TEMA GOSTER
 

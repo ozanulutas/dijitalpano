@@ -28,14 +28,15 @@ class HomeController extends Controller {
 
         $data['subeler'] = $sube->list();
         $data['slidelar'] = $slide->list(null, null, ['tarih'], 'DESC');
-        $data['video'] = $video->findBy('goster', true);
+        // $data['video'] = $video->findBy('goster', true);
+        $data['video'] = $video->list('goster', true);
         $result['resimler'] = $resim->list();
         $result['tercihler'] = $tercih->list();
 
-        if(!$data['video']->id) {
-            $videoEmbed = new VideoEmbed($dbc);
-            $data['videoEmbed'] = $videoEmbed->findBy('id', 1);
-        }
+        // if(!$data['video']->id) {
+        //     $videoEmbed = new VideoEmbed($dbc);
+        //     $data['videoEmbed'] = $videoEmbed->findBy('id', 1);
+        // }
 
         foreach($result['resimler'] as $resim) {
             $data['resimler'][$resim->id] = $resim;

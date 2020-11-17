@@ -24,12 +24,12 @@ class VideoController extends Controller {
         $video = new Video($dbc);
         $thumbnail = new Thumbnail($dbc);
 
-        $result['videolar'] = $video->list();
+        $data['videolar'] = $video->list();
         $data['thumbs'] = $thumbnail->list();
 
-        foreach($result['videolar'] as $video) {
-            $data['videolar'][$video->id][] = $video;
-        }
+        // foreach($result['videolar'] as $video) {
+        //     $data['videolar'][$video->id][] = $video;
+        // }
 
         $template = new Template('admin');
         $template->view('admin/video', $data);
@@ -41,6 +41,8 @@ class VideoController extends Controller {
         $dbh = DatabaseConnection::getInstance();
         $dbc = $dbh->getConnection();
 
+        // ESKİ
+        /*
         if(isset($_POST['kaydet'])) {
 
             $upload = new Upload('video', VIDEO_DIR);
@@ -54,14 +56,50 @@ class VideoController extends Controller {
             }
         }
         else
-            header("Location: index.php?section=video");
+            header("Location: index.php?section=video");*/
+
+        $data = array();
+        $data['baslik'] = 'Video Ekle';
+        $data['panelBaslik']['gdrive'] = "Google Drive'dan Ekle";
+        $data['panelBaslik']['sunucu'] = 'Sunucuya Yükle';
+        $data['action'] = 'create';
+
+        if(isset($_POST['kaydet'])) {
+
+            if($_POST['kaynak'] == 'sunucu') {
+
+                $upload = new Upload('video', VIDEO_DIR);
+
+                if($yol = $upload->uploadFile()) {
+                    
+                    $_POST['yol'] = $yol;
+                    $video = new Video($dbc);
+                    $video->setValues($_POST);
+                    $video->insert();
+                }
+            }
+            elseif($_POST['kaynak'] == 'gdrive') {
+                $video = new Video($dbc);
+                $video->setValues($_POST);
+                $video->insert();
+                header("Location: index.php?section=video");
+            }
+        }
+        else {
+            $data['video'] = new Video();
+
+            $template = new Template('admin');
+            $template->view('admin/video-duzenle', $data);
+        }
     }
+
 
     public function editAction() {
 
         $dbh = DatabaseConnection::getInstance();
         $dbc = $dbh->getConnection();
-
+        /*
+        // ESKİ
         if(isset($_POST['video_id'])) {
             
             if($_POST['command'] == 'yayinla') {
@@ -90,9 +128,107 @@ class VideoController extends Controller {
                     echo 'Video yayından kaldırıldı.';
             }
         }
+        */
+
+        $data = array();
+        $data['baslik'] = 'Video Düzenle';
+        $data['panelBaslik']['gdrive'] = 'Google Drive Videosu Düzenle';
+        $data['panelBaslik']['sunucu'] = 'Sunucu Videosu Düzenle';
+        $data['action'] = 'edit';
+
+        if(isset($_POST['kaydet'])) {
+
+            $video = new Video($dbc);
+            if($_POST['kaynak'] == 'sunucu') {
+                $video->findBy('id', $_POST['id']);
+                $video->isim = $_POST['isim'];
+                $video->update();
+            }
+            elseif($_POST['kaynak'] == 'gdrive') {
+                $video->setValues($_POST);
+                $video->update();
+            }
+         
+            header("Location: index.php?section=video");
+        }
+        elseif(isset($_POST['iptal'])) {
+            header("Location: index.php?section=video");
+        }
+        elseif(isset($_GET['id'])) {
+
+            $video = new Video($dbc);
+            $data['video'] = $video->findBy('id', $_GET['id']); 
+
+            $template = new Template('admin');
+            $template->view('admin/video-duzenle', $data);
+        }
+        else
+            header("Location: index.php?section=video");
     }
 
 
+    public function deleteAction() {        
+
+        if(isset($_GET['id'])) {
+
+            $dbh = DatabaseConnection::getInstance();
+            $dbc = $dbh->getConnection();
+            
+            $video = new Video($dbc);
+            
+            $video->findBy('id', $_GET['id']);
+            $video->delete();     
+            if(file_exists($video->yol)) {
+                unlink($video->yol); 
+            }
+        }
+        
+        header("Location: index.php?section=video");
+    }
+
+
+    public function publishAction() {
+
+        if(!empty($_POST['id'])) {
+
+            $dbh = DatabaseConnection::getInstance();
+            $dbc = $dbh->getConnection();
+            
+            $ids = array();
+            parse_str($_POST['id'], $ids);
+            $video = new Video($dbc);
+
+            foreach($ids['id'] as $id) {
+                $video->findBy('id', $id);
+                $video->goster = true;
+                $video->update();
+            }
+            echo 'Videolar yayında.';
+        }
+    }
+
+
+    public function unpublishAction() {
+
+        if(!empty($_POST['id'])) {
+
+            $dbh = DatabaseConnection::getInstance();
+            $dbc = $dbh->getConnection();
+            
+            $ids = array();
+            parse_str($_POST['id'], $ids);
+            $video = new Video($dbc);
+
+            foreach($ids['id'] as $id) {
+                $video->findBy('id', $id);
+                $video->goster = null;
+                $video->update();
+            }
+            echo 'Videolar yayından kaldırıldı.';
+        }
+    }
+
+/*
     public function embedAction() {
 
         if($_POST) {
@@ -122,9 +258,9 @@ class VideoController extends Controller {
         }
         else
             header("Location: index.php?section=video");
-    }
+    }*/
 
-
+/*
     public function deleteAction() {        
 
         $dbh = DatabaseConnection::getInstance();
@@ -141,7 +277,7 @@ class VideoController extends Controller {
         
         header("Location: index.php?section=video");
     }
-
+*/
 
     public function ajaxAction() {
 
@@ -162,7 +298,7 @@ class VideoController extends Controller {
             header("Location: index.php?section=video");
     }
     
-
+/*
     public function thumb($video_id) {
         $dbh = DatabaseConnection::getInstance();
         $dbc = $dbh->getConnection();
@@ -176,6 +312,6 @@ class VideoController extends Controller {
             'video_id' => $video_id]);
         $thumbnail->insert();
     } 
-
+*/
 
 }

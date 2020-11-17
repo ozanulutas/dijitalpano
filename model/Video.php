@@ -10,8 +10,10 @@ class Video extends Entity{
 
         $this->fields = [
             'id',
+            'isim',
             'yol',
-            'goster'
+            'goster',
+            'kaynak'
         ];
     }
 }

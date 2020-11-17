@@ -34,6 +34,18 @@
     font-weight: bold;
 }
 
+@font-face {
+    font-family:'infinite-stroke';
+    src: url('../font/Infinite_Stroke_Bolder.otf');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family:'goldman';
+    src: url('../font/Goldman-Bold.ttf');
+    font-weight: bold;
+}
+
 * {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -66,8 +78,10 @@ select {
 }
 
 h1 { font-size: 3vw; }
+
 h2,
 .custom-btn { font-size: 3.0vmin; }
+
 p { font-size: 2.5vmin; } 
 
 a { text-decoration: none;}
@@ -251,7 +265,7 @@ hr { opacity: 0.3; }
 .alan2 {
     /**/ grid-area: alan2;
     display: grid;
-    grid-template-rows: auto 1fr auto; /*auto auto 1fr; */
+    grid-template-rows: auto 1fr auto; 
     padding: 0.5rem;
     overflow: hidden;
     max-width: 100%;
@@ -346,8 +360,30 @@ iframe {
     color: white;
 }
 
+#prog {
+    padding: 0 2%;
+}
+
 .prog h2 {
-    margin-bottom: 1%;
+    font-family: 'infinite-stroke';
+    /* margin-bottom: 1%; */
+    font-size: 3.5vmin;
+    margin: 2%;
+    font-weight: bold;
+    text-shadow: -2px 2px 3px rgba(0, 0, 0, 0.5), 
+    2px -2px 3px rgba(255, 255, 255, 0.9); 
+}
+
+.etkinlik {
+    /* display: flex;
+    flex-direction: ; */
+    padding: 2% 1%;
+    box-shadow: inset -2px 2px 5px rgba(0, 0, 0, 0.5),
+    inset 2px -2px 5px rgba(255, 255, 255, 0.685);
+    
+}
+#simdiSaat {
+    margin: auto 1%;
 }
 
 .simdi,
@@ -370,12 +406,34 @@ iframe {
     margin-top: 0px;
 }
 #zaman-fark {
-    color: black;
+    color: white;
     text-align: left;
     font-size: 2vmin;
     font-weight: bold;
     text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.5), 
     2px -2px 4px rgba(255, 255, 255, 0.9); 
+    background-color: red;
+    /* margin-bottom: 1%; */
+    padding: 1.5%;
+    display: inline-flex;
+    box-shadow: inset -2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+#progIcerik {
+    font-family: "goldman";
+    font-weight: bold;
+    text-align: left;
+}
+#progIcerik p {
+    box-shadow:  -2px 2px 5px rgba(0, 0, 0, 0.5);
+     /* 2px -2px 5px rgba(255, 255, 255, 0.685); */    
+}
+
+.dikey-cizgi {
+    /* width: 0; */
+    border-left: 6px solid red;
+    height: 0.75vmin;
+    margin-left: 10%;
+    z-index: 2;
 }
 
 #saat {
