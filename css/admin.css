@@ -140,7 +140,8 @@ tr, th, td {
   height: 100%; */
 }
 
-table, th {
+table, 
+th {
   border: 1px solid #00a0b0;
 }
 
@@ -189,6 +190,15 @@ td img {
 
 td a {
   margin-right: 15%;
+}
+
+.duyuru-table {
+  table-layout: fixed;  
+}
+
+.td-input {
+  width: min-content;
+  text-align: center;
 }
 
 /* FORM */
@@ -315,10 +325,6 @@ td a {
 .duyuru-wrapper {
   max-width: 90vmin;
   
-}
-
-.duyuru-table {
-  table-layout: fixed;  
 }
 
 /* RESİMLER */
@@ -499,12 +505,6 @@ td a {
 
 .active:after {
   content: "\2796"; 
-}
-
-/* KULLANICI */
-
-.kullanici-table tr:hover {
-  cursor: default;
 }
 
 /* TOOLTIP */

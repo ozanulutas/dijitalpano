@@ -258,15 +258,16 @@ hr { opacity: 0.3; }
 
 .alan1 {
     grid-area: alan1;
-    padding: 0.5rem;
+    padding: 0 0.5rem;
 
-    max-height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .alan2 {
     /**/ grid-area: alan2;
     display: grid;
     grid-template-rows: auto 1fr auto; 
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem 0 0.5rem;
     overflow: hidden;
     max-width: 100%;
 }
@@ -341,6 +342,29 @@ iframe {
                  5px -5px 10px rgba(255, 255, 255, 0.9);  */
 }
 
+.geri-sayim-wrapper {
+    display: flex;
+    justify-content: end;
+}
+.geri-sayim {
+    font-family: 'goldman';
+    font-weight: bold;
+    color: white;
+    background-color: var(--renk-1);
+    padding: 1vmin;
+    margin-top: 1%; 
+    width: max-content;    
+    
+    box-shadow: inset -2px 2px 5px rgba(0, 0, 0, 0.5),
+    inset 2px -2px 5px rgba(255, 255, 255, 0.685);
+}
+
+.geri-sayim-etkinlik {
+    color: black;
+    text-shadow: -2px 2px 3px rgba(0, 0, 0, 0.5), 
+    2px -2px 3px rgba(255, 255, 255, 0.9); 
+}
+
 /* alan2 */
 
 #saat,
@@ -397,11 +421,11 @@ iframe {
     margin: auto;
 }
 
-.prog .simdi {
+.simdi {
     margin-top: 1%;
     background-color: #5fbe00;
 }
-.prog .sonra {
+.sonra {
     background-color: red;
     margin-top: 0px;
 }
@@ -596,6 +620,10 @@ iframe {
 
 .dot-container {
     text-align: right;
+
+    /* justify-content: flex-end;
+    display: flex;
+    background-color: khaki; */
 }
 
 .dot {

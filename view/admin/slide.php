@@ -12,7 +12,8 @@
             <th>Slide Başlığı</th>
             <th>Slide Metni</th>
             <th>Tarih</th>
-            <th colspan="2">Resim</th>
+            <th>Resim</th>
+            <th>Seçenek</th>
         </tr>
 
         <?php foreach($data['slidelar'] as $slide) { ?>

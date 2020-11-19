@@ -109,6 +109,10 @@
             <input type="hidden" name="ozellik[]" class="ozellik" value="slide_hiz">
             <input type="number" name="deger[]" class="deger" min="0" value="<?php echo $data['tercihler']['slide_hiz']->deger / 1000 ?? ''; ?>">
 
+            <h3>Veri Yenileme Sıklığı</h3>
+            <input type="hidden" name="ozellik[]" class="ozellik" value="yenile_hiz">
+            <input type="number" name="deger[]" class="deger" min="0" value="<?php echo $data['tercihler']['yenile_hiz']->deger / 1000 ?? ''; ?>">
+
             <button type="submit" name="kaydet" class="form-item submit-btn">Kaydet</button>
         </form>
     </div>

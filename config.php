@@ -13,7 +13,6 @@ define( "IMG_SLIDE_DIR", IMG_DIR . "slide/" );
 define( "IMG_LAYOUT_DIR", IMG_DIR . "layout/" );
 define( "IMG_THUMB_DIR", IMG_DIR . "thumbnail/" );
 
-
 define( "GUNLER", [
     'Pazartesi',
     'Salı',
@@ -42,5 +41,7 @@ require_once 'model/VideoEmbed.php';
 require_once 'model/Thumbnail.php';
 require_once 'model/Css.php';
 require_once 'model/Tercih.php';
+require_once 'model/Sayac.php';
+require_once 'model/SubeSayac.php';
 
 include 'vendor/autoload.php';

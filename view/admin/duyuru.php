@@ -23,7 +23,8 @@
             <th>Duyuru Metni</th>
             <th>Yayınlanma Tarihi</th>
             <th>Bitiş Tarihi</th>
-            <th colspan="2">Şubeler</th>
+            <th>Şubeler</th>
+            <th>Seçenek</th>
         </tr>
         
         <?php foreach($data['duyurular'] as $duyuru) { ?>

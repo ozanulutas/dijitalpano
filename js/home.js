@@ -195,7 +195,8 @@ function closeNav() {
 
 // MODAL
 
-/*var modal = document.getElementById("modal");
+/*
+var modal = document.getElementById("modal");
 var btn = document.getElementById("open-modal");
 var span = document.getElementById("close-modal");
 
@@ -213,40 +214,12 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }    
-} */
+} 
+*/
 
-// SLIDE
-
-var slideIndex = 0;
-showSlides();
-
-function showSlides() {
-    
-    var i;
-    var slides = document.getElementsByClassName("slide");
-    var dots = document.getElementsByClassName("dot");
-    
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-    
-    slideIndex++;
-    if (slideIndex > slides.length) slideIndex = 1;
-
-    slides[slideIndex - 1].style.display = "flex";
-    dots[slideIndex-1].className += " active";
-    
-    marquee();
-    
-    // setTimeout(showSlides, slide_hiz);     
-}
 
 // LOGIN
-
+/*
 $(function() {
     $('#loginForm').submit(function(e){ 
         e.preventDefault();
@@ -277,9 +250,11 @@ $(function() {
         });
     });
 });
+*/
 
 // PROGRAM GOSTER 
 
+var progTimeout;
 function progGoster() {
 
     let gunler = gunuGoster();
@@ -319,23 +294,27 @@ function progGoster() {
         $('#zaman-fark').text(fark);
         // $('#sonraSaat').text(fark + ':');
         $('#zaman-fark').show();
-    }   
+    } else {
+        $('#zaman-fark').hide();
+    }
 
-    setTimeout(progGoster, 60000);
+    progTimeout = setTimeout(progGoster, 60000);
 }
 
 // GOSTER
 
+// ŞUBEYE GÖRE GÖSTER
+
 const cssVarName = ['--renk-1', '--renk-2', '--renk-3', '--renk-4', '--renk-5', '--renk-6'];
 const cssVarVal = ['#ff5f01', '#feac00', '#ffb933', '#800000', '#ffc933', '#ff9100'];
 
-function goster() {
+function gosterSubeyeGore() {
     $.ajax({
         type: 'POST',
         url: 'index.php',
         data: {
             section: 'home', 
-            action: 'show',
+            action: 'showBySube',
             sube_id: $('#subeSec').val()
         },
         dataType: 'json',
@@ -382,7 +361,6 @@ function goster() {
                     document.documentElement.style.setProperty(cssVarName[i], cssVarVal[i]);
                 }
             }
-            
         },
         error: function() {
             $('#duyuru').empty();
@@ -395,12 +373,129 @@ function goster() {
     });
 }
 
-$(function() {
-    $('#subeSec').change(function(){ 
-        goster();
+// SABİT VERİLERİ GÖSTER
+
+var yenile_hiz;
+var slide_hiz;
+
+function gosterSabit() {
+    $.ajax({
+        type: 'POST',
+        url: 'index.php',
+        data: {
+            section: 'home', 
+            action: 'showStatic',
+            sube_id: $('#subeSec').val()
+        },
+        dataType: 'json',
+        success: function(data) { 
+
+            // TERCİHLER
+
+            if(data.tercihler) {
+                const marquee_hiz = data.tercihler.marquee_hiz.deger;
+                slide_hiz = data.tercihler.slide_hiz.deger; 
+                yenile_hiz = data.tercihler.yenile_hiz.deger;
+
+                document.documentElement.style.setProperty('--marquee-hiz', marquee_hiz + 's');
+            }
+
+            // SLIDE GOSTER
+
+            $('.slideshow-container').empty();
+
+            if(data.slidelar.length > 0) {
+
+                var slideDot = $('<div/>').addClass('.dot-container');
+
+                for (let i in data.slidelar) {
+
+                    var slideDiv = $('<div/>')
+                        .addClass('alan3-sag overflow slide rotate');
+
+                    if(data.slidelar[i].resim_id) {
+                        var resimId = data.slidelar[i].resim_id;
+                        var slideImg = $('<img/>')
+                        .attr('src', data.resimler[resimId].yol)
+                        .addClass('alan3-sag-resim');
+
+                        slideDiv.append(slideImg);
+                    }
+
+                    var slideMarquee = $('<div/>')
+                        .attr('name', 'marquee');
+
+                    slideMarquee.append(
+                        $('<h2/>')
+                            .text(data.slidelar[i].baslik)
+                    );
+                    slideMarquee.append(
+                        $('<p/>')
+                            .text(data.slidelar[i].metin)
+                    );
+
+                    slideDiv.append(slideMarquee);
+                    $('.slideshow-container').append(slideDiv);  
+                    $('.slideshow-container').append(slideDot);  
+                    
+                    $(slideDot).append(
+                        $('<span>')
+                            .addClass('dot')
+                    );
+                }
+                showSlides();
+            }
+        }
     });
-    goster();
+}
+
+function gosterZamanlayici() {
+    clearTimeout(slideTimeout);
+    clearTimeout(progTimeout);
+
+    gosterSubeyeGore();
+    gosterSabit();
+    
+    console.log('her');
+    setTimeout('gosterZamanlayici()', yenile_hiz);
+}
+
+$(function() {
+    gosterZamanlayici();
+
+    $('#subeSec').change(function(){ 
+        gosterSubeyeGore();
+    });    
 });
+
+
+// SLIDE
+
+var slideIndex = 0;
+var slideTimeout;
+function showSlides() {
+    
+    var i;
+    var slides = document.getElementsByClassName("slide");
+    var dots = document.getElementsByClassName("dot");
+    
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    
+    slideIndex++;
+    if (slideIndex > slides.length) slideIndex = 1;
+
+    slides[slideIndex - 1].style.display = "flex";
+    dots[slideIndex-1].className += " active";
+    
+    marquee(); 
+    // slideTimeout = setTimeout(showSlides, slide_hiz); 
+}
 
 // VIDEO PLAYLIST
 

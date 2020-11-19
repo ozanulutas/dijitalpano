@@ -207,7 +207,7 @@ function progGoster() {
                         row += '<td onclick="edit(\'program\', ' + data.programlar[j][i]['id'] + ');" class="prog-edit">' 
                         + formatTime(data.programlar[j][i]['saat']) 
                         + '<br>' 
-                        + data.programlar[j][i]['etkinlik'].substr(0, 10)
+                        + data.programlar[j][i]['etkinlik']
                         + '</td>';
                     }
                     else {

@@ -51,7 +51,7 @@ class HomeController extends Controller {
     }
 
 
-    public function showAction() {
+    public function showBySubeAction() {
 
         if($_POST) {
             $dbh = DatabaseConnection::getInstance();
@@ -64,6 +64,17 @@ class HomeController extends Controller {
             $subeDuyuru = new SubeDuyuru($dbc);
             $program = new Program($dbc);
             $css = new Css($dbc);
+
+            // SABİT
+            $slide = new Slide($dbc);
+            $resim = new Resim($dbc);
+            $data['slidelar'] = $slide->list(null, null, ['tarih'], 'DESC');
+            $result['resimler'] = $resim->list();
+
+            foreach($result['resimler'] as $resim) {
+                $data['resimler'][$resim->id] = $resim;
+            } 
+            // SABİT 
 
             $data['css'] = $css->list('sube_id', $_POST['sube_id'], ['name']);
             $data['sube'] = $sube->findBy('id', $_POST['sube_id']);
@@ -87,6 +98,33 @@ class HomeController extends Controller {
         else {
             header('Location: index.php');
         }
+    }
+
+
+    public function showStaticAction() {
+
+        $dbh = DatabaseConnection::getInstance();
+        $dbc = $dbh->getConnection();
+
+        $data = array();
+
+        $slide = new Slide($dbc);
+        $resim = new Resim($dbc);
+        $tercih = new Tercih($dbc);
+
+        $result['tercihler'] = $tercih->list();
+        foreach($result['tercihler'] as $tercih) {
+            $data['tercihler'][$tercih->ozellik] = $tercih;
+        } 
+
+        $data['slidelar'] = $slide->list(null, null, ['tarih'], 'DESC');
+        $result['resimler'] = $resim->list();
+
+        foreach($result['resimler'] as $resim) {
+            $data['resimler'][$resim->id] = $resim;
+        } 
+
+        echo json_encode($data);
     }
     
 

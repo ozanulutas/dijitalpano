@@ -51,7 +51,7 @@ class TercihController extends Controller {
 
                 $tercih->findBy('ozellik', $_POST['ozellik'][$i]['value']);
                 $tercih->ozellik = $_POST['ozellik'][$i]['value'];
-                $tercih->deger = ($tercih->ozellik == 'slide_hiz') ? $_POST['deger'][$i]['value'] * 1000 : $_POST['deger'][$i]['value'];
+                $tercih->deger = ($tercih->ozellik == 'slide_hiz' || $tercih->ozellik == 'yenile_hiz') ? $_POST['deger'][$i]['value'] * 1000 : $_POST['deger'][$i]['value'];
                 
                 $tercih->update();                
             }

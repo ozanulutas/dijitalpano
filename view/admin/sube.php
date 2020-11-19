@@ -7,10 +7,11 @@
 
 <div class="form-wrapper">
 
-    <table>
+    <table class="duyuru-table">
         <tr>
             <th>Şube Adı</th>
-            <th colspan="2">Adres</th>
+            <th>Adres</th>
+            <th>Seçenek</th>
         </tr>
         <?php foreach($data['subeler'] as $sube) { ?>
         <tr>

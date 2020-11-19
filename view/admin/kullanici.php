@@ -7,12 +7,12 @@
 
 <div class="form-wrapper">
 
-    <table class="kullanici-table">
+    <table>
         <tr>
             <th>Kullanıcı Adı</th>
         </tr>
         <?php foreach($data['kullanicilar'] as $kullanici) { ?>
-        <tr>
+        <tr class="td-empty">
             <td>
                 <?php echo $kullanici->k_adi; ?>
             </td>

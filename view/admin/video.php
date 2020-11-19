@@ -24,16 +24,16 @@
         </div>
     </div>
 
-    <table>
+    <table class="duyuru-table">
         <tr>
-            <th>Yayında</th>
+            <th class="td-input">Yayında</th>
             <th>Video Adı</th>
             <th>Kaynak</th>
             <th>Seçenekler</th>
         </tr>
         <?php foreach($data['videolar'] as $video) { ?>
         <tr>
-            <td class="td-empty" >
+            <td class="td-empty td-input">
                 <input type="checkbox" name="id[]" value="<?php echo $video->id; ?>" <?php echo $video->goster == true ? 'checked' : ''; ?>>
             </td>
             <td onclick="edit('video', <?php echo $video->id; ?>)">
