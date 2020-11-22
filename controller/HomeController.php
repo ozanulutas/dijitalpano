@@ -54,39 +54,39 @@ class HomeController extends Controller {
     public function showBySubeAction() {
 
         if($_POST) {
+
             $dbh = DatabaseConnection::getInstance();
             $dbc = $dbh->getConnection();
 
             $data = array();
 
-            $duyuru = new Duyuru($dbc);
             $sube = new Sube($dbc);
+            $duyuru = new Duyuru($dbc);
             $subeDuyuru = new SubeDuyuru($dbc);
+            $sayac = new Sayac($dbc);
+            $subeSayac = new SubeSayac($dbc);
             $program = new Program($dbc);
             $css = new Css($dbc);
-
-            // SABİT
-            $slide = new Slide($dbc);
-            $resim = new Resim($dbc);
-            $data['slidelar'] = $slide->list(null, null, ['tarih'], 'DESC');
-            $result['resimler'] = $resim->list();
-
-            foreach($result['resimler'] as $resim) {
-                $data['resimler'][$resim->id] = $resim;
-            } 
-            // SABİT 
 
             $data['css'] = $css->list('sube_id', $_POST['sube_id'], ['name']);
             $data['sube'] = $sube->findBy('id', $_POST['sube_id']);
             
             $subeDuyurular = $subeDuyuru->list('sube_id', $_POST['sube_id']);
+            $subeSayaclar = $subeSayac->list('sube_id', $_POST['sube_id']);
             
             $duyuruId = array();
             foreach($subeDuyurular as $sd) {
                 $duyuruId[] = $sd->duyuru_id;         
             }
+
+            $sayacId = array();
+            foreach($subeSayaclar as $sc) {
+                $sayacId[] = $sc->sayac_id;         
+            }
             
-            $data['duyurular'] = $duyuru->whereInBtwDate('id', $duyuruId, ['yayin_tarih'], 'DESC');                
+            $data['duyurular'] = $duyuru->whereInBtwDate('id', $duyuruId, ['yayin_tarih', 'bitis_tarih'], ['yayin_tarih'], 'DESC'); 
+            $data['sayaclar'] = $sayac->whereInBtwDate('id', $sayacId, ['yayin_tarih', 'tarih', 'saat'], ['yayin_tarih', 'tarih', 'saat'], 'ASC');  
+                
             
             $result['programlar'] = $program->list('sube_id', $_POST['sube_id'], ['gun', 'saat']);
             foreach($result['programlar'] as $program) {

@@ -153,6 +153,34 @@ function zamanFarki(simdi, sonra) {
     return '';
 }
 
+
+function unixTimestampFarki(simdi, sonra) {
+
+    let fark = Date.parse(sonra) - simdi;
+
+    var gunFarki = Math.floor(fark/1000/60/60/24);
+    fark -= gunFarki*1000*60*60*24
+
+    var saatFarki = Math.floor(fark/1000/60/60);
+    fark -= saatFarki*1000*60*60
+
+    var dkFarki = Math.floor(fark/1000/60);
+    fark -= dkFarki*1000*60
+
+    // var snFarki = Math.floor(fark/1000);
+
+    if(gunFarki >= 0) {
+        
+        // console.log((gunFarki > 0 ? (gunFarki + ' gün ') : '') + 
+        // (saatFarki > 0 ? (saatFarki + ' saat ') : '') + 
+        // (dkFarki > 0 ? (dkFarki + ' dakika ') : ''));
+        
+        return (gunFarki > 0 ? (gunFarki + ' gün ') : '') + 
+            (saatFarki > 0 ? (saatFarki + ' saat ') : '') + 
+            (dkFarki > 0 ? (dkFarki + ' dakika ') : '');
+    }
+}
+
 // SAAT FORMAT
 
 function saatFormat(saat) {
@@ -255,6 +283,7 @@ $(function() {
 // PROGRAM GOSTER 
 
 var progTimeout;
+
 function progGoster() {
 
     let gunler = gunuGoster();
@@ -301,6 +330,27 @@ function progGoster() {
     progTimeout = setTimeout(progGoster, 60000);
 }
 
+// GERİ SAYIM GOSTER 
+
+var sayacTimeout;
+var sayacIndis = 0;
+
+function sayacGoster() {
+    
+    if(unixTimestampFarki(Date.now(), sayac[sayacIndis].tarih + ' ' + sayac[sayacIndis].saat)) {
+        $('.geri-sayim-wrapper').show();
+        $('.geri-sayim-etkinlik').text(sayac[sayacIndis].etkinlik + ' İçin Kalan Süre: ');
+        $('.geri-sayim-sayac').text(unixTimestampFarki(Date.now(), sayac[sayacIndis].tarih + ' ' + sayac[sayacIndis].saat));
+        
+    } else {
+        $('.geri-sayim-wrapper').hide();
+        sayacIndis++;
+        if(sayacIndis >= sayac.length) sayacIndis = 0;
+    }
+    
+    sayacTimeout = setTimeout(sayacGoster, 60000);
+}
+
 // GOSTER
 
 // ŞUBEYE GÖRE GÖSTER
@@ -343,6 +393,17 @@ function gosterSubeyeGore() {
             } else {
                 $('#progIcerik').hide();
             }
+
+            // GERİ SAYIM
+            
+            if(data.sayaclar.length > 0) {
+                $('.geri-sayim-wrapper').show();
+                sayac = data.sayaclar;
+                console.log(sayac);
+                sayacGoster();              
+            } else {
+                $('.geri-sayim-wrapper').hide();
+            }
             
             // BAŞLIK GOSTER
 
@@ -384,8 +445,7 @@ function gosterSabit() {
         url: 'index.php',
         data: {
             section: 'home', 
-            action: 'showStatic',
-            sube_id: $('#subeSec').val()
+            action: 'showStatic'
         },
         dataType: 'json',
         success: function(data) { 
@@ -452,12 +512,13 @@ function gosterSabit() {
 function gosterZamanlayici() {
     clearTimeout(slideTimeout);
     clearTimeout(progTimeout);
+    clearTimeout(sayacTimeout);
+    // clearInterval(sayacTimeout);
 
     gosterSubeyeGore();
     gosterSabit();
     
-    console.log('her');
-    setTimeout('gosterZamanlayici()', yenile_hiz);
+    // setTimeout('gosterZamanlayici()', yenile_hiz);
 }
 
 $(function() {

@@ -72,9 +72,14 @@
                 }
 
             </script> -->
+            
 
+        <!-- GERİ SAYIM -->
         <div class="geri-sayim-wrapper">
-            <div class="geri-sayim"><span class="geri-sayim-etkinlik">Genel Sınav İçin Kalan Süre:</span> 2 gün, 13 saat, 23 dakika</div>
+            <div class="geri-sayim">
+                <span class="geri-sayim-etkinlik">Genel Sınav İçin Kalan Süre:</span> 
+                <span class="geri-sayim-sayac">2 gün, 13 saat, 23 dakika</span> 
+            </div>
         </div>
     </div>
 

@@ -72,12 +72,15 @@ class Entity {
     }
 
 
-    public function whereInBtwDate($fieldName, $fieldValues = array(), $order = array(), $sort = null) {
+    public function whereInBtwDate($fieldName, $fieldValues = array(), $date = array(), $order = array(), $sort = null) {
+
+        $date['bitis_tarih'] = isset($date[1]) ? (" AND " . $date[1] . " >= CURDATE() ") : "";
+        $date['bitis_saat'] = isset($date[2]) ? (" AND " . $date[2] . " >= CURTIME() ") : "";
 
         $in = str_repeat('?, ', count($fieldValues) - 1) . '?';
         $orderBy = $order ? (' ORDER BY ' . implode(', ', $order)) : '';
         $sortBy = $sort ? $sort : '';
-        $sql = "SELECT * FROM " . $this->tableName . " WHERE $fieldName IN ($in) AND yayin_tarih <= curdate() AND bitis_tarih >= curdate() $orderBy $sortBy";
+        $sql = "SELECT * FROM " . $this->tableName . " WHERE $fieldName IN ($in) AND " . $date[0] . " <= CURDATE() " . $date['bitis_tarih'] . $date['bitis_saat'] . " $orderBy $sortBy";
 
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute($fieldValues);
