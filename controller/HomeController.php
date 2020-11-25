@@ -28,8 +28,8 @@ class HomeController extends Controller {
 
         $data['subeler'] = $sube->list();
         $data['slidelar'] = $slide->list(null, null, ['tarih'], 'DESC');
-        // $data['video'] = $video->findBy('goster', true);
-        $data['video'] = $video->list('goster', true);
+        $data['video'] = $video->findBy('goster', true);
+        // $data['video'] = $video->list('goster', true);
         $result['resimler'] = $resim->list();
         $result['tercihler'] = $tercih->list();
 
@@ -111,6 +111,9 @@ class HomeController extends Controller {
         $slide = new Slide($dbc);
         $resim = new Resim($dbc);
         $tercih = new Tercih($dbc);
+        // $video = new Video($dbc);
+        
+        // $data['video'] = $video->findBy('goster', true);
 
         $result['tercihler'] = $tercih->list();
         foreach($result['tercihler'] as $tercih) {
@@ -126,29 +129,4 @@ class HomeController extends Controller {
 
         echo json_encode($data);
     }
-    
-
-    /*public function loginAction() {
-
-        if($_POST) {
-            $dbh = DatabaseConnection::getInstance();
-            $dbc = $dbh->getConnection();
-
-            $data = array();
-
-            $kullanici = new Kullanici($dbc);
-            $data['kullanici'] = $kullanici->findUser($_POST['k_adi'], $_POST['sifre']);
-            
-            if($data['kullanici']) {
-                $_SESSION['k_id'] = $data['kullanici']->id;
-                
-                echo json_encode($_SESSION);
-            } else {
-                echo json_encode("Kullanıcı adı veya şifre hatalı");
-            }
-        } 
-        else {
-            header('Location: index.php');
-        }
-    }*/
 }

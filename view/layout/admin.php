@@ -21,11 +21,15 @@
 
         <div class="main-wrapper">   
 
-            <?php include 'nav-admin.php'; ?>
+            <?php if(isset($_SESSION['k_id'])) {
+                include 'nav-admin.php'; 
+            } ?>
             
             <main id="main-admin">
 
-                <?php include 'view/' . $template . '.php'; ?>
+                <?php if(isset($_SESSION['k_id'])) {
+                    include 'view/' . $template . '.php';
+                } ?>
 
             </main>
 

@@ -29,7 +29,7 @@
             <?php foreach($data['subeler'] as $sube) { ?>
                 <option value="<?php echo $sube->id; ?>" 
                  <?php echo ((($data['sube_id'] ?? '') == $sube->id || ($data['program']->sube_id ?? '') == $sube->id)) ? ' selected' : ' '; ?>>
-                    <?php echo $sube->isim; ?>
+                    <?php echo htmlspecialchars($sube->isim); ?>
                 </option> <?php 
             } ?>
         </select>
@@ -44,7 +44,7 @@
         </select> 
 
         <h3 class="form-item">Ders Adı</h3>
-        <input type="text" name="etkinlik" id="etkinlik" value="<?php echo $data['program']->etkinlik ?? ''; ?>" class="form-item" <?php echo $data['action'] == 'edit' ? ' required' : ''; ?>> 
+        <input type="text" name="etkinlik" id="etkinlik" value="<?php echo htmlspecialchars($data['program']->etkinlik ?? ''); ?>" class="form-item" <?php echo $data['action'] == 'edit' ? ' required' : ''; ?>> 
         
         <h3 class="form-item">Saat Aralığı</h3>
         <div class="group">

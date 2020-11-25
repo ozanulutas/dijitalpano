@@ -11,10 +11,10 @@
         <input type="hidden" name="id" value="<?php echo $data['sube']->id ?? ''; ?>" class="form-item"> 
 
         <h3 class="form-item">Şube Adı</h3>
-        <input type="text" name="isim" value="<?php echo $data['sube']->isim ?? ''; ?>" placeholder="Şube Adı" class="form-item" required> <br>
+        <input type="text" name="isim" value="<?php echo htmlspecialchars($data['sube']->isim ?? ''); ?>" placeholder="Şube Adı" class="form-item" required> <br>
         
         <h3 class="form-item">Şube Adresi</h3>
-        <input type="text" name="adres" value="<?php echo $data['sube']->adres ?? ''; ?>" placeholder="Şube Adresi" class="form-item"> <br>
+        <input type="text" name="adres" value="<?php echo htmlspecialchars($data['sube']->adres ?? ''); ?>" placeholder="Şube Adresi" class="form-item"> <br>
         
         <button type="submit" name="kaydet" class="form-item submit-btn">Kaydet</button> <br>
         <button type="submit" name="iptal" formnovalidate class="form-item cancel-btn">İptal</button> <br>

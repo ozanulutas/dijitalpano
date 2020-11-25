@@ -3,7 +3,7 @@
 class Entity {
 
     protected $dbc;
-    protected $tableName;
+    public $tableName;
     protected $fields;
 
 
@@ -21,13 +21,10 @@ class Entity {
         $sql = "SELECT * FROM " . $this->tableName . " WHERE " . $fieldName . " = :value";
         $stmt = $this->dbc->prepare($sql);
         $stmt->execute(['value' => $fieldValue]);
-        $row = $stmt->fetch();
+        $row = $stmt->fetch();        
         
-        // $obj = new $this;
-        // $obj->setValues($row);
         $this->setValues($row);
 
-        //return $obj;
         return $this;
     }
 

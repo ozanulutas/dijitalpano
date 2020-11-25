@@ -10,10 +10,10 @@
     <div id="success" class="fade"></div>
 
     <div class="islem-group"> 
-        <a href="index.php?section=video&action=create" style="align-self:flex-end;">Yeni Video Ekle</a>
+        <a href="index.php?section=video&action=create" class="ekle" style="align-self:flex-end;">Yeni Video Ekle</a>
 
         <div class="flex-col w-50">
-            <div class="accordion form-item">Seçili Videoları...</div>
+            <div class="accordion form-item">Seçili Videoyu...</div>
             <div class="panel">          
                 <span class="create form-item" onclick="yayinla()">Yayınla</span> 
                 <br>                  
@@ -29,23 +29,25 @@
             <th class="td-input">Yayında</th>
             <th>Video Adı</th>
             <th>Kaynak</th>
-            <th>Seçenekler</th>
+            <th class="td-secenek">Seçenekler</th>
         </tr>
         <?php foreach($data['videolar'] as $video) { ?>
         <tr>
             <td class="td-empty td-input">
-                <input type="checkbox" name="id[]" value="<?php echo $video->id; ?>" <?php echo $video->goster == true ? 'checked' : ''; ?>>
+                <!-- <input type="checkbox" name="id[]" value="<?php /*echo $video->id; ?>" <?php echo $video->goster == true ? 'checked' : ''; */?>> -->
+                <input type="radio" name="id" class="video-sec" value="<?php echo $video->id; ?>" 
+                 <?php echo $video->goster == true ? 'checked' : ''; ?>>
             </td>
             <td onclick="edit('video', <?php echo $video->id; ?>)">
-                <?php echo $video->isim; ?>
+                <?php echo htmlspecialchars($video->isim); ?>
             </td>
             <td onclick="edit('video', <?php echo $video->id; ?>)">
-                <?php echo $video->kaynak; ?>
+                <?php echo htmlspecialchars($video->kaynak); ?>
             </td>
             <td class="td-empty td-secenek">
-                <a href="javascript:void(0);"
+                <a href="javascript:void(0);" class="izle"
                     onclick="videoGoster(<?php echo $video->id; ?>)">                    
-                    İZLE
+                    &#9654; İZLE
                 </a>
                 <a href="index.php?section=video&action=delete&id=<?php echo $video->id; ?>"
                     onclick="return deleteControl('Videoyu silmek istediğinize emin misiniz?')"
@@ -59,8 +61,8 @@
     
 
 
-        <!-- ESKİ -->
-        <!-- 
+    <!-- ESKİ -->
+    <!-- 
     <div id="success" class="fade"></div>
     <div id="error" class="fade"></div>
 

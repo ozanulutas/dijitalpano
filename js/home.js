@@ -1,4 +1,18 @@
 
+// escapeHtml
+
+function escapeHtml(text) {
+    var map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    
+    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
 // TARİH
 
 var zaman = new Date();
@@ -27,8 +41,8 @@ function tarihGoster() {
 // HAVA
 havaDurumu();
 function havaDurumu() {
-    // $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&lang=tr&exclude=minutely,hourly,alerts&appid=fa13191aaafdf33d06c157515cbd09f8", function(data){
-        $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=40.976&lon=27.503&units=metric&lang=tr&exclude=minutely,hourly,alerts&appid=fa13191aaafdf33d06c157515cbd09f8", function(data){    
+    // $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&lang=tr&exclude=minutely,hourly,alerts&appid=<ID>", function(data){
+        $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=40.976&lon=27.503&units=metric&lang=tr&exclude=minutely,hourly,alerts&appid=<ID>", function(data){    
         
         var gun = document.getElementsByClassName('gun');
         var havaIcon = document.getElementsByClassName('hava-icon');
@@ -138,19 +152,21 @@ function zamanFarki(simdi, sonra) {
     let sonraDk = parseInt(sonraArr[1], 10) + parseInt(sonraArr[0], 10) * 60;
 
     fark = sonraDk - simdiDk;
+    
+    if(fark < 0) fark += 24*60;
+    
 
-    if(fark > 0) {
-        if(fark >= 60) {
-            let saat = Math.floor(fark / 60);
-            let dk = fark % 60;
-            fark = (dk > 0) ? (saat + ' saat ' + dk + ' dakika sonra') : (saat + ' saat sonra');
-        }
-        else {
-            fark = (sonraDk - simdiDk) + ' dakika sonra';
-        }
-        return fark;
+    if(fark > 60) {
+        let saat = Math.floor(fark / 60);
+        let dk = fark % 60;
+        fark = (dk > 0) ? (saat + ' saat ' + dk + ' dakika sonra') : (saat + ' saat sonra');
     }
-    return '';
+    else {
+        if(fark == 0) fark = 'Şimdi';
+        else fark = (sonraDk - simdiDk) + ' dakika sonra';            
+    }
+
+    return fark;
 }
 
 
@@ -283,9 +299,10 @@ $(function() {
 // PROGRAM GOSTER 
 
 var progTimeout;
-
+/*
 function progGoster() {
-
+    console.log('progGoster');
+    console.log(prog);
     let gunler = gunuGoster();
 
     if((typeof prog !== 'undefined') && (typeof prog[gunler[zaman.getDay()]] !== 'undefined')) {      
@@ -305,29 +322,82 @@ function progGoster() {
     if(typeof simdiki === 'undefined') {
         $('.simdi').hide();
     } else {                
-        $('.simdi').show();
-        // $('#simdiSaat').text(saatFormat(simdiki['saat']));                  
+        $('.simdi').show();                 
         $('#simdi').text(simdiki['etkinlik']);  
     }
 
     if(typeof sonraki === 'undefined') {
         $('.sonra').hide();
         $('#zaman-fark').hide();
+        $('.dikey-cizgi').hide();
     } else {
         $('.sonra').show();
-        // $('#sonraSaat').text(saatFormat(sonraki['saat'])); 
         $('#sonra').text(sonraki['etkinlik']);
     }
 
     if(typeof fark !== 'undefined') {
         $('#zaman-fark').text(fark);
-        // $('#sonraSaat').text(fark + ':');
         $('#zaman-fark').show();
     } else {
         $('#zaman-fark').hide();
+        $('.dikey-cizgi').hide();
     }
 
-    progTimeout = setTimeout(progGoster, 60000);
+    if(fark == '') {
+        $('#zaman-fark').hide();
+        $('.dikey-cizgi').hide();
+    } else {
+        $('#zaman-fark').text(fark);
+        $('#zaman-fark').show();
+        $('.dikey-cizgi').show();
+    }
+
+    // progTimeout = setTimeout(progGoster, 60000);
+}
+*/
+// yeni prog
+
+function progGoster() {
+
+    console.log('progGoster ' + simdi());
+    console.log(prog);
+
+    let gunler = gunuGoster();
+    let progBugun;
+    let simdiki;
+    let sonraki;
+    let zamanFark;
+
+    if(prog.length > 0 && typeof prog[gunler[zaman.getDay()]] !== 'undefined') {
+        progBugun = prog[gunler[zaman.getDay()]];
+        console.log(progBugun);
+        for(let i = 0; i < progBugun.length; i++) {
+            if(simdi() >= progBugun[i].saat/* && simdi() <= progBugun[i].bitis_saat*/) {
+                simdiki = progBugun[i];
+                sonraki =  (i < progBugun.length - 1) ? progBugun[i + 1] : progBugun[0];
+                zamanFark = zamanFarki(simdi(), sonraki.saat);                
+            }
+        }
+
+        $('.simdi').show();                 
+        $('.sonra').show();
+        $('#zaman-fark').show();
+        $('.dikey-cizgi').show();
+        $('#simdi').text(simdiki.etkinlik);  
+        $('#sonra').text(sonraki.etkinlik);
+        $('#zaman-fark').text(zamanFark);  
+
+        progTimeout = setTimeout(progGoster, 60000);
+
+    } else {
+        console.log('else');
+
+        $('.simdi').hide();                 
+        $('.sonra').hide();
+        $('#zaman-fark').hide();
+        $('.dikey-cizgi').hide();
+        clearTimeout(progTimeout);
+    }
 }
 
 // GERİ SAYIM GOSTER 
@@ -392,6 +462,7 @@ function gosterSubeyeGore() {
                 progGoster();      
             } else {
                 $('#progIcerik').hide();
+                clearTimeout(progTimeout);
             }
 
             // GERİ SAYIM
@@ -402,7 +473,7 @@ function gosterSubeyeGore() {
                 console.log(sayac);
                 sayacGoster();              
             } else {
-                $('.geri-sayim-wrapper').hide();
+                $('.geri-sayim-wrapper').hide();                
             }
             
             // BAŞLIK GOSTER
@@ -458,7 +529,7 @@ function gosterSabit() {
                 yenile_hiz = data.tercihler.yenile_hiz.deger;
 
                 document.documentElement.style.setProperty('--marquee-hiz', marquee_hiz + 's');
-            }
+            }            
 
             // SLIDE GOSTER
 
@@ -470,14 +541,13 @@ function gosterSabit() {
 
                 for (let i in data.slidelar) {
 
-                    var slideDiv = $('<div/>')
-                        .addClass('alan3-sag overflow slide rotate');
+                    var slideDiv = $('<div/>').addClass('alan3-sag overflow slide rotate');                        
 
                     if(data.slidelar[i].resim_id) {
                         var resimId = data.slidelar[i].resim_id;
                         var slideImg = $('<img/>')
-                        .attr('src', data.resimler[resimId].yol)
-                        .addClass('alan3-sag-resim');
+                            .attr('src', data.resimler[resimId].yol)
+                            .addClass('alan3-sag-resim');
 
                         slideDiv.append(slideImg);
                     }
@@ -486,25 +556,33 @@ function gosterSabit() {
                         .attr('name', 'marquee');
 
                     slideMarquee.append(
-                        $('<h2/>')
-                            .text(data.slidelar[i].baslik)
+                        $('<h2/>').text(data.slidelar[i].baslik)                            
                     );
                     slideMarquee.append(
-                        $('<p/>')
-                            .text(data.slidelar[i].metin)
+                        $('<p/>').text(data.slidelar[i].metin)                            
                     );
 
                     slideDiv.append(slideMarquee);
-                    $('.slideshow-container').append(slideDiv);  
-                    $('.slideshow-container').append(slideDot);  
+                    $('.slideshow-container').append(slideDiv);   
                     
                     $(slideDot).append(
-                        $('<span>')
-                            .addClass('dot')
+                        $('<span>').addClass('dot')                            
                     );
                 }
+
+                $('.slideshow-container').append(slideDot); 
+                slideDot.css('text-align', 'right');
+
                 showSlides();
             }
+
+            /*
+            // VIDEO GOSTER
+
+            if(data.video) {
+                $('#player').attr('src', data.video.yol);
+            }
+            */
         }
     });
 }
@@ -555,7 +633,7 @@ function showSlides() {
     dots[slideIndex-1].className += " active";
     
     marquee(); 
-    // slideTimeout = setTimeout(showSlides, slide_hiz); 
+    slideTimeout = setTimeout(showSlides, slide_hiz); 
 }
 
 // VIDEO PLAYLIST

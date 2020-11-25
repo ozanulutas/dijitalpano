@@ -1,4 +1,18 @@
 
+// escapeHtml
+
+function escapeHtml(text) {
+    var map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    
+    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
 // RESPONSIVE-NAV
 
 function responsive() {
@@ -59,7 +73,7 @@ function akordiyon() {
 
 // MODAL
 
-function goster(id) {
+function resimGoster(id) {
 
     var modal = document.getElementById("modal");
     var img = document.getElementById(id);
@@ -111,11 +125,14 @@ $(function() {
 // ŞİFREYİ GÖSTER
 
 function showPassword() {
-    var inp = document.getElementById("sifre");
-    if (inp.type === "password") {
-        inp.type = "text";
-    } else {
-        inp.type = "password";
+    var inp = document.getElementsByClassName("sifre");
+    for(let i = 0; i < inp.length; i++) {
+
+        if (inp[i].type === "password") {
+            inp[i].type = "text";
+        } else {
+            inp[i].type = "password";
+        }
     }
 }
 
@@ -207,7 +224,7 @@ function progGoster() {
                         row += '<td onclick="edit(\'program\', ' + data.programlar[j][i]['id'] + ');" class="prog-edit">' 
                         + formatTime(data.programlar[j][i]['saat']) 
                         + '<br>' 
-                        + data.programlar[j][i]['etkinlik']
+                        + escapeHtml(data.programlar[j][i]['etkinlik'])
                         + '</td>';
                     }
                     else {
@@ -226,10 +243,7 @@ function progGoster() {
 
 $(function() {
     $('#subeSec').change(function() {        
-        progGoster();
-        
-
-
+        progGoster();  
     }); 
 });
 
@@ -250,7 +264,6 @@ $(function() {
             },
             dataType: 'json',
             success: function(data) {
-                console.log(data);
                 if(data.id > 0) {
                     $("#success").html('Kayıt başarıyla eklendi.');
                     $("#success").show();
@@ -297,7 +310,6 @@ $(document).ready(function(){
                 $('#import').text('Aktarılıyor...');
             },
             success: function(data) {
-                console.log(data);
                 $("#success").html(data);
                 $("#success").show();
                 $('#success').delay(5000).fadeOut('slow');
@@ -308,6 +320,49 @@ $(document).ready(function(){
                 $('#import').css('cursor', 'pointer');
 
                 progGoster();
+            }
+        });
+    });
+});
+
+// GOOGLE DRIVE PROG IMPORT
+
+$(document).ready(function(){
+    $('#gDriveImportForm').on('submit', function(event){
+        event.preventDefault();
+        var formData = new FormData(this);
+        formData.append('section', 'program');
+        formData.append('action', 'gDriveImport');
+        formData.append('gDriveImport', 'gDriveImport');
+        formData.append('sube_id', $('#subeSec').val());
+        $.ajax({
+            url: "index.php",
+            method: "POST",
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+                $('#gDriveImport').attr('disabled', 'disabled');
+                $('#gDriveImport').css('cursor', 'default');
+                $('#gDriveImport').text('Aktarılıyor...');
+            },
+            success: function(data) {
+                $("#success").html(data);
+                $("#success").show();
+                $('#success').delay(5000).fadeOut('slow');
+
+                $('#gDriveImportForm')[0].reset();
+                $('#gDriveImport').attr('disabled', false);
+                $('#gDriveImport').text('İçe Aktar');
+                $('#gDriveImport').css('cursor', 'pointer');
+
+                progGoster();
+            },
+            error:function(){
+                $("#error").html("Beklenmeyen bir hata oluştu.");
+                $("#error").show();
+                $('#error').delay(5000).fadeOut('slow');
             }
         });
     });
@@ -390,7 +445,7 @@ function videoGoster(id) {
             success: function(data) {  
                 // $('#modalContent video source').attr('src', data.video.yol);
                 // $("#modalContent video")[0].load();  
-                $('#modalContent iframe').attr('src', data.video.yol);
+                $('#modalContent iframe').attr('src', escapeHtml(data.video.yol));
                 // $("#modalContent iframe")[0].load(); 
                 
                 var modal = document.getElementById("modal");
@@ -399,7 +454,7 @@ function videoGoster(id) {
             
                 modal.style.display = "block";
                 // captionText.innerHTML = caption[caption.length - 1];
-                captionText.innerHTML = data.video.isim
+                captionText.innerHTML = escapeHtml(data.video.isim);
             
                 var span = document.getElementsByClassName("close")[0];
                 span.onclick = function() {
@@ -426,11 +481,11 @@ function yayinla() {
             data: {
                 section: 'video', 
                 action: 'publish',
-                id: $('input[name="id[]"]:checked').serialize(),
+                // id: $('input[name="id[]"]:checked').serialize(),
+                id: $('input[name="id"]:checked').val(),
             },
 
             success: function(data) { 
-                console.log(data); 
                 if(data != '') {
 
                     $("#success").html(data);
@@ -453,13 +508,14 @@ function yayindanKaldir() {
             data: {
                 section: 'video', 
                 action: 'unpublish',
-                id: $('input[name="id[]"]:checked').serialize(),
+                // id: $('input[name="id[]"]:checked').serialize(),
+                id: $('input[name="id"]:checked').val(),
             },
 
             success: function(data) {  
                 if(data != '') {
-
-                    $('input[name="id[]"]:checked').prop('checked', false);
+                    // $('input[name="id[]"]:checked').prop('checked', false);
+                    $('input[name="id"]:checked').prop('checked', false);
 
                     $("#success").html(data);
                     $("#success").show();
@@ -792,7 +848,6 @@ $(function() {
 
     $('#kullaniciEditForm').submit(function(e) {
         e.preventDefault();
-        console.log($('#kullaniciEditForm').serialize());
         $.ajax({
             type: 'POST',
             url: 'index.php',
@@ -824,15 +879,19 @@ $(function() {
                 validate: 'validate',
                 currAction: $('#currAction').val(),
             },
+            dataType: 'json',
             success: function(data) {
-                if(data != "") {
-                    $("#error").html(data);
+                $('#kullaniciKaydet').prop('disabled', false);
+                if(data.err) {
+                    $("#error").html(data.err);
                     $("#error").show();
                     $('#error').delay(5000).fadeOut('slow');
 
                     $('#kullaniciKaydet').prop('disabled', true);
-                } else {
+                } 
+                if(data.succ) {
                     $('#kullaniciKaydet').prop('disabled', false);
+                    // document.getElementById('kullaniciKaydet').disabled = false;
                 }
             }
         });

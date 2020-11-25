@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once 'config.php';
+require_once 'src/config.php';
 
 DatabaseConnection::connect(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
 

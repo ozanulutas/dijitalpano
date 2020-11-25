@@ -8,6 +8,7 @@
 <div class="form-wrapper duyuru-wrapper">
     
     <div id="success" class="fade form-item"></div>
+    <div id="error" class="fade form-item"></div>
     
     <div class="prog-secenek-wrapper">
 
@@ -15,7 +16,7 @@
             <select name="sube_id" id="subeSec" class="sec form-item"> 
                 <?php foreach($data['subeler'] as $sube) { ?>
                 <option value="<?php echo $sube->id; ?>" <?php if(isset($_GET['sube_id'])) echo ($_GET['sube_id'] == $sube->id) ? 'selected' : '' ?>>
-                    <?php echo $sube->isim; ?>
+                    <?php echo htmlspecialchars($sube->isim); ?>
                 </option>
                 <?php } ?>
             </select>  
@@ -25,13 +26,29 @@
             <div class="accordion form-item">Seçili Şubeden...</div>
             <div class="panel">
 
+                <div class="ayırac">
+                    <h4 class="ayırac-baslik">Bilgisayardan içe aktar</h4>
+                    <hr>
+                </div>
                 <form id="importForm">   
                     <input type="file" name="yol" class="form-item" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required>        
                     <button type="submit" name="import" id="import" class="form-item btn btn-aktar">İçe Aktar</button> 
                 </form>
 
-                <hr>
+                <div class="ayırac">
+                    <h4 class="ayırac-baslik">Google Drive'dan içe aktar</h4>
+                    <hr>
+                </div>
+                <form id="gDriveImportForm" method="post" action="index.php?section=program&action=gDriveImport">   
+                    <input type="text" name="sheetId" class="form-item" placeholder="Tablo ID'sini girin..." required>       
+                    <button type="submit" name="gDriveImport" id="gDriveImport" class="form-item btn btn-aktar">İçe Aktar</button> 
+                </form>
+
                 
+                <div class="ayırac">
+                    <h4 class="ayırac-baslik">Bilgisayara aktar</h4>
+                    <hr>
+                </div>
                 <form method="post" action="index.php?section=program&action=export" id="exportForm">
                     <input type="hidden" name="sube_id" class="subeId">
                     <input type="hidden" name="file_type" id="fileType" value="Xls">
@@ -51,7 +68,7 @@
 
     <div class="islem-group">
 
-        <span class="create" onclick="create('program')">Yeni Etkinlik Ekle</span>
+        <span class="create ekle" onclick="create('program')">Yeni Etkinlik Ekle</span>
 
         <form action="index.php?section=program&action=delete" method="post" id="progSil">
             <input type="hidden" name="sube_id" class="subeId">

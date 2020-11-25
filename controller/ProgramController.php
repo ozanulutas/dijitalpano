@@ -5,6 +5,17 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 class ProgramController extends Controller {
 
 
+    private $gunler = [
+        'Pazartesi' => 0,
+        'Salı' => 1,
+        'Çarşamba' => 2,
+        'Perşembe' => 3,
+        'Cuma' => 4,
+        'Cumartesi' => 5,
+        'Pazar' => 6
+    ];
+
+
     protected function runBeforeAction() {
 
         if(empty($_SESSION['k_id'])) {
@@ -200,6 +211,72 @@ class ProgramController extends Controller {
                 echo "Dosya başarıyla içe aktarıldı.";
             }
         }        
+        else
+            header("Location: index.php?section=program");
+    }
+
+
+    public function gDriveImportAction() {
+
+        if(isset($_POST['gDriveImport'])) {
+
+            $client = new \Google_Client();
+            $client->setApplicationName('Google Drive Spread Sheets'); // herhangi bir isim
+            $client->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
+            $client->setAccessType('offline');
+            $client->setAuthConfig(ROOT_PATH . 'vendor/credentials.json'); // indirdiğimiz kimlik bilileri
+            $service = new Google_Service_Sheets($client);
+            $spreadsheetId = $_POST['sheetId']; // drive'daki excel id
+
+            try {
+                $range = 'A2:AH'; 
+                $response = $service->spreadsheets_values->get($spreadsheetId, $range);            
+                
+                $values = $response->getValues();
+    
+                if(empty($values)) {
+                    echo "Tablo boş.";
+                } 
+                else {      
+                    $dbh = DatabaseConnection::getInstance();
+                    $dbc = $dbh->getConnection();
+                    $program = new Program($dbc);
+
+                    $gunler = [
+                        'Pazartesi' => 0,
+                        'Salı' => 1,
+                        'Çarşamba' => 2,
+                        'Perşembe' => 3,
+                        'Cuma' => 4,
+                        'Cumartesi' => 5,
+                        'Pazar' => 6
+                    ];
+
+                    for($i = 0, $j = 0; $i < 7; $i++, $j += 5) {    
+                        foreach($values as $row)
+                        {
+                            $k = 0;
+                            if(!empty($row[$k])) {
+                                $params = array(
+                                    'gun'  => $this->gunler[$row[0 + $j]] ?? null,
+                                    'saat'  => $row[1 + $j] ?? null,
+                                    'bitis_saat'  => $row[2 + $j] ?? null,
+                                    'etkinlik'  => $row[3 + $j] ?? null,
+                                    'sube_id'  => $_POST['sube_id'] ?? null
+                                );
+                                
+                                $program->setValues($params);
+                                $program->insert();
+                            }
+                            $k++;
+                        }
+                    }   
+                    echo "Dosya başarıyla içe aktarıldı."; 
+                }
+            } catch(Exception $e) {
+                die(header("HTTP/1.0 404 Not Found"));
+            }
+        }
         else
             header("Location: index.php?section=program");
     }

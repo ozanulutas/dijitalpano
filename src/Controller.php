@@ -25,6 +25,18 @@ class Controller {
         return substr($time, 0, 5);
     }
 
+    protected function degistiMi($tabloAdi, $degistuMu) {
+
+        $dbh = DatabaseConnection::getInstance();
+        $dbc = $dbh->getConnection();
+
+        $degistiMi = new DegistiMi($dbc);
+        $degistiMi->findBy('tablo_adi', $tabloAdi);
+        $degistiMi->degisti_mi = $degistuMu;
+        $degistiMi->update();
+
+        return $degistiMi;
+    }
 
 
 }

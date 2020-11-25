@@ -189,6 +189,8 @@ class VideoController extends Controller {
 
     public function publishAction() {
 
+        /*
+        // CHECKBOX İLE            
         if(!empty($_POST['id'])) {
 
             $dbh = DatabaseConnection::getInstance();
@@ -205,11 +207,35 @@ class VideoController extends Controller {
             }
             echo 'Videolar yayında.';
         }
+        */
+
+        // RADIO İLE
+
+        if(!empty($_POST['id'])) {
+
+            $dbh = DatabaseConnection::getInstance();
+            $dbc = $dbh->getConnection();
+
+            $video = new Video($dbc);
+            $video->findBy('goster', true);
+            $video->goster = null;
+            $video->update();
+            
+            $video->findBy('id', $_POST['id']);
+            $video->goster = true;
+            $video->update();
+            
+            if($video)
+                echo 'Video yayında.';
+        }
+        
     }
 
 
     public function unpublishAction() {
 
+        /*
+        // CHECKBOX İLE 
         if(!empty($_POST['id'])) {
 
             $dbh = DatabaseConnection::getInstance();
@@ -225,6 +251,22 @@ class VideoController extends Controller {
                 $video->update();
             }
             echo 'Videolar yayından kaldırıldı.';
+        }
+        */
+
+        // RADIO İLE
+
+        if(!empty($_POST['id'])) {
+            $dbh = DatabaseConnection::getInstance();
+            $dbc = $dbh->getConnection();
+
+            $video = new Video($dbc);
+            $video->findBy('id', $_POST['id']);
+            $video->goster = null;
+            $video->update();
+            
+            if($video)
+                echo 'Video yayından kaldırıldı.';
         }
     }
 

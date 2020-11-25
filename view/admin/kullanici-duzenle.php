@@ -29,14 +29,30 @@
 
         <input type="hidden" name="id" value="<?php echo $data['kullanici']->id ?? ''; ?>" class="form-item"> 
 
+        <!-- ESKİ -->
+        <?php if($data['action'] == 'create') { ?> 
         <h3 class="form-item">Kullanıcı Adı</h3>
-        <input type="text" name="k_adi" id="k_adi" value="<?php echo $data['kullanici']->k_adi ?? ''; ?>" placeholder="Kullanıcı Adınız" class="form-item" required> <br>
+        <input type="text" name="k_adi" id="k_adi" value="" placeholder="Kullanıcı Adı" class="form-item" required> <br> 
         
         <h3 class="form-item">Şifre</h3>
-        <input type="password" name="sifre" id="sifre" value="<?php echo $data['kullanici']->sifre ?? ''; ?>" placeholder="Şifreniz" class="form-item" required> <br>
+        <input type="password" name="sifre" id="sifre" value="" placeholder="Şifre" class="form-item" required> <br>
+
+        <?php 
+        }
+        elseif($data['action'] == 'edit') { ?> 
+        <!-- YENİ -->        
+        <h2 class="form-item">Şifre Değiştir</h2>        
+
+        <h3 class="form-item">Eski Şifre</h3>
+        <input type="password" name="eskiSifre" id="eskiSifre" value="" placeholder="Mevcut şifreniz..." class="form-item sifre" required>
+
+        <h3 class="form-item">Yeni Şifre</h3>
+        <input type="password" name="yeniSifre" id="yeniSifre" value="" placeholder="Yeni şifreniz..." class="form-item sifre" required>
+
         <div class="form-item checkbox">
             <input type="checkbox" onclick="showPassword()">Şireyi Göster
-        </div>
+        </div> <?php
+        } ?>
 
         <button type="submit" name="kaydet" id="kullaniciKaydet" class="form-item submit-btn">Kaydet</button> <br>
         <button type="submit" name="iptal" formnovalidate class="form-item cancel-btn" id="kullaniciFormIptal">İptal</button> <br>

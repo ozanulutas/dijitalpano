@@ -13,7 +13,7 @@
 
             <?php foreach($data['resimler'] as $resim) { ?>            
             <div class="gallery-item">
-                <img src="<?php echo $resim->yol; ?>" id="<?php echo $resim->id; ?>" onclick="goster(this.id)">            
+                <img src="<?php echo htmlspecialchars($resim->yol); ?>" id="<?php echo $resim->id; ?>" onclick="resimGoster(this.id)">            
                 <input type="checkbox" name="id[]" class="resim-sec" value="<?php echo $resim->id; ?>">
             </div> <?php
             } ?>

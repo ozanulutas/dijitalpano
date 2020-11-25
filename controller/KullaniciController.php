@@ -40,6 +40,7 @@ class KullaniciController extends Controller {
         if(isset($_POST['kaydet'])) {
 
             $kullanici = new Kullanici($dbc);
+            $_POST['sifre'] = password_hash($_POST['sifre'], PASSWORD_DEFAULT);
             $kullanici->setValues($_POST);
             $kullanici->insert();
            
@@ -70,10 +71,19 @@ class KullaniciController extends Controller {
                 
             $values = array();
             parse_str($_POST['formData'], $values);
-
+            //
             $kullanici = new Kullanici($dbc);
-            $kullanici->setValues($values);
-            $kullanici->update();
+            $kullanici->findBy('id', $_SESSION['k_id']);
+
+            if(password_verify($values['eskiSifre'], $kullanici->sifre)) {
+                $kullanici->sifre = password_hash($values['yeniSifre'], PASSWORD_DEFAULT);
+                $kullanici->update();
+            }
+            //
+
+            // $kullanici = new Kullanici($dbc);
+            // $kullanici->setValues($values);
+            // $kullanici->update();
 
             echo 'Hesap bilgileri güncellendi.';
         }
@@ -111,14 +121,23 @@ class KullaniciController extends Controller {
         if(isset($_POST['validate'])) {
             $dbh = DatabaseConnection::getInstance();
             $dbc = $dbh->getConnection();
+
+            $data = array();
             
             $kullanici = new Kullanici($dbc);
             $mevcutKullanici = new Kullanici($dbc);
             $mevcutKullanici->findBy('id', $_SESSION['k_id']);
             $kullanici->findBy('k_adi', $_POST['k_adi']);
 
-            if($kullanici->id && ((($mevcutKullanici->k_adi != $kullanici->k_adi) && ($_POST['currAction'] == 'edit')) || ($_POST['currAction'] == 'create')))
-                echo 'Aynı isimde bir kullanıcı zaten var.';
+            if($kullanici->id && ((($mevcutKullanici->k_adi != $kullanici->k_adi) && ($_POST['currAction'] == 'edit')) || ($_POST['currAction'] == 'create'))) {
+
+                // echo 'Aynı isimde bir kullanıcı zaten var.';
+                $data['err'] = 'Aynı isimde bir kullanıcı zaten var.';
+                echo json_encode($data);
+            } else {
+                $data['succ'] = 'hömbürlüp';
+                echo json_encode($data);
+            }
         }
         else
             header("Location: index.php?section=kullanici");

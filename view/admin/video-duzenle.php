@@ -18,10 +18,10 @@
                 <input type="hidden" name="id" value="<?php echo $data['video']->id ?? ''; ?>"> 
 
                 <h3>Video Adı</h3>
-                <input type="text" name="isim" value="<?php echo $data['video']->isim ?? ''; ?>" required>
+                <input type="text" name="isim" value="<?php echo htmlspecialchars($data['video']->isim ?? ''); ?>" required>
 
                 <h3>Video Linki</h3>
-                <input type="text" name="yol" id="embedLink" value="<?php echo $data['video']->yol ?? ''; ?>" required>
+                <input type="text" name="yol" id="embedLink" value="<?php echo htmlspecialchars($data['video']->yol ?? ''); ?>" required>
 
                 <button type="submit" name="kaydet" class="form-item submit-btn"><?php echo $data['action'] == 'create' ? 'Ekle' : 'Kaydet'; ?></button>
                 <button name="iptal" formnovalidate class="form-item cancel-btn">İptal</button> 
@@ -45,7 +45,7 @@
                 <input type="hidden" name="id" value="<?php echo $data['video']->id ?? ''; ?>">               
 
                 <h3>Video Adı</h3>
-                <input type="text" name="isim" value="<?php echo $data['video']->isim ?? ''; ?>" required>       
+                <input type="text" name="isim" value="<?php echo htmlspecialchars($data['video']->isim ?? ''); ?>" required>       
 
                 <?php if($data['action'] == 'create') { ?>
                 <h3 class="form-item">Video Seç</h3>

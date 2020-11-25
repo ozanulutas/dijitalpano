@@ -1,6 +1,6 @@
 <?php
 
-class Kullanici extends Entity{
+class Kullanici extends Entity {
 
     public function __construct($dbc = null) {
 

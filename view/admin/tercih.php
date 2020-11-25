@@ -25,7 +25,7 @@
             <select name="sube_id" id="cssSubeSec">           
                 <?php foreach($data['subeler'] as $sube) { ?>
                     <option value="<?php echo $sube->id; ?>" class="cssSubeSec">
-                        <?php echo $sube->isim; ?>
+                        <?php echo htmlspecialchars($sube->isim); ?>
                     </option> <?php 
                 } ?>
             </select>

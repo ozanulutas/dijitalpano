@@ -43,7 +43,7 @@ class SubeController extends Controller {
             $sube = new Sube($dbc);
             $sube->setValues($_POST);
             $sube->insert();
-           
+            
             header("Location: index.php?section=sube");
         }
         elseif(isset($_POST['iptal'])) {

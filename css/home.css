@@ -240,7 +240,7 @@ hr { opacity: 0.3; }
 /* MAIN */
 
 #main-pano {          
-    /* margin: 0.5rem; */
+    margin: 0.5rem;
     display: grid;
     min-height: 100%; 
     max-width: 100%;
@@ -299,6 +299,7 @@ iframe {
     border: none;
     box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5), 
                  5px -5px 10px rgba(255, 255, 255, 0.9);
+    background-color: black;
 }
 
 .video-wrapper {

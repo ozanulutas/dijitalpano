@@ -11,10 +11,10 @@
         <input type="hidden" name="id" value="<?php echo $data['slide']->id ?? ''; ?>"> 
 
         <h3 class="form-item">Slide Başlığı</h3>
-        <input type="text" name="baslik" id="" value="<?php echo $data['slide']->baslik ?? ''; ?>" required> <br>
+        <input type="text" name="baslik" id="" value="<?php echo htmlspecialchars($data['slide']->baslik ?? ''); ?>" required> <br>
 
         <h3 class="form-item">Slide Metni</h3>
-        <textarea name="metin" id="" cols="30" rows="10" required><?php echo $data['slide']->metin ?? ''; ?></textarea> <br>
+        <textarea name="metin" id="" cols="30" rows="10" required><?php echo htmlspecialchars($data['slide']->metin ?? ''); ?></textarea> <br>
 
         <input type="hidden" name="tarih" value="<?php echo date("Y-m-d"); ?>"> <br>
 
@@ -23,7 +23,7 @@
         <div class="gallery">
             <?php foreach($data['resimler'] as $resim) { ?>            
             <div class="gallery-item">
-                <img src="<?php echo $resim->yol; ?>" id="<?php echo $resim->id; ?>" onclick="goster(this.id)">            
+                <img src="<?php echo htmlspecialchars($resim->yol); ?>" id="<?php echo $resim->id; ?>" onclick="resimGoster(this.id)">            
                 <input type="radio" name="resim_id" value="<?php echo $resim->id ?? ''; ?>" class="radio"
                  <?php if(isset($data['slide']->resim_id)) echo ($resim->id == $data['slide']->resim_id) ? 'checked' : ''; ?>>
             </div> <?php

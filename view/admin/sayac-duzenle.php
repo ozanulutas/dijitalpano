@@ -11,7 +11,7 @@
         <input type="hidden" name="id" value="<?php echo $data['sayac']->id ?? ''; ?>"> 
 
         <h3 class="form-item">Etkinlik Adı</h3>
-        <input type="text" name="etkinlik" value="<?php echo $data['sayac']->etkinlik ?? ''; ?>">
+        <input type="text" name="etkinlik" value="<?php echo htmlspecialchars($data['sayac']->etkinlik ?? ''); ?>">
 
         <h3 class="form-item">Etkinlik Zamanı</h3>
         <div class="group">
@@ -33,7 +33,7 @@
                 <input type="checkbox" name="sube_id[]" class="sube-sec"
                     value="<?php echo $sube->id ?? ''; ?>" 
                     <?php if(isset($data['subeSayac'][$sube->id])) echo ($data['subeSayac'][$sube->id]->sube_id == $sube->id) ? 'checked' : ''; ?>>
-                <?php echo $sube->isim; ?> 
+                <?php echo htmlspecialchars($sube->isim); ?> 
             </div> <?php            
         } ?>
 

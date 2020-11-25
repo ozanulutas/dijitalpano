@@ -12,13 +12,13 @@
             <option onclick="filter('hepsi')">Hepsini Göster</option>
             <?php foreach($data['subeler'] as $sube) { ?>
             <option onclick="filter(<?php echo '\'sbf-' . $sube->id . '\''; ?>)" >
-                <?php echo $sube->isim; ?>
+                <?php echo htmlspecialchars($sube->isim); ?>
             </option>
             <?php } ?>
         </select>  
     </div>   
     
-    <a href="index.php?section=sayac&action=create">Yeni Geri Sayım Ekle</a>    
+    <a href="index.php?section=sayac&action=create" class="ekle">Yeni Geri Sayım Ekle</a>    
 
     <table class="duyuru-table">
         <tr>
@@ -26,12 +26,12 @@
             <th>Etkinlik Tarihi</th>
             <th>Yayınlanma Tarihi</th>
             <th>Şubeler</th>
-            <th>Seçenek</th>
+            <th class="td-input">Seçenek</th>
         </tr>
         <?php foreach($data['sayaclar'] as $sayac) { ?>
         <tr class="filter <?php echo $data['subeFiltre'][$sayac->id] ?? ''; ?>">
             <td onclick="edit('sayac', <?php echo $sayac->id; ?>)">
-                <?php echo $sayac->etkinlik; ?>
+                <?php echo htmlspecialchars($sayac->etkinlik); ?>
             </td>
             <td onclick="edit('sayac', <?php echo $sayac->id; ?>)">
                 <?php echo $sayac->tarih . '<br>' . $sayac->saat; ?>
@@ -40,7 +40,7 @@
                 <?php echo $sayac->yayin_tarih; ?>
             </td>
             <td onclick="edit('sayac', <?php echo $sayac->id; ?>)">
-                <?php echo $data['sube'][$sayac->id] ?? ''; ?>                
+                <?php echo htmlspecialchars($data['sube'][$sayac->id] ?? ''); ?>                
             </td>
             <td class="td-empty">
                 <a href="index.php?section=sayac&action=delete&id=<?php echo $sayac->id; ?>"
